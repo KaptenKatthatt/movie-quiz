@@ -4,18 +4,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>What's hisher face?</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- Local CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="container bg-primary">
-    <h1 class="display-1">Testar lite mer</h1>
-    <button type="button" class="btn btn-primary">Knapp</button>
-    <div class="">Test</div>
-  </div>
+  <div class="container">
+    <h1 class="display-1 mb-5">Welcome to what's <span class="bg-danger">his</span><span class="bg-primary ">her</span>
+      face!
+    </h1>
+    <div class="container  border border-dark rounded-3">
+      <h2 class="display-3 mb-5">Choose how many photos to guess</h2>
 
-  <script type="module" src="main.js"></script>
+      <div class="btnContainer container d-flex justify-content-center gap-3">
+        <button class="btn btn-primary p-4 selectFiveBtn">5 persons</button>
+        <button class="btn btn-primary p-4 selectTenBtn">10 persons</button>
+        <button class="btn btn-success p-4 selectAllBtn">Yes</button>
+      </div>
+    </div>
+
+    <div class="d-none questionScreen container d-flex flex-column align-items-center">
+      <h2 class="display-4">Guess the face!</h2>
+      <div class="photoContainer"><img src="img/jonas_olson.JPG" alt="Photo of person to guess" height="400"></div>
+      <div class="pointsContainer"></div>
+      <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
+        <button class="btn btn-light">Name1</button>
+        <button class="btn btn-light">Name2</button>
+        <button class="btn btn-light">Name3</button>
+        <button class="btn btn-light">Name4</button>
+      </div>
+      <div class="nextQuestionContainer">
+        <div class="button btn btn-disabled"></div>
+      </div>
+
+    </div>
+
+
+
+
+
+  </div>
+  <script src="script.js"></script>
 </body>
 
 </html>
