@@ -136,11 +136,34 @@ startBtnContainerEl.addEventListener("click", (e) => {
   // startBtnContainerEl.classList.add("d-none");
   // questionScreenContainerEl.classList.remove("d-none");
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
+  console.log("Shuffled students", shuffledStudents);
   console.log("Sliced students", slicedStudents);
-  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[0].name}</button>`;
-  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[1].name}</button>`;
-  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[2].name}</button>`;
-  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[3].name}</button>`;
+  let currentStudent = slicedStudents[0];
+  console.log("currentStudent", currentStudent);
+  let filteredWrongStudents = shuffledStudents.filter((student) => {
+    return student.id !== currentStudent.id;
+  });
+  console.log("Filtered wrong students", filteredWrongStudents);
+  slicedStudents.shift();
+  currentStudent = slicedStudents[0];
+  console.log("currentStudent", currentStudent);
+  filteredWrongStudents = shuffledStudents.filter((student) => {
+    return student.id !== currentStudent.id;
+  });
+  console.log("Filtered wrong students", filteredWrongStudents);
+
+  //Take
+  let threeRandos = cloneAndShuffleArray(students).slice(0, 3);
+  console.log("3 randos", threeRandos);
+  let questionButtonNames = [currentStudent, ...threeRandos];
+  console.log("Questionbutton array", questionButtonNames);
+
+  let buttonMeButtons = questionButtonNames.map(
+    (name) => `<button class="btn btn-warning">${name.name}</button>`
+  );
+
+  console.log("Sliced students", slicedStudents);
+  questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
 });
 
 // Map the results to buttons
