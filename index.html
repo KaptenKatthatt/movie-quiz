@@ -19,23 +19,25 @@
       face!
     </h1>
     <div class="container startBtnContainer  border border-dark rounded-3">
-      <h2 class="display-3 mb-5">Choose how many photos to guess</h2>
+      <h2 class="display-3 mb-5">Choose how many students to guess</h2>
 
       <div class=" container d-flex justify-content-center gap-3">
-        <button class="btn btn-primary p-4 selectFiveBtn">5 persons</button>
-        <button class="btn btn-primary p-4 selectTenBtn">10 persons</button>
+        <button class="btn btn-primary p-4 selectFiveBtn">5 people</button>
+        <button class="btn btn-primary p-4 selectTenBtn">10 people</button>
         <button class="btn btn-success p-4 selectAllBtn">Yes</button>
       </div>
     </div>
 
     <div class="d-none questionScreenContainer container d-flex flex-column align-items-center">
       <h2 class="display-4">Guess the face!</h2>
-      <div class="photoContainer"><img src="img/jonas_olson.jpg" alt="Photo of person to guess" height="400"></div>
+      <h2 class="scoreBoard display-5"></h2>
+
+      <img class="photoContainer" src="" alt="Photo of person to guess" height="400">
       <div class="pointsContainer"></div>
       <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
       </div>
-      <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
     </div>
+    <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
   </div>
   <script src="script.js"></script>
 </body>

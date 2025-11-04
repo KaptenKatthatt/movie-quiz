@@ -7,99 +7,104 @@ const questionScreenContainerEl = document.querySelector(
 );
 const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
+const photoContainerEl = document.querySelector(".photoContainer");
+const scoreBoardEl = document.querySelector(".scoreBoard");
 
 const students = [
   {
     id: 1,
     name: "Kalle Kallesson",
-    image: "img/jonas_olson.jpg",
+    image: "https://picsum.photos/200/200?random=1",
   },
   {
     id: 2,
     name: "Anna Andersson",
-    image: "img/anna_andersson.jpg",
+    image: "https://picsum.photos/200/200?random=2",
   },
   {
     id: 3,
     name: "Erik Eriksson",
-    image: "img/erik_eriksson.jpg",
+    image: "https://picsum.photos/200/200?random=3",
   },
   {
     id: 4,
     name: "Maria Nilsson",
-    image: "img/maria_nilsson.jpg",
+    image: "https://picsum.photos/200/200?random=4",
   },
   {
     id: 5,
     name: "Johan Johansson",
-    image: "img/johan_johansson.jpg",
+    image: "https://picsum.photos/200/200?random=5",
   },
   {
     id: 6,
     name: "Lisa Larsson",
-    image: "img/lisa_larsson.jpg",
+    image: "https://picsum.photos/200/200?random=6",
   },
   {
     id: 7,
     name: "Peter Petersson",
-    image: "img/peter_petersson.jpg",
+    image: "https://picsum.photos/200/200?random=7",
   },
   {
     id: 8,
     name: "Sara Svensson",
-    image: "img/sara_svensson.jpg",
+    image: "https://picsum.photos/200/200?random=8",
   },
   {
     id: 9,
     name: "Mikael Karlsson",
-    image: "img/mikael_karlsson.jpg",
+    image: "https://picsum.photos/200/200?random=9",
   },
   {
     id: 10,
     name: "Emma Gustafsson",
-    image: "img/emma_gustafsson.jpg",
+    image: "https://picsum.photos/200/200?random=10",
   },
   {
     id: 11,
     name: "David Davidsson",
-    image: "img/david_davidsson.jpg",
+    image: "https://picsum.photos/200/200?random=11",
   },
   {
     id: 12,
     name: "Jenny Persson",
-    image: "img/jenny_persson.jpg",
+    image: "https://picsum.photos/200/200?random=12",
   },
   {
     id: 13,
     name: "Magnus Olsson",
-    image: "img/magnus_olsson.jpg",
+    image: "https://picsum.photos/200/200?random=13",
   },
   {
     id: 14,
     name: "Camilla Jonsson",
-    image: "img/camilla_jonsson.jpg",
+    image: "https://picsum.photos/200/200?random=14",
   },
   {
     id: 15,
     name: "Fredrik Lindberg",
-    image: "img/fredrik_lindberg.jpg",
+    image: "https://picsum.photos/200/200?random=15",
   },
   {
     id: 16,
     name: "Helena Holm",
-    image: "img/helena_holm.jpg",
+    image: "https://picsum.photos/200/200?random=16",
   },
 ];
-let currentStudent;
-
+let currentStudent = {};
 let nbrOfSelectedStudents = 0;
 let shuffledStudents = []; //Complete shuffled student array
-let slicedStudents = []; //Student array reduced to nbr of selected guesses
+let slicedStudents = []; //Student array sliced to nbr of selected guesses
+let filteredWrongStudents = []; //Student array with correct answer filtered out
+let questionButtonNames = []; //The four names on the question buttons
 
-// console.log("Students before shuffle", students);
+//Result arrays
+const rightAnswers = [];
+const wrongAnswers = [];
 
-// Fishes-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = (array) => {
+// Fisher-Yates algoritm for array shuffling to the rescue! 🤩
+function cloneAndShuffleArray(array) {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -108,76 +113,90 @@ const cloneAndShuffleArray = (array) => {
     shuffledArrayClone[j] = temp;
   }
   return shuffledArrayClone;
-};
+}
 
-// Randomize array
-//Clone and shuffle students array
-shuffledStudents = cloneAndShuffleArray(students);
-// console.log("Students after shuffle", shuffledStudents);
+function updateScore() {
+  scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
+}
 
-// Ask how many persons you wish to guess on, 5, 10 or ALL?
-//An event listener on the container containing the buttons listens for the clicked button and sets answer to that.
-// Filter out 5,10 or all
+function renderNewQuestion() {
+  // first index is currentStudent
+  currentStudent = slicedStudents[0];
+  // Make an array of wrong students to choose from, filters out correct answer
+  filteredWrongStudents = shuffledStudents.filter(
+    (student) => student.id !== currentStudent.id
+  );
+  //Take currentStudent and throw into an array with three randos
+  let threeRandos = cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
+  questionButtonNames = [currentStudent, ...threeRandos];
+  //Randomize button names
+  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
+  console.log("Question button array", questionButtonNames);
+  // Generate one button for each student
+  let buttonMeButtons = questionButtonNames.map(
+    (student) => `<button class="btn btn-warning">${student.name}</button>`
+  );
+
+  console.log("Currstudent", currentStudent);
+  // Add image to currentStudent from students array
+  photoContainerEl.src = currentStudent.image;
+
+  //Inject buttons into html and join array
+  questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
+}
 
 //Eventlistener for selecting number of questions
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.textContent.includes("5")) {
     nbrOfSelectedStudents = 5;
-    // console.log("5 selected", nbrOfSelectedStudents);
-    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   } else if (e.target.textContent.includes("10")) {
     nbrOfSelectedStudents = 10;
-    // console.log("10 selected", nbrOfSelectedStudents);
-    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   } else if (e.target.textContent.includes("Yes")) {
     nbrOfSelectedStudents = students.length;
-    // console.log("All selected", nbrOfSelectedStudents);
-    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   }
-  startBtnContainerEl.classList.add("d-none");
-  questionScreenContainerEl.classList.remove("d-none");
+  // Shuffles the student array to create random order on buttons
+  shuffledStudents = cloneAndShuffleArray(students);
+  //Create an array with selected nbr of students
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
-  console.log("Shuffled students", shuffledStudents);
-  console.log("Sliced students", slicedStudents);
-  currentStudent = slicedStudents[0];
-  console.log("currentStudent", currentStudent);
-  let filteredWrongStudents = shuffledStudents.filter((student) => {
-    return student.id !== currentStudent.id;
-  });
-  console.log("Filtered wrong students", filteredWrongStudents);
-  slicedStudents.shift();
-  currentStudent = slicedStudents[0];
-  console.log("currentStudent", currentStudent);
-  filteredWrongStudents = shuffledStudents.filter((student) => {
-    return student.id !== currentStudent.id;
-  });
-  console.log("Filtered wrong students", filteredWrongStudents);
+  console.log("SlicedStuds before", slicedStudents);
 
-  //Take the currentStudent and throw into an array with three randos
-  let threeRandos = cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
-  console.log("3 randos", threeRandos);
-  let questionButtonNames = [currentStudent, ...threeRandos];
-  console.log("Questionbutton array", questionButtonNames);
-  //Randomize button names
-  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
+  // Hide startPage
+  startBtnContainerEl.classList.add("d-none");
+  // Show questionPage
+  questionScreenContainerEl.classList.remove("d-none");
+  console.log("right answers length", rightAnswers.length);
+  console.log("nbrstudents", nbrOfSelectedStudents);
+  //Update score
+  updateScore();
 
-  let buttonMeButtons = questionButtonNames.map(
-    (name) => `<button class="btn btn-warning">${name.name}</button>`
-  );
-
-  console.log("Sliced students", slicedStudents);
-  questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
+  // Render the questionPage content
+  renderNewQuestion();
 });
 
+// Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 questionScreenContainerEl.addEventListener("click", (e) => {
   selectedAnswer = e.target.textContent;
   if (currentStudent.name === selectedAnswer) {
     e.target.classList.add("btn-success");
     e.target.classList.remove("btn-warning");
+    rightAnswers.push(currentStudent);
   } else {
     e.target.classList.add("btn-danger");
     e.target.classList.remove("btn-warning");
+    wrongAnswers.push(currentStudent);
   }
+  //Disables all buttons from being clicked again
+  const buttons = questionBtnContainerEl.querySelectorAll("button");
+  buttons.forEach((button) => (button.disabled = true));
+  //Deletes currentStudent
+  slicedStudents.shift();
+  console.log("SlicedStuds after", slicedStudents);
 
   nextQuestionBtnEl.classList.remove("d-none");
+  // Update scoreboard
+  updateScore();
+});
+
+nextQuestionBtnEl.addEventListener("click", () => {
+  slicedStudents.length > 0 ? renderNewQuestion() : alert("Spelet är slut!");
 });
