@@ -5,6 +5,7 @@ const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
+const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 
 const students = [
   {
@@ -89,9 +90,11 @@ const students = [
   },
 ];
 
-let nbrOfSelected = 0;
+let nbrOfSelectedStudents = 0;
+let shuffledStudents = []; //Complete shuffled student array
+let slicedStudents = []; //Student array reduced to nbr of selected guesses
 
-console.log("Students before shuffle", students);
+// console.log("Students before shuffle", students);
 
 // Fishes-Yates algoritm for array shuffling to the rescue! 🤩
 const cloneAndShuffleArray = (array) => {
@@ -107,8 +110,8 @@ const cloneAndShuffleArray = (array) => {
 
 // Randomize array
 //Clone and shuffle students array
-const shuffledStudents = cloneAndShuffleArray(students);
-console.log("Students after shuffle", shuffledStudents);
+shuffledStudents = cloneAndShuffleArray(students);
+// console.log("Students after shuffle", shuffledStudents);
 
 //Show startscreen
 
@@ -118,25 +121,39 @@ console.log("Students after shuffle", shuffledStudents);
 
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.textContent.includes("5")) {
-    nbrOfSelected = 5;
-    console.log("5 selected", nbrOfSelected);
-    console.log(shuffledStudents.slice(0, nbrOfSelected));
+    nbrOfSelectedStudents = 5;
+    // console.log("5 selected", nbrOfSelectedStudents);
+    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   } else if (e.target.textContent.includes("10")) {
-    nbrOfSelected = 10;
-    console.log("10 selected", nbrOfSelected);
-    console.log(shuffledStudents.slice(0, nbrOfSelected));
+    nbrOfSelectedStudents = 10;
+    // console.log("10 selected", nbrOfSelectedStudents);
+    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   } else if (e.target.textContent.includes("Yes")) {
-    nbrOfSelected = students.length;
-    console.log("All selected", nbrOfSelected);
-    console.log(shuffledStudents.slice(0, nbrOfSelected));
+    nbrOfSelectedStudents = students.length;
+    // console.log("All selected", nbrOfSelectedStudents);
+    // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   }
-  startBtnContainerEl.classList.add("d-none");
-  questionScreenContainerEl.classList.remove("d-none");
+  // startBtnContainerEl.classList.add("d-none");
+  // questionScreenContainerEl.classList.remove("d-none");
+  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
+  console.log("Sliced students", slicedStudents);
+  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[0].name}</button>`;
+  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[1].name}</button>`;
+  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[2].name}</button>`;
+  questionBtnContainerEl.innerHTML += `<button class="btn btn-warning">${slicedStudents[3].name}</button>`;
 });
 
-const gameArray = [];
-
 // Map the results to buttons
+// Make an array with 1 correct name and 3 random names.
+// Make each index into a button with the student.name
+//Make a function that slices out 3 random people from shuffledStudents
+//Make array with the current correct answer and 3 random people from shuffledStudents. Then shuffle that array and present it as buttons.
+
+// currentQuestionArray = slicedStudents[n] + 3 indexes from shuffledStudens
+
+// slicedStudents.map((student) => {
+//   `<button class="btn btn-light">${student.name}</button>`;
+// });
 
 //An event listener on the div containing the buttons listens for the clicked button and sets answer to that.
 
@@ -148,7 +165,7 @@ const gameArray = [];
 //make an array with the correct name and three wrong ones. Randomize the array before showing it.
 
 // User clicks on an option
-//  Correct? Change class to correct which colors the button green(bs-success)
+//  Correct? (clicked button id === correctAnswer.id)Change class to correct which colors the button green(bs-success)
 //Wrong? Change class to wrong that makes the button red(bs-danger).
 
 //Enable Next question button -> Generates next question
