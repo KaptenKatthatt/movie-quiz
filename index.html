@@ -18,19 +18,19 @@
     <h1 class="display-1 mb-5">Welcome to what's <span class="bg-danger">his</span><span class="bg-primary ">her</span>
       face!
     </h1>
-    <div class="container  border border-dark rounded-3">
+    <div class="container startBtnContainer border border-dark rounded-3">
       <h2 class="display-3 mb-5">Choose how many photos to guess</h2>
 
-      <div class="btnContainer container d-flex justify-content-center gap-3">
-        <button class="btn btn-primary p-4 selectFiveBtn">5 persons</button>
-        <button class="btn btn-primary p-4 selectTenBtn">10 persons</button>
-        <button class="btn btn-success p-4 selectAllBtn">Yes</button>
+      <div class=" container d-flex justify-content-center gap-3">
+        <button data-selectedNbrPeople="5" class="btn btn-primary p-4 selectFiveBtn">5 persons</button>
+        <button data-selectedNbrPeople="10" class="btn btn-primary p-4 selectTenBtn">10 persons</button>
+        <button data-selectedNbrPeople="99" class="btn btn-success p-4 selectAllBtn">Yes</button>
       </div>
     </div>
 
-    <div class="d-none questionScreen container d-flex flex-column align-items-center">
+    <div class="d-none questionScreenContainer container d-flex flex-column align-items-center">
       <h2 class="display-4">Guess the face!</h2>
-      <div class="photoContainer"><img src="img/jonas_olson.JPG" alt="Photo of person to guess" height="400"></div>
+      <div class="photoContainer"><img src="img/jonas_olson.jpg" alt="Photo of person to guess" height="400"></div>
       <div class="pointsContainer"></div>
       <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
         <button class="btn btn-light">Name1</button>
