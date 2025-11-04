@@ -6,6 +6,7 @@ const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
 const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
+const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 
 const students = [
   {
@@ -89,6 +90,7 @@ const students = [
     image: "img/helena_holm.jpg",
   },
 ];
+let currentStudent;
 
 let nbrOfSelectedStudents = 0;
 let shuffledStudents = []; //Complete shuffled student array
@@ -113,12 +115,11 @@ const cloneAndShuffleArray = (array) => {
 shuffledStudents = cloneAndShuffleArray(students);
 // console.log("Students after shuffle", shuffledStudents);
 
-//Show startscreen
-
 // Ask how many persons you wish to guess on, 5, 10 or ALL?
 //An event listener on the container containing the buttons listens for the clicked button and sets answer to that.
 // Filter out 5,10 or all
 
+//Eventlistener for selecting number of questions
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.textContent.includes("5")) {
     nbrOfSelectedStudents = 5;
@@ -133,12 +134,12 @@ startBtnContainerEl.addEventListener("click", (e) => {
     // console.log("All selected", nbrOfSelectedStudents);
     // console.log(shuffledStudents.slice(0, nbrOfSelectedStudents));
   }
-  // startBtnContainerEl.classList.add("d-none");
-  // questionScreenContainerEl.classList.remove("d-none");
+  startBtnContainerEl.classList.add("d-none");
+  questionScreenContainerEl.classList.remove("d-none");
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
   console.log("Shuffled students", shuffledStudents);
   console.log("Sliced students", slicedStudents);
-  let currentStudent = slicedStudents[0];
+  currentStudent = slicedStudents[0];
   console.log("currentStudent", currentStudent);
   let filteredWrongStudents = shuffledStudents.filter((student) => {
     return student.id !== currentStudent.id;
@@ -152,11 +153,13 @@ startBtnContainerEl.addEventListener("click", (e) => {
   });
   console.log("Filtered wrong students", filteredWrongStudents);
 
-  //Take
-  let threeRandos = cloneAndShuffleArray(students).slice(0, 3);
+  //Take the currentStudent and throw into an array with three randos
+  let threeRandos = cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
   console.log("3 randos", threeRandos);
   let questionButtonNames = [currentStudent, ...threeRandos];
   console.log("Questionbutton array", questionButtonNames);
+  //Randomize button names
+  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
   let buttonMeButtons = questionButtonNames.map(
     (name) => `<button class="btn btn-warning">${name.name}</button>`
@@ -166,37 +169,15 @@ startBtnContainerEl.addEventListener("click", (e) => {
   questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
 });
 
-// Map the results to buttons
-// Make an array with 1 correct name and 3 random names.
-// Make each index into a button with the student.name
-//Make a function that slices out 3 random people from shuffledStudents
-//Make array with the current correct answer and 3 random people from shuffledStudents. Then shuffle that array and present it as buttons.
+questionScreenContainerEl.addEventListener("click", (e) => {
+  selectedAnswer = e.target.textContent;
+  if (currentStudent.name === selectedAnswer) {
+    e.target.classList.add("btn-success");
+    e.target.classList.remove("btn-warning");
+  } else {
+    e.target.classList.add("btn-danger");
+    e.target.classList.remove("btn-warning");
+  }
 
-// currentQuestionArray = slicedStudents[n] + 3 indexes from shuffledStudens
-
-// slicedStudents.map((student) => {
-//   `<button class="btn btn-light">${student.name}</button>`;
-// });
-
-//An event listener on the div containing the buttons listens for the clicked button and sets answer to that.
-
-//If 5 or 10, pick 5 or 10 random objects from array.
-//If ALL, pick array.length number of people and randomize
-
-// Load game screen with 1 photo and four choice buttons, and a disabled next question button.
-
-//make an array with the correct name and three wrong ones. Randomize the array before showing it.
-
-// User clicks on an option
-//  Correct? (clicked button id === correctAnswer.id)Change class to correct which colors the button green(bs-success)
-//Wrong? Change class to wrong that makes the button red(bs-danger).
-
-//Enable Next question button -> Generates next question
-
-//Update score
-
-//Game finished?
-// No, goto next question
-// Yes, show finishscreen with score and high score.
-//Check If highschore, if yes update highscore
-//Show Play again button -> Goes to startscreen
+  nextQuestionBtnEl.classList.remove("d-none");
+});
