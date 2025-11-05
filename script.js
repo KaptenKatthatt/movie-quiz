@@ -152,8 +152,12 @@ function renderNewQuestion() {
 }
 
 function restartGame() {
+  console.log("Before reset arrays", rightAnswers, wrongAnswers);
+
   rightAnswers = [];
   wrongAnswers = [];
+
+  console.log("Reset arrays", rightAnswers, wrongAnswers);
 
   endScreenEl.classList.add("d-none");
   startBtnContainerEl.classList.remove("d-none");
@@ -187,9 +191,8 @@ startBtnContainerEl.addEventListener("click", (e) => {
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 questionScreenContainerEl.addEventListener("click", (e) => {
-  let selectedAnswer = e.target.textContent;
   if (e.target.tagName === "BUTTON") {
-    if (currentStudent.name === selectedAnswer) {
+    if (currentStudent.name === e.target.textContent) {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
       rightAnswers.push(currentStudent);
@@ -202,6 +205,7 @@ questionScreenContainerEl.addEventListener("click", (e) => {
     const buttons = questionBtnContainerEl.querySelectorAll("button");
     buttons.forEach((button) => (button.disabled = true));
     //Deletes currentStudent
+    console.log("SlicedStuds before", slicedStudents);
     studentSliced ? "" : slicedStudents.shift();
     studentSliced = true;
     console.log("SlicedStuds after", slicedStudents);
@@ -214,15 +218,13 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
 nextQuestionBtnEl.addEventListener("click", () => {
   studentSliced = false;
-  if (slicedStudents.length > 0) {
-    // renderNewQuestion();
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        renderNewQuestion();
-      });
-    } else {
-      renderNewQuestion();
-    }
+  // Checks if there is any students left to question about
+  if ((slicedStudents.length = 0)) {
+    document.startViewTransition
+      ? document.startViewTransition(() => {
+          renderNewQuestion();
+        })
+      : renderNewQuestion();
   } else {
     // Game is over, go to endScreen
     //Hide question screen
@@ -231,32 +233,13 @@ nextQuestionBtnEl.addEventListener("click", () => {
 
     //Show endscreen
     endScreenEl.classList.remove("d-none");
-    // Send over nbr of correct answers and total nbr of questions
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        try {
-          renderEndScreen(
-            rightAnswers.length,
-            nbrOfSelectedStudents,
-            rightAnswers,
-            wrongAnswers
-          );
-        } catch (err) {
-          console.error("Error in renderEndScreen:", err);
-        }
-      });
-    } else {
-      try {
-        renderEndScreen(
-          rightAnswers.length,
-          nbrOfSelectedStudents,
-          rightAnswers,
-          wrongAnswers
-        );
-      } catch (err) {
-        console.error("Error in renderEndScreen:", err);
-      }
-    }
+    // Render endscreen and send over nbr of correct answers and total nbr of questions
+    renderEndScreen(
+      rightAnswers.length,
+      nbrOfSelectedStudents,
+      rightAnswers,
+      wrongAnswers
+    );
   }
 });
 // Button to launch restart game function

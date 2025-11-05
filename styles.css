@@ -26,27 +26,29 @@
     scale: 1;
   }
 }
-
-.answerCardsContainer {
+/* 
+.endScreen {
   view-transition-name: endScreen;
+  isolation: isolate;
 }
 
 ::view-transition-old(endScreen) {
-  animation: fadeOut 1s ease-in-out;
+  animation: moveOut 1s ease-in-out;
 }
 
 ::view-transition-new(endScreen) {
-  animation: fadeIn 1.5s ease-in-out;
+  animation: moveIn 1.5s ease-in-out;
 }
 
-@keyframes fadeOut {
+@keyframes moveOut {
   to {
-    opacity: 0;
+    transform: translateX(-100%);
   }
 }
 
-@keyframes fadeIn {
+@keyframes moveIn {
   from {
-    opacity: 0;
+    transform: translateX(100%);
   }
 }
+ */

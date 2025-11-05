@@ -7,24 +7,24 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   console.log("rightAnswersArr", rightAnswersArr);
   console.log("wrongAnswersArr", wrongAnswersArr);
   rightAnswerCardsEl.innerHTML = rightAnswersArr
-    .map((answer) => {
+    .map((student) => {
       return `
         <div class="card" style="width: 9rem;">
-  <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+  <img src="${student.image}" class="card-img-top" alt="${student.name}">
   <div class="card-body">
-    <h5 class="card-title">${answer.name}</h5>
+    <h5 class="card-title">${student.name}</h5>
   </div>
 </div>
     `;
     })
     .join("");
   wrongAnswerCardsEl.innerHTML = wrongAnswersArr
-    .map((answer) => {
+    .map((student) => {
       return `
         <div class="card" style="width: 9rem;">
-  <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+  <img src="${student.image}" class="card-img-top" alt="${student.name}">
   <div class="card-body">
-    <h5 class="card-title">${answer.name}</h5>
+    <h5 class="card-title">${student.name}</h5>
   </div>
 </div>
     `;
@@ -33,7 +33,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 }
 
 let highscoreList = [1, 1, 1];
-let previousTry = [];
+let previousTry = [2, 3, 4];
 function renderHighScoreList(finalScore) {
   let rUWorthy = false;
 
@@ -41,8 +41,14 @@ function renderHighScoreList(finalScore) {
   console.log("Previous attempts", previousTry);
   console.log("Last score", previousTry[previousTry.length - 1]);
 
+  previousTry.sort((a, b) => b - a);
   highScoreListEl.innerHTML = previousTry
-    .map((score) => `<li>${score}</li>`)
+    .map(
+      (score, index) =>
+        `<li class="list-group-item ${
+          index === previousTry.length - 1 ? "bg-primary" : ""
+        }"><span class="fw-bold">${score}</span></li>`
+    )
     .join("");
   /* 
   // Check if finalScore is higher than lowest highscore

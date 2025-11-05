@@ -1,14 +1,20 @@
+## Bugs
+
+It removes student when you click an answer button AND next question. It should not remove on question button.
+
 ## After end of game
 
 Show high score list, top 5?
-
-Restart game button
+Can you color the latest score?
+Previous score and latestScore?
 
 ## App general
 
+### DONE
+
 - View transition when switching question
 
-### DONE
+  Restart game button
 
 Show photos and names of correct and wrong answers
 

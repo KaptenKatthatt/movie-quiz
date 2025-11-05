@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="d-none questionScreenContainer container d-flex flex-column align-items-center">
+    <div class="d-none questionScreenContainer container d-flex flex-column align-items-center justify-content-center">
       <h2 class="display-4 text-center">Guess the face!</h2>
       <h2 class="scoreBoard display-5"></h2>
 
@@ -37,16 +37,18 @@
       <!-- Question buttons container -->
       <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
       </div>
+      <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary text-center">Next question</button>
     </div>
-    <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
   </div>
   <!-- End screen with high score and right/wrong cards -->
   <div class="endScreen container mt-5 border border-dark rounded-3 text-center d-none">
     <h2 class="display-4">Game Finished!</h2>
     <h2 class="display-3 endScore"></h2>
-    <div class="highScoreListcontainer border border-dark rounded-3">
+    <div class="highScoreListcontainer ">
       <h2>High Score list</h2>
-      <ol class="highScoreList"></ol>
+      <ol class="highScoreList list-group list-group-numbered">
+        <!-- <li class="list-group-item"><span class="fw-bold">sdmcdkm</span></li> -->
+      </ol>
     </div>
 
     <div class="answerCardsContainer container border border-dark rounded-3">
