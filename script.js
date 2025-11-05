@@ -201,5 +201,10 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
 nextQuestionBtnEl.addEventListener("click", () => {
   studentSliced = false;
-  slicedStudents.length > 0 ? renderNewQuestion() : alert("Spelet är slut!");
+  if (slicedStudents.length > 0) {
+    renderNewQuestion();
+  } else {
+    alert("Spelet är slut!");
+  }
+  //Hide question
 });
