@@ -105,6 +105,7 @@ let questionButtonNames = []; //The four names on the question buttons
 //Result arrays
 const rightAnswers = [];
 const wrongAnswers = [];
+const highscoreList = [];
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -142,27 +143,42 @@ function renderNewQuestion() {
     (student) => `<button class="btn btn-warning">${student.name}</button>`
   );
 
-  function renderEndScreen() {
-    // Show endscreen
-    endScreenEl.classList.remove("d-none");
-    // Render score
-    endScoreEl.innerText = `You final score is ${rightAnswers.length}/${nbrOfSelectedStudents}`;
-    // Add score to top5 if higher than lowest score
-
-    // Check if highest score
-
-    // Display correct and wrong answers with name and photo with cards
-
-    // Add button to launch restart game function
-    // restartGame();
-  }
-
   console.log("Currstudent", currentStudent);
   // Add image to currentStudent from students array
   photoContainerEl.src = currentStudent.image;
 
   //Inject buttons into html and join array
   questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
+}
+
+function renderEndScreen() {
+  // Show endscreen
+  endScreenEl.classList.remove("d-none");
+  // Render score
+  let finalScore = rightAnswers.length;
+  endScoreEl.innerText = `You final score is ${finalScore}/${nbrOfSelectedStudents}`;
+
+  // Check if finalScore is higher than lowest highscore
+  rUWorthy = highscoreList.find((score) => {
+    finalScore >= score;
+  });
+  console.log("rUWorthy", rUWorthy);
+
+  // Add score to top3 if higher than lowest score
+
+  // Check if high score worthy
+  if (highscoreList.length === 3 && rUWorthy) {
+    highscoreList.push(finalScore).sort();
+  } else if (highscoreList.length < 3) {
+    highscoreList.push(finalScore).sort();
+  } else {
+    alert("No highscore, do gooder next time plz.");
+  }
+
+  // Display correct and wrong answers with name and photo with cards
+
+  // Add button to launch restart game function
+  // restartGame();
 }
 
 //Eventlistener for selecting number of questions
@@ -223,7 +239,7 @@ nextQuestionBtnEl.addEventListener("click", () => {
   if (slicedStudents.length > 0) {
     renderNewQuestion();
   } else {
-    alert("Spelet är slut!");
+    // alert("Spelet är slut!");
     //Hide question screen
     nextQuestionBtnEl.classList.add("d-none");
     //Show endscreen
