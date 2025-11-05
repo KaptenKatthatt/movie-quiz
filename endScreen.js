@@ -1,9 +1,7 @@
-export function renderEndScreen() {
-  // Show endscreen
-  endScreenEl.classList.remove("d-none");
-  // Render score
-  let finalScore = rightAnswers.length;
-  endScoreEl.innerText = `You final score is ${finalScore}/${nbrOfSelectedStudents}`;
+export function renderEndScreen(finalScore, totalQuestions) {
+  const endScoreEl = document.querySelector(".endScore");
+  // Render score to DOM
+  endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
 
   let highscoreList = [5, 2, 3];
   let previousTry = finalScore;
@@ -51,3 +49,7 @@ export function renderEndScreen() {
   // Add button to launch restart game function
   // restartGame();
 }
+
+function renderAnswers() {}
+
+function renderHighScoreList() {}

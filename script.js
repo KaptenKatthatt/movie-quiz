@@ -11,7 +11,6 @@ const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
-const endScoreEl = document.querySelector(".endScore");
 const endScreenEl = document.querySelector(".endScreen");
 
 const students = [
@@ -193,7 +192,7 @@ questionScreenContainerEl.addEventListener("click", (e) => {
     e.target.classList.remove("btn-warning");
     wrongAnswers.push(currentStudent);
   }
-  //Disables all buttons from being clicked again
+  //Disables all buttons from being clicked twice
   const buttons = questionBtnContainerEl.querySelectorAll("button");
   buttons.forEach((button) => (button.disabled = true));
   //Deletes currentStudent
@@ -214,7 +213,10 @@ nextQuestionBtnEl.addEventListener("click", () => {
     // alert("Spelet är slut!");
     //Hide question screen
     nextQuestionBtnEl.classList.add("d-none");
+    questionScreenContainerEl.classList.add("d-none");
     //Show endscreen
-    renderEndScreen();
+    endScreenEl.classList.remove("d-none");
+    // Show endscreen and send over nbr of correct answers and total nbr of questions
+    renderEndScreen(rightAnswers.length, nbrOfSelectedStudents);
   }
 });
