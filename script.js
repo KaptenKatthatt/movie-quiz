@@ -204,11 +204,6 @@ questionScreenContainerEl.addEventListener("click", (e) => {
     //Disables all buttons from being clicked twice
     const buttons = questionBtnContainerEl.querySelectorAll("button");
     buttons.forEach((button) => (button.disabled = true));
-    //Deletes currentStudent
-    console.log("SlicedStuds before", slicedStudents);
-    studentSliced ? "" : slicedStudents.shift();
-    studentSliced = true;
-    console.log("SlicedStuds after", slicedStudents);
 
     nextQuestionBtnEl.classList.remove("d-none");
     // Update scoreboard
@@ -218,8 +213,15 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
 nextQuestionBtnEl.addEventListener("click", () => {
   studentSliced = false;
+
+  //Deletes currentStudent
+  console.log("SlicedStuds before", slicedStudents);
+  studentSliced ? "" : slicedStudents.shift();
+  studentSliced = true;
+  console.log("SlicedStuds after", slicedStudents);
+
   // Checks if there is any students left to question about
-  if ((slicedStudents.length = 0)) {
+  if (slicedStudents.length > 0) {
     document.startViewTransition
       ? document.startViewTransition(() => {
           renderNewQuestion();
