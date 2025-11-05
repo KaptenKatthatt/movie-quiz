@@ -1,12 +1,18 @@
-export function renderEndScreen(finalScore, totalQuestions) {
-  const endScoreEl = document.querySelector(".endScore");
-  // Render score to DOM
-  endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
+const endScoreEl = document.querySelector(".endScore");
+const highScoreListEl = document.querySelector(".highScoreList");
 
-  let highscoreList = [5, 2, 3];
+function renderAnswers() {}
+
+function renderHighScoreList(highscoreList) {
+  highScoreListEl.innerHTML = highscoreList
+    .map((score) => `<li>${score}</li>`)
+    .join("");
+}
+
+export function renderEndScreen(finalScore, totalQuestions) {
+  let highscoreList = [1, 2, 3];
   let previousTry = finalScore;
   let rUWorthy = false;
-  // endScoreEl.innerText = `You final score is ${finalScore}/${nbrOfSelectedStudents}`;
 
   // Check if finalScore is higher than lowest highscore
   // Remove lowest score and replace with finalScore
@@ -43,13 +49,12 @@ export function renderEndScreen(finalScore, totalQuestions) {
   } else {
     console.log("No highscore, do gooder next time plz.");
   }
+  // Render score to DOM
+  endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
 
+  renderHighScoreList(highscoreList);
   // Display correct and wrong answers with name and photo with cards
 
   // Add button to launch restart game function
   // restartGame();
 }
-
-function renderAnswers() {}
-
-function renderHighScoreList() {}

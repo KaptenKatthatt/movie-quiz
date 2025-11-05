@@ -14,11 +14,12 @@
 
 <body>
   <div class="container">
-    <h1 class="display-1 mb-5">Welcome to what's <span class="bg-danger">his</span><span class="bg-primary ">her</span>
+    <h1 class="display-1 mb-5 text-center">Welcome to what's <span class="bg-danger">his</span><span
+        class="bg-primary ">her</span>
       face!
     </h1>
     <div class="container startBtnContainer  border border-dark rounded-3">
-      <h2 class="display-3 mb-5">Choose how many students to guess</h2>
+      <h2 class="display-3 mb-5 text-center">Choose how many students to guess</h2>
 
       <div class=" container d-flex justify-content-center gap-3">
         <button class="btn btn-primary p-4 selectFiveBtn">5 people</button>
@@ -28,7 +29,7 @@
     </div>
 
     <div class="d-none questionScreenContainer container d-flex flex-column align-items-center">
-      <h2 class="display-4">Guess the face!</h2>
+      <h2 class="display-4 text-center">Guess the face!</h2>
       <h2 class="scoreBoard display-5"></h2>
 
       <img class="photoContainer" src="" alt="Photo of person to guess" height="400">
@@ -41,6 +42,10 @@
   <div class="endScreen container mt-5 border border-dark rounded-3 d-none">
     <h2 class="display-4">Game Finished!</h2>
     <h2 class="display-3 endScore"></h2>
+    <div class="highScoreListcontainer border border-dark rounded-3">
+      <h2>High Score list</h2>
+      <ol class="highScoreList"></ol>
+    </div>
   </div>
 
   <script type="module" src="script.js"></script>

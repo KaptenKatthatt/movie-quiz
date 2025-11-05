@@ -106,7 +106,6 @@ let questionButtonNames = []; //The four names on the question buttons
 //Result arrays
 const rightAnswers = [];
 const wrongAnswers = [];
-const highscoreList = [];
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -150,6 +149,7 @@ function renderNewQuestion() {
 
   //Inject buttons into html and join array
   questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
+  nextQuestionBtnEl.classList.add("d-none");
 }
 
 //Eventlistener for selecting number of questions
@@ -183,26 +183,28 @@ startBtnContainerEl.addEventListener("click", (e) => {
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 questionScreenContainerEl.addEventListener("click", (e) => {
   let selectedAnswer = e.target.textContent;
-  if (currentStudent.name === selectedAnswer) {
-    e.target.classList.add("btn-success");
-    e.target.classList.remove("btn-warning");
-    rightAnswers.push(currentStudent);
-  } else {
-    e.target.classList.add("btn-danger");
-    e.target.classList.remove("btn-warning");
-    wrongAnswers.push(currentStudent);
-  }
-  //Disables all buttons from being clicked twice
-  const buttons = questionBtnContainerEl.querySelectorAll("button");
-  buttons.forEach((button) => (button.disabled = true));
-  //Deletes currentStudent
-  studentSliced ? "" : slicedStudents.shift();
-  studentSliced = true;
-  console.log("SlicedStuds after", slicedStudents);
+  if (e.target.tagName === "BUTTON") {
+    if (currentStudent.name === selectedAnswer) {
+      e.target.classList.add("btn-success");
+      e.target.classList.remove("btn-warning");
+      rightAnswers.push(currentStudent);
+    } else {
+      e.target.classList.add("btn-danger");
+      e.target.classList.remove("btn-warning");
+      wrongAnswers.push(currentStudent);
+    }
+    //Disables all buttons from being clicked twice
+    const buttons = questionBtnContainerEl.querySelectorAll("button");
+    buttons.forEach((button) => (button.disabled = true));
+    //Deletes currentStudent
+    studentSliced ? "" : slicedStudents.shift();
+    studentSliced = true;
+    console.log("SlicedStuds after", slicedStudents);
 
-  nextQuestionBtnEl.classList.remove("d-none");
-  // Update scoreboard
-  setScore();
+    nextQuestionBtnEl.classList.remove("d-none");
+    // Update scoreboard
+    setScore();
+  }
 });
 
 nextQuestionBtnEl.addEventListener("click", () => {
