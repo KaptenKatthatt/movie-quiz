@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's hisher face?</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="display-1 mb-5">Welcome to what's <span class="bg-danger">his</span><span class="bg-primary ">her</span>
+      face!
+    </h1>
+    <div class="container startBtnContainer  border border-dark rounded-3">
+      <h2 class="display-3 mb-5">Choose how many students to guess</h2>
+
+      <div class=" container d-flex justify-content-center gap-3">
+        <button class="btn btn-primary p-4 selectFiveBtn">5 people</button>
+        <button class="btn btn-primary p-4 selectTenBtn">10 people</button>
+        <button class="btn btn-success p-4 selectAllBtn">Yes</button>
+      </div>
+    </div>
+
+    <div class="d-none questionScreenContainer container d-flex flex-column align-items-center">
+      <h2 class="display-4">Guess the face!</h2>
+      <h2 class="scoreBoard display-5"></h2>
+
+      <img class="photoContainer" src="" alt="Photo of person to guess" height="400">
+      <div class="pointsContainer"></div>
+      <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
+      </div>
+    </div>
+    <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
+  </div>
+  <div class="endScreen container mt-5 border border-dark rounded-3">
+    <h2 class="display-4">Game Finished!</h2>
+    <h2 class="display-3 endScore">Your final score is 5/10</h2>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
