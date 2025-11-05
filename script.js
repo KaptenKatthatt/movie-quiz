@@ -12,6 +12,7 @@ const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
 const endScreenEl = document.querySelector(".endScreen");
+const restartGameBtn = document.querySelector(".restartGameBtn");
 
 const students = [
   {
@@ -104,8 +105,8 @@ let filteredWrongStudents = []; //Student array with correct answer filtered out
 let questionButtonNames = []; //The four names on the question buttons
 
 //Result arrays
-const rightAnswers = [];
-const wrongAnswers = [];
+let rightAnswers = [];
+let wrongAnswers = [];
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -123,8 +124,6 @@ function setScore() {
   scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
 }
 
-const getScore = () => rightAnswers.length;
-
 function renderNewQuestion() {
   // first index is currentStudent
   currentStudent = slicedStudents[0];
@@ -137,7 +136,7 @@ function renderNewQuestion() {
   questionButtonNames = [currentStudent, ...threeRandos];
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
-  console.log("Question button array", questionButtonNames);
+
   // Generate one button for each student
   let buttonMeButtons = questionButtonNames.map(
     (student) => `<button class="btn btn-warning">${student.name}</button>`
@@ -150,6 +149,14 @@ function renderNewQuestion() {
   //Inject buttons into html and join array
   questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
   nextQuestionBtnEl.classList.add("d-none");
+}
+
+function restartGame() {
+  rightAnswers = [];
+  wrongAnswers = [];
+
+  endScreenEl.classList.add("d-none");
+  startBtnContainerEl.classList.remove("d-none");
 }
 
 //Eventlistener for selecting number of questions
@@ -171,8 +178,6 @@ startBtnContainerEl.addEventListener("click", (e) => {
   startBtnContainerEl.classList.add("d-none");
   // Show questionPage
   questionScreenContainerEl.classList.remove("d-none");
-  console.log("right answers length", rightAnswers.length);
-  console.log("nbrstudents", nbrOfSelectedStudents);
   //Update score
   setScore();
 
@@ -219,25 +224,40 @@ nextQuestionBtnEl.addEventListener("click", () => {
       renderNewQuestion();
     }
   } else {
-    // alert("Spelet är slut!");
+    // Game is over, go to endScreen
     //Hide question screen
     nextQuestionBtnEl.classList.add("d-none");
     questionScreenContainerEl.classList.add("d-none");
+
     //Show endscreen
     endScreenEl.classList.remove("d-none");
-    // Show endscreen and send over nbr of correct answers and total nbr of questions
-
+    // Send over nbr of correct answers and total nbr of questions
     if (document.startViewTransition) {
       document.startViewTransition(() => {
+        try {
+          renderEndScreen(
+            rightAnswers.length,
+            nbrOfSelectedStudents,
+            rightAnswers,
+            wrongAnswers
+          );
+        } catch (err) {
+          console.error("Error in renderEndScreen:", err);
+        }
+      });
+    } else {
+      try {
         renderEndScreen(
           rightAnswers.length,
           nbrOfSelectedStudents,
           rightAnswers,
           wrongAnswers
         );
-      });
-    } else {
-      renderNewQuestion();
+      } catch (err) {
+        console.error("Error in renderEndScreen:", err);
+      }
     }
   }
 });
+// Button to launch restart game function
+restartGameBtn.addEventListener("click", () => restartGame());

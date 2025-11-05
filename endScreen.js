@@ -2,6 +2,7 @@ const endScoreEl = document.querySelector(".endScore");
 const highScoreListEl = document.querySelector(".highScoreList");
 const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
+
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   console.log("rightAnswersArr", rightAnswersArr);
   console.log("wrongAnswersArr", wrongAnswersArr);
@@ -31,22 +32,19 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .join("");
 }
 
-function renderHighScoreList(highscoreList) {
-  highScoreListEl.innerHTML = highscoreList
-    .map((score) => `<li>${score}</li>`)
-    .join("");
-}
-
-export function renderEndScreen(
-  finalScore,
-  totalQuestions,
-  rightAnswersArr,
-  wrongAnswersArr
-) {
-  let highscoreList = [1, 2, 3];
-  let previousTry = finalScore;
+let highscoreList = [1, 1, 1];
+let previousTry = [];
+function renderHighScoreList(finalScore) {
   let rUWorthy = false;
 
+  previousTry.push(finalScore);
+  console.log("Previous attempts", previousTry);
+  console.log("Last score", previousTry[previousTry.length - 1]);
+
+  highScoreListEl.innerHTML = previousTry
+    .map((score) => `<li>${score}</li>`)
+    .join("");
+  /* 
   // Check if finalScore is higher than lowest highscore
   // Remove lowest score and replace with finalScore
   let lowestHighScore = Math.min(...highscoreList);
@@ -82,13 +80,22 @@ export function renderEndScreen(
   } else {
     console.log("No highscore, do gooder next time plz.");
   }
+ */
+  // highScoreListEl.innerHTML = previousTry
+  //   .map((score) => `<li>${score}</li>`)
+  //   .join("");
+}
+
+export function renderEndScreen(
+  finalScore,
+  totalQuestions,
+  rightAnswersArr,
+  wrongAnswersArr
+) {
   // Render score to DOM
   endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
 
-  renderHighScoreList(highscoreList);
-  renderAnswerCards(rightAnswersArr, wrongAnswersArr);
+  renderHighScoreList(finalScore);
   // Display correct and wrong answers with name and photo with cards
-
-  // Add button to launch restart game function
-  // restartGame();
+  renderAnswerCards(rightAnswersArr, wrongAnswersArr);
 }

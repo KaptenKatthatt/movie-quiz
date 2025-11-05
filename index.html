@@ -41,59 +41,25 @@
     <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
   </div>
   <!-- End screen with high score and right/wrong cards -->
-  <div class="endScreen container mt-5 border border-dark rounded-3 d-none">
+  <div class="endScreen container mt-5 border border-dark rounded-3 text-center d-none">
     <h2 class="display-4">Game Finished!</h2>
     <h2 class="display-3 endScore"></h2>
-    <div class="highScoreListcontainer border border-dark rounded-3 d-none">
+    <div class="highScoreListcontainer border border-dark rounded-3">
       <h2>High Score list</h2>
       <ol class="highScoreList"></ol>
     </div>
 
     <div class="answerCardsContainer container border border-dark rounded-3">
       <h2 class="display-5 text-success">Right answers!</h2>
-      <div class="rightAnswerCards container d-flex flex-wrap">
-        <!--    <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" class="card-img-top" alt="Anna Andersson">
-          <div class="card-body">
-            <h5 class="card-title">Anna Andersson</h5>
-          </div>
-        </div>
-        <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" class="card-img-top" alt="Björn Berg">
-          <div class="card-body">
-            <h5 class="card-title">Björn Berg</h5>
-          </div>
-        </div>
-        <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/women/68.jpg" class="card-img-top" alt="Cecilia Carlsson">
-          <div class="card-body">
-            <h5 class="card-title">Cecilia Carlsson</h5>
-          </div>
-        </div> -->
+      <div class="rightAnswerCards container d-flex flex-wrap justify-content-center">
       </div>
       <h2 class="display-5 text-danger">Wrong answers...</h2>
-      <div class="wrongAnswerCards container d-flex flex-wrap">
-        <!--  <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/men/15.jpg" class="card-img-top" alt="Daniel Dahl">
-          <div class="card-body">
-            <h5 class="card-title">Daniel Dahl</h5>
-          </div>
-        </div>
-        <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/women/12.jpg" class="card-img-top" alt="Emma Ek">
-          <div class="card-body">
-            <h5 class="card-title">Emma Ek</h5>
-          </div>
-        </div>
-        <div class="card" style="width: 9rem;">
-          <img src="https://randomuser.me/api/portraits/men/54.jpg" class="card-img-top" alt="Fredrik Fors">
-          <div class="card-body">
-            <h5 class="card-title">Fredrik Fors</h5>
-          </div>
-        </div> -->
+      <div class="wrongAnswerCards container d-flex flex-wrap justify-content-center">
       </div>
     </div>
+    <button class="btn btn-success p-4 mt-3 restartGameBtn">Restart Game</button>
   </div>
+
 
   <script type="module" src="script.js"></script>
 </body>
