@@ -11,3 +11,5 @@ Restart game button
 ## App general
 
 - View transition when switching question
+
+- Disable next question button until question has been answered

@@ -95,6 +95,7 @@ const students = [
 let currentStudent = {};
 let nbrOfSelectedStudents = 0;
 let shuffledStudents = []; //Complete shuffled student array
+let studentSliced = false;
 let slicedStudents = []; //Student array sliced to nbr of selected guesses
 let filteredWrongStudents = []; //Student array with correct answer filtered out
 let questionButtonNames = []; //The four names on the question buttons
@@ -189,7 +190,8 @@ questionScreenContainerEl.addEventListener("click", (e) => {
   const buttons = questionBtnContainerEl.querySelectorAll("button");
   buttons.forEach((button) => (button.disabled = true));
   //Deletes currentStudent
-  slicedStudents.shift();
+  studentSliced ? "" : slicedStudents.shift();
+  studentSliced = true;
   console.log("SlicedStuds after", slicedStudents);
 
   nextQuestionBtnEl.classList.remove("d-none");
@@ -198,5 +200,6 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 });
 
 nextQuestionBtnEl.addEventListener("click", () => {
+  studentSliced = false;
   slicedStudents.length > 0 ? renderNewQuestion() : alert("Spelet är slut!");
 });
