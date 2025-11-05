@@ -17,82 +17,82 @@ const students = [
   {
     id: 1,
     name: "Kalle Kallesson",
-    image: "https://picsum.photos/200/200?random=1",
+    image: "https://randomuser.me/api/portraits/men/10.jpg",
   },
   {
     id: 2,
     name: "Anna Andersson",
-    image: "https://picsum.photos/200/200?random=2",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     id: 3,
     name: "Erik Eriksson",
-    image: "https://picsum.photos/200/200?random=3",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: 4,
     name: "Maria Nilsson",
-    image: "https://picsum.photos/200/200?random=4",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
   },
   {
     id: 5,
     name: "Johan Johansson",
-    image: "https://picsum.photos/200/200?random=5",
+    image: "https://randomuser.me/api/portraits/men/15.jpg",
   },
   {
     id: 6,
     name: "Lisa Larsson",
-    image: "https://picsum.photos/200/200?random=6",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
     id: 7,
     name: "Peter Petersson",
-    image: "https://picsum.photos/200/200?random=7",
+    image: "https://randomuser.me/api/portraits/men/54.jpg",
   },
   {
     id: 8,
     name: "Sara Svensson",
-    image: "https://picsum.photos/200/200?random=8",
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
   },
   {
     id: 9,
     name: "Mikael Karlsson",
-    image: "https://picsum.photos/200/200?random=9",
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
   },
   {
     id: 10,
     name: "Emma Gustafsson",
-    image: "https://picsum.photos/200/200?random=10",
+    image: "https://randomuser.me/api/portraits/women/50.jpg",
   },
   {
     id: 11,
     name: "David Davidsson",
-    image: "https://picsum.photos/200/200?random=11",
+    image: "https://randomuser.me/api/portraits/men/33.jpg",
   },
   {
     id: 12,
     name: "Jenny Persson",
-    image: "https://picsum.photos/200/200?random=12",
+    image: "https://randomuser.me/api/portraits/women/21.jpg",
   },
   {
     id: 13,
     name: "Magnus Olsson",
-    image: "https://picsum.photos/200/200?random=13",
+    image: "https://randomuser.me/api/portraits/men/41.jpg",
   },
   {
     id: 14,
     name: "Camilla Jonsson",
-    image: "https://picsum.photos/200/200?random=14",
+    image: "https://randomuser.me/api/portraits/women/36.jpg",
   },
   {
     id: 15,
     name: "Fredrik Lindberg",
-    image: "https://picsum.photos/200/200?random=15",
+    image: "https://randomuser.me/api/portraits/men/60.jpg",
   },
   {
     id: 16,
     name: "Helena Holm",
-    image: "https://picsum.photos/200/200?random=16",
+    image: "https://randomuser.me/api/portraits/women/63.jpg",
   },
 ];
 let currentStudent = {};
@@ -210,7 +210,14 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 nextQuestionBtnEl.addEventListener("click", () => {
   studentSliced = false;
   if (slicedStudents.length > 0) {
-    renderNewQuestion();
+    // renderNewQuestion();
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        renderNewQuestion();
+      });
+    } else {
+      renderNewQuestion();
+    }
   } else {
     // alert("Spelet är slut!");
     //Hide question screen

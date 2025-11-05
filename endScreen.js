@@ -5,8 +5,9 @@ const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   console.log("rightAnswersArr", rightAnswersArr);
   console.log("wrongAnswersArr", wrongAnswersArr);
-  rightAnswerCardsEl.innerHTML = rightAnswersArr.map((answer) => {
-    return `
+  rightAnswerCardsEl.innerHTML = rightAnswersArr
+    .map((answer) => {
+      return `
         <div class="card" style="width: 9rem;">
   <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
   <div class="card-body">
@@ -14,9 +15,11 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   </div>
 </div>
     `;
-  });
-  wrongAnswerCardsEl.innerHTML = wrongAnswersArr.map((answer) => {
-    return `
+    })
+    .join("");
+  wrongAnswerCardsEl.innerHTML = wrongAnswersArr
+    .map((answer) => {
+      return `
         <div class="card" style="width: 9rem;">
   <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
   <div class="card-body">
@@ -24,7 +27,8 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   </div>
 </div>
     `;
-  });
+    })
+    .join("");
 }
 
 function renderHighScoreList(highscoreList) {
