@@ -9,6 +9,8 @@ const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
+const endScoreEl = document.querySelector(".endScore");
+const endScreenEl = document.querySelector(".endScreen");
 
 const students = [
   {
@@ -116,9 +118,11 @@ function cloneAndShuffleArray(array) {
   return shuffledArrayClone;
 }
 
-function updateScore() {
+function setScore() {
   scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
 }
+
+const getScore = () => rightAnswers.length;
 
 function renderNewQuestion() {
   // first index is currentStudent
@@ -137,6 +141,21 @@ function renderNewQuestion() {
   let buttonMeButtons = questionButtonNames.map(
     (student) => `<button class="btn btn-warning">${student.name}</button>`
   );
+
+  function renderEndScreen() {
+    // Show endscreen
+    endScreenEl.classList.remove("d-none");
+    // Render score
+    endScoreEl.innerText = `You final score is ${rightAnswers.length}/${nbrOfSelectedStudents}`;
+    // Add score to top5 if higher than lowest score
+
+    // Check if highest score
+
+    // Display correct and wrong answers with name and photo with cards
+
+    // Add button to launch restart game function
+    // restartGame();
+  }
 
   console.log("Currstudent", currentStudent);
   // Add image to currentStudent from students array
@@ -168,7 +187,7 @@ startBtnContainerEl.addEventListener("click", (e) => {
   console.log("right answers length", rightAnswers.length);
   console.log("nbrstudents", nbrOfSelectedStudents);
   //Update score
-  updateScore();
+  setScore();
 
   // Render the questionPage content
   renderNewQuestion();
@@ -196,7 +215,7 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
   nextQuestionBtnEl.classList.remove("d-none");
   // Update scoreboard
-  updateScore();
+  setScore();
 });
 
 nextQuestionBtnEl.addEventListener("click", () => {
@@ -205,6 +224,9 @@ nextQuestionBtnEl.addEventListener("click", () => {
     renderNewQuestion();
   } else {
     alert("Spelet är slut!");
+    //Hide question screen
+    nextQuestionBtnEl.classList.add("d-none");
+    //Show endscreen
+    renderEndScreen();
   }
-  //Hide question
 });
