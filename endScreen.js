@@ -1,7 +1,31 @@
 const endScoreEl = document.querySelector(".endScore");
 const highScoreListEl = document.querySelector(".highScoreList");
-
-function renderAnswers() {}
+const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
+const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
+function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
+  console.log("rightAnswersArr", rightAnswersArr);
+  console.log("wrongAnswersArr", wrongAnswersArr);
+  rightAnswerCardsEl.innerHTML = rightAnswersArr.map((answer) => {
+    return `
+        <div class="card" style="width: 9rem;">
+  <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+  <div class="card-body">
+    <h5 class="card-title">${answer.name}</h5>
+  </div>
+</div>
+    `;
+  });
+  wrongAnswerCardsEl.innerHTML = wrongAnswersArr.map((answer) => {
+    return `
+        <div class="card" style="width: 9rem;">
+  <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+  <div class="card-body">
+    <h5 class="card-title">${answer.name}</h5>
+  </div>
+</div>
+    `;
+  });
+}
 
 function renderHighScoreList(highscoreList) {
   highScoreListEl.innerHTML = highscoreList
@@ -9,7 +33,12 @@ function renderHighScoreList(highscoreList) {
     .join("");
 }
 
-export function renderEndScreen(finalScore, totalQuestions) {
+export function renderEndScreen(
+  finalScore,
+  totalQuestions,
+  rightAnswersArr,
+  wrongAnswersArr
+) {
   let highscoreList = [1, 2, 3];
   let previousTry = finalScore;
   let rUWorthy = false;
@@ -53,6 +82,7 @@ export function renderEndScreen(finalScore, totalQuestions) {
   endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
 
   renderHighScoreList(highscoreList);
+  renderAnswerCards(rightAnswersArr, wrongAnswersArr);
   // Display correct and wrong answers with name and photo with cards
 
   // Add button to launch restart game function

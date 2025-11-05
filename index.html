@@ -34,17 +34,47 @@
 
       <img class="photoContainer" src="" alt="Photo of person to guess" height="400">
       <div class="pointsContainer"></div>
+      <!-- Question buttons container -->
       <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
       </div>
     </div>
     <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary">Next question</button>
   </div>
-  <div class="endScreen container mt-5 border border-dark rounded-3 d-none">
+  <div class="endScreen container mt-5 border border-dark rounded-3">
     <h2 class="display-4">Game Finished!</h2>
     <h2 class="display-3 endScore"></h2>
     <div class="highScoreListcontainer border border-dark rounded-3">
       <h2>High Score list</h2>
       <ol class="highScoreList"></ol>
+    </div>
+
+    <div class="answerCardsContainer container border border-dark rounded-3">
+      <h2 class="display-5 text-success">Correct answers</h2>
+      <div class="rightAnswerCards container d-flex">
+      </div>
+      <h2 class="display-5 text-danger">Wrong answers</h2>
+      <div class="wrongAnswerCards container d-flex">
+
+        <div class="card" style="width: 9rem;">
+          <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+          <div class="card-body">
+            <h5 class="card-title">${answer.name}</h5>
+          </div>
+        </div>
+        <div class="card" style="width: 9rem;">
+          <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+          <div class="card-body">
+            <h5 class="card-title">${answer.name}</h5>
+          </div>
+        </div>
+        <div class="card" style="width: 9rem;">
+          <img src="${answer.image}" class="card-img-top" alt="${answer.name}">
+          <div class="card-body">
+            <h5 class="card-title">${answer.name}</h5>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
