@@ -1,24 +1,14 @@
 /* Standard fade-transition (default) */
-::view-transition-old(root) {
-  animation: slideOut 0.5s ease-in-out;
+::view-transition-old(questionScreenContainer) {
+  animation: slideOut 0.8s;
 }
 
-::view-transition-new(root) {
-  animation: slideIn 0.5s ease-in-out;
+::view-transition-new(questionScreenContainer) {
+  animation: slideIn 0.8s ease-in-out;
 }
-
-/* @keyframes fadeOut {
-  to {
-    opacity: 0;
-  }
+.questionScreenContainer {
+  view-transition-name: questionScreenContainer;
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-} */
-
 @keyframes slideOut {
   to {
     transform: translateX(-100%);
@@ -34,5 +24,29 @@
   }
   to {
     scale: 1;
+  }
+}
+
+.answerCardsContainer {
+  view-transition-name: endScreen;
+}
+
+::view-transition-old(endScreen) {
+  animation: fadeOut 1s ease-in-out;
+}
+
+::view-transition-new(endScreen) {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
 }

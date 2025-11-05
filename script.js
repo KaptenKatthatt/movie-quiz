@@ -226,11 +226,18 @@ nextQuestionBtnEl.addEventListener("click", () => {
     //Show endscreen
     endScreenEl.classList.remove("d-none");
     // Show endscreen and send over nbr of correct answers and total nbr of questions
-    renderEndScreen(
-      rightAnswers.length,
-      nbrOfSelectedStudents,
-      rightAnswers,
-      wrongAnswers
-    );
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        renderEndScreen(
+          rightAnswers.length,
+          nbrOfSelectedStudents,
+          rightAnswers,
+          wrongAnswers
+        );
+      });
+    } else {
+      renderNewQuestion();
+    }
   }
 });
