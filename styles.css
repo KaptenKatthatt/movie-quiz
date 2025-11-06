@@ -2,11 +2,23 @@ body {
   background-color: #1d7874;
 }
 
+.card:nth-child(odd) {
+  transform: rotate(3deg);
+}
+.card:nth-child(even) {
+  transform: rotate(-3deg);
+}
+
+.allPhotosContainer img {
+  filter: hue-rotate(50deg);
+  filter: contrast(5);
+}
+
 .photoContainer {
   view-transition-name: photoContainer;
 }
 ::view-transition-old(photoContainer) {
-  animation: slideOut 0.8s;
+  animation: slideOut 0.8s ease-in-out;
 }
 
 ::view-transition-new(photoContainer) {
@@ -35,17 +47,13 @@ body {
   view-transition-name: startScreen;
 }
 
-.questionScreenContainer {
-  view-transition-name: questionScreen;
-}
-
 ::view-transition-old(startScreen) {
   animation: slideUpOut 0.7s forwards;
 }
-
-::view-transition-new(questionScreen) {
+/* Removed because start page should only be removed, the new that replaces it comes from the photoContainer */
+/* ::view-transition-new(startScreen) {
   animation: slideUpIn 0.7s forwards;
-}
+} */
 
 @keyframes slideUpOut {
   to {
@@ -54,7 +62,7 @@ body {
   }
 }
 
-@keyframes slideUpIn {
+/* @keyframes slideUpIn {
   from {
     transform: translateY(100px);
     opacity: 0;
@@ -63,4 +71,4 @@ body {
     transform: translateY(0);
     opacity: 1;
   }
-}
+} */

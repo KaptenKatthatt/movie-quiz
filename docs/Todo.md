@@ -15,6 +15,9 @@ Color previous score?
 
 ## App general
 
+Mobile first
+media queries, fewer cards on start page? None=?
+
 ### DONE
 
 Wrong answer array is not emptied

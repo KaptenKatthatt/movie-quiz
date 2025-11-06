@@ -35,6 +35,21 @@ function cloneAndShuffleArray(array) {
   return shuffledArrayClone;
 }
 
+function renderStartScreen() {
+  document.querySelector(".allPhotosContainer").innerHTML = students
+    .map((student) => {
+      return `
+        <div class="card shadow-lg border-dark border-2" style="width: 6rem;">
+  <img src="${student.image}" class="card-img-top" alt="Images of students to guess the names of.">
+  <div class="card-body">
+    <h5 class="card-title text-center display-4">?</h5>
+  </div>
+</div>
+    `;
+    })
+    .join("");
+}
+renderStartScreen();
 function setScore() {
   scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
 }
