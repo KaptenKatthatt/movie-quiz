@@ -33,7 +33,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 }
 
 let highscoreList = [1, 1, 1];
-let previousTry = [2, 3, 4];
+let previousTry = [];
 function renderHighScoreList(finalScore) {
   let rUWorthy = false;
 
@@ -46,8 +46,12 @@ function renderHighScoreList(finalScore) {
     .map(
       (score, index) =>
         `<li class="list-group-item ${
-          index === previousTry.length - 1 ? "bg-primary" : ""
-        }"><span class="fw-bold">${score}</span></li>`
+          index === previousTry.length - 1 ? "bg-success text-light" : ""
+        }"> 
+        ${
+          index === previousTry.length - 1 ? "Your score: " : ""
+        }<span class="fw-bold">${score}</span></li>
+        `
     )
     .join("");
   /* 
