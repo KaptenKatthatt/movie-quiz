@@ -1,11 +1,16 @@
 const endScoreEl = document.querySelector(".endScore");
 const highScoreListEl = document.querySelector(".highScoreList");
 const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
+const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
+const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  console.log("rightAnswersArr", rightAnswersArr);
-  console.log("wrongAnswersArr", wrongAnswersArr);
+  // Render right answer cards
+  rightAnswersHeadingEl.innerText =
+    rightAnswersArr.length > 0
+      ? "These were correct!"
+      : "No right answers... try again";
   rightAnswerCardsEl.innerHTML = rightAnswersArr
     .map((student) => {
       return `
@@ -18,16 +23,22 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     `;
     })
     .join("");
+  // Render wrong answer cards
+  wrongAnswersHeadingEl.innerText =
+    wrongAnswersArr.length > 0
+      ? "These were wrong..."
+      : "No wrong answers! Good job!";
+
   wrongAnswerCardsEl.innerHTML = wrongAnswersArr
     .map((student) => {
       return `
-        <div class="card" style="width: 9rem;">
-  <img src="${student.image}" class="card-img-top" alt="${student.name}">
-  <div class="card-body">
-    <h5 class="card-title">${student.name}</h5>
+            <div class="card" style="width: 9rem;">
+    <img src="${student.image}" class="card-img-top" alt="${student.name}">
+    <div class="card-body">
+      <h5 class="card-title">${student.name}</h5>
+    </div>
   </div>
-</div>
-    `;
+      `;
     })
     .join("");
 }

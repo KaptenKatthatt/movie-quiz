@@ -57,7 +57,8 @@ function renderNewQuestion() {
 
   // Generate one button for each student
   let buttonMeButtons = questionButtonNames.map(
-    (student) => `<button class="btn btn-warning">${student.name}</button>`
+    (student) =>
+      `<button class="btn btn-warning btn-lg">${student.name}</button>`
   );
 
   console.log("Currstudent", currentStudent);
@@ -109,16 +110,20 @@ startBtnContainerEl.addEventListener("click", (e) => {
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 questionScreenContainerEl.addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON") {
+  if (
+    e.target.tagName === "BUTTON" &&
+    e.target.textContent !== "Next question"
+  ) {
     if (currentStudent.name === e.target.textContent) {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
       rightAnswers.push(currentStudent);
-    } else {
+    } else if (currentStudent.name !== e.target.textContent) {
       e.target.classList.add("btn-danger");
       e.target.classList.remove("btn-warning");
       wrongAnswers.push(currentStudent);
     }
+
     //Disables all buttons from being clicked twice
     const buttons = questionBtnContainerEl.querySelectorAll("button");
     buttons.forEach((button) => (button.disabled = true));
