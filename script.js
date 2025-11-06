@@ -1,8 +1,5 @@
 import { renderEndScreen } from "./endScreen.js";
 
-const selectFiveBtnEl = document.querySelector(".selectFiveBtn");
-const selectTenBtnEl = document.querySelector(".selectTenBtn");
-const selectAllBtnEl = document.querySelector(".selectAllBtn");
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
@@ -71,15 +68,12 @@ function renderNewQuestion() {
 }
 
 function restartGame() {
-  console.log("Before reset arrays", rightAnswers, wrongAnswers);
-
   rightAnswers = [];
   wrongAnswers = [];
 
-  console.log("Reset arrays", rightAnswers, wrongAnswers);
-
   endScreenEl.classList.add("d-none");
   startBtnContainerEl.classList.remove("d-none");
+  document.querySelector(".welcomeHeader").classList.remove("d-none");
 }
 
 //Eventlistener for selecting number of questions
@@ -91,21 +85,24 @@ startBtnContainerEl.addEventListener("click", (e) => {
   } else if (e.target.textContent.includes("Yes")) {
     nbrOfSelectedStudents = students.length;
   }
+
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
-  console.log("SlicedStuds before", slicedStudents);
 
-  // Hide startPage
-  startBtnContainerEl.classList.add("d-none");
-  // Show questionPage
-  questionScreenContainerEl.classList.remove("d-none");
-  //Update score
-  setScore();
-
-  // Render the questionPage content
-  renderNewQuestion();
+  // Trigga view transition för siteContainer när spelet startar
+  document.startViewTransition(() => {
+    document.querySelector(".welcomeHeader").classList.add("d-none");
+    // Hide startPage
+    startBtnContainerEl.classList.add("d-none");
+    // Show questionPage
+    questionScreenContainerEl.classList.remove("d-none");
+    //Update score
+    setScore();
+    // Render the questionPage content
+    renderNewQuestion();
+  });
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.

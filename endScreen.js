@@ -56,12 +56,8 @@ function renderHighScoreList(finalScore) {
   highScoreListEl.innerHTML = previousTry
     .map(
       (score, index) =>
-        `<li class="list-group-item ${
-          index === previousTry.length - 1 ? "bg-success text-light" : ""
-        }"> 
-        ${
-          index === previousTry.length - 1 ? "Your score: " : ""
-        }<span class="fw-bold">${score}</span></li>
+        `<li class="list-group-item "> 
+        <span class="fw-bold">${score}</span></li>
         `
     )
     .join("");

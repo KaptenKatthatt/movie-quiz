@@ -13,16 +13,18 @@
 </head>
 
 <body>
-  <div class="container w-50">
-    <h1 class="display-3 m-3 text-center">Welcome to who's that face!
+  <!-- Site container -->
+  <div class="container siteContainer border border-dark border-3 p-2 rounded-4 bg-light-subtle mt-4 shadow-lg">
+    <!-- Main header -->
+    <h1 class="display-3 m-3 text-center welcomeHeader">Welcome to who's that face!
     </h1>
-    <div class="container startBtnContainer border border-dark rounded-3">
-      <h2 class="display-5 mb-5 text-center">Decide how many students to guess</h2>
-
-      <div class=" container d-flex justify-content-center flex-wrap gap-3">
-        <button class="btn btn-primary p-4 fs-3 selectFiveBtn">5 people</button>
-        <button class="btn btn-primary p-4 fs-3 selectTenBtn">10 people</button>
-        <button class="btn btn-success p-4 fs-3 selectAllBtn">Yes</button>
+    <!-- Start game container -->
+    <div class="startBtnContainer">
+      <h2 class="display-5 mb-5 text-center">How many students to guess?</h2>
+      <div class="nbrQuestionsContainer container d-flex justify-content-center flex-wrap gap-3 p-3">
+        <button class="btn btn-primary p-4 fs-3 ">5 people</button>
+        <button class="btn btn-primary p-4 fs-3 ">10 people</button>
+        <button class="btn btn-success p-4 fs-3">Yes</button>
       </div>
     </div>
 
@@ -30,18 +32,19 @@
       <h2 class="display-4 text-center">Guess the face!</h2>
       <h2 class="scoreBoard display-5"></h2>
 
-      <img class="photoContainer" src="" alt="Photo of the person to guess">
+      <img class="photoContainer img-fluid rounded-5" src="" alt="Photo of the person to guess">
       <div class="pointsContainer"></div>
       <!-- Question buttons container -->
-      <div class="questionBtnContainer d-flex justify-content-center gap-3 mt-3">
+      <div class="questionBtnContainer d-flex flex-wrap justify-content-cente
+      r gap-3 my-5">
       </div>
-      <button class=" mt-5 d-none nextQuestionBtn button btn btn-secondary text-center">Next question</button>
+      <button class=" d-none nextQuestionBtn button btn btn-secondary btn-lg text-center">Next question</button>
     </div>
     <!-- End screen with high score and right/wrong cards -->
-    <div class=" endScreen container my-5 border border-dark rounded-3 text-center d-none ">
+    <div class=" endScreen container my-5 text-center d-none">
       <h2 class="display-4">Game Finished!</h2>
       <h2 class="display-3 endScore"></h2>
-      <div class="highScoreListcontainer container w-25">
+      <div class="highScoreListcontainer container w-50 border border-warning rounded-3 p-3">
         <h2>High Score list</h2>
         <ol class="highScoreList list-group list-group-numbered">
         </ol>

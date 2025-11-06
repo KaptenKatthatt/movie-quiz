@@ -1,14 +1,18 @@
-/* Standard fade-transition (default) */
-::view-transition-old(questionScreenContainer) {
+body {
+  background-color: #1d7874;
+}
+
+.photoContainer {
+  view-transition-name: photoContainer;
+}
+::view-transition-old(photoContainer) {
   animation: slideOut 0.8s;
 }
 
-::view-transition-new(questionScreenContainer) {
+::view-transition-new(photoContainer) {
   animation: slideIn 0.8s ease-in-out;
 }
-.questionScreenContainer {
-  view-transition-name: questionScreenContainer;
-}
+
 @keyframes slideOut {
   to {
     transform: translateX(-100%);
@@ -26,29 +30,37 @@
     scale: 1;
   }
 }
-/* 
-.endScreen {
-  view-transition-name: endScreen;
-  isolation: isolate;
+
+.startBtnContainer {
+  view-transition-name: startScreen;
 }
 
-::view-transition-old(endScreen) {
-  animation: moveOut 1s ease-in-out;
+.questionScreenContainer {
+  view-transition-name: questionScreen;
 }
 
-::view-transition-new(endScreen) {
-  animation: moveIn 1.5s ease-in-out;
+::view-transition-old(startScreen) {
+  animation: slideUpOut 0.7s forwards;
 }
 
-@keyframes moveOut {
+::view-transition-new(questionScreen) {
+  animation: slideUpIn 0.7s forwards;
+}
+
+@keyframes slideUpOut {
   to {
-    transform: translateX(-100%);
+    transform: translateY(-100px);
+    opacity: 0;
   }
 }
 
-@keyframes moveIn {
+@keyframes slideUpIn {
   from {
-    transform: translateX(100%);
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
- */
