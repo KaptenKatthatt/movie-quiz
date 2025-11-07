@@ -50,9 +50,26 @@ function renderStartScreen() {
     .join("");
 }
 renderStartScreen();
+
 function setScore() {
-  scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
+  // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
+  if (rightAnswers.length > 0) {
+    scoreBoardEl.classList.add("addScore");
+    scoreBoardEl.addEventListener(
+      "animationend",
+      () => {
+        scoreBoardEl.classList.remove("addScore");
+      },
+      { once: true }
+    );
+  }
+  scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
+  // previousScore = currentScore; // Uppdatera föregående poäng
 }
+// function setScore() {
+//   scoreBoardEl.classList.add("addScore");
+//   scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
+// }
 
 function renderNewQuestion() {
   // first index is currentStudent

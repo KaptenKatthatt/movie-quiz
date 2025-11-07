@@ -9,6 +9,7 @@ h2 {
 }
 body {
   background-color: #1d7874;
+  overflow: hidden;
 }
 
 .allPhotosContainer {
@@ -100,18 +101,20 @@ body {
   }
 }
 
-/* @keyframes embiggen {
-  0% {
-    scale: 0;
+.addScore {
+  animation: addScore 1s ease-in-out;
+}
+@keyframes addScore {
+  from {
+    scale: 1;
+    opacity: 1;
+    background: #ffc107;
+    border-radius: 10px;
   }
-  50% {
+  to {
     scale: 1.5;
+    opacity: 0;
+    background: #ffc107;
+    border-radius: 10px;
   }
-  100% {
-    scale: 0;
-  }
-} */
-
-/* .endScore {
-  transition: scale 1.5s ease;
-} */
+}
