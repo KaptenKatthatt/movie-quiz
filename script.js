@@ -42,7 +42,7 @@ function renderStartScreen() {
         <div class="card shadow-lg border-dark border-2" style="width: 6rem;">
   <img src="${student.image}" class="card-img-top" alt="Images of students to guess the names of.">
   <div class="card-body">
-    <h5 class="card-title text-center display-4">?</h5>
+    <h2 class="card-title text-center display-5" style="height: 1.5rem;">?</h2>
   </div>
 </div>
     `;

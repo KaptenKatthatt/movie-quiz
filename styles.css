@@ -2,6 +2,11 @@ body {
   background-color: #1d7874;
 }
 
+.allPhotosContainer {
+  height: 30vh;
+  overflow: hidden;
+}
+
 .card:nth-child(odd) {
   transform: rotate(3deg);
 }
