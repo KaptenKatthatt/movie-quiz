@@ -1,24 +1,24 @@
 ## Bugs
 
+## App general
+
+### DONE
+
 Can't base selector on length-1 since the list is sorted by nbr and the last nbr can be anything. Figure out some other way to select the last score
+
+Mobile first
+media queries, fewer cards on start page? None=?
 
 ## After end of game
 
 Håll reda på senaste resultat och vid varje ny gissning visa om man förbättrade eller
 försämrade sig denna gången
 
-High score list?
+High score list
 
 Rename or remake previousTry array to highscore array.
 Show high score list, top 5?
 Color previous score?
-
-## App general
-
-Mobile first
-media queries, fewer cards on start page? None=?
-
-### DONE
 
 Your score is always 2, based on what?
 

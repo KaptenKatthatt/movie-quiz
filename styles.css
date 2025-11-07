@@ -88,15 +88,30 @@ body {
 } */
 
 .embiggen {
-  animation: embiggen 1.5s ease-in-out;
-  border-radius: 5px;
+  animation: embiggen 1s ease-in-out alternate 6;
 }
 
 @keyframes embiggen {
   from {
-    scale: 0;
+    scale: 1;
   }
   to {
-    scale: 1.5;
+    scale: 2;
   }
 }
+
+/* @keyframes embiggen {
+  0% {
+    scale: 0;
+  }
+  50% {
+    scale: 1.5;
+  }
+  100% {
+    scale: 0;
+  }
+} */
+
+/* .endScore {
+  transition: scale 1.5s ease;
+} */

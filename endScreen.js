@@ -88,13 +88,9 @@ export function renderEndScreen(
   // Start animation by adding class
   endScoreEl.classList.add("embiggen");
   // Render score to DOM
-  endScoreEl.innerHTML = `Your final score is <span class="bg-success">${finalScore}/${totalQuestions}</span>`;
+  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
 
   renderHighScoreList(finalScore, totalQuestions);
   // Display correct and wrong answers with name and photo with cards
   renderAnswerCards(rightAnswersArr, wrongAnswersArr);
-  // Remove animation class
-  setTimeout(() => {
-    endScoreEl.classList.remove("embiggen");
-  }, 2000);
 }
