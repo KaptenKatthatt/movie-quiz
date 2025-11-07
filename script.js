@@ -73,7 +73,6 @@ function renderNewQuestion() {
       `<button class="btn btn-warning btn-lg">${student.name}</button>`
   );
 
-  console.log("Currstudent", currentStudent);
   // Add image to currentStudent from students array
   photoContainerEl.src = currentStudent.image;
 
@@ -150,10 +149,8 @@ nextQuestionBtnEl.addEventListener("click", () => {
   studentSliced = false;
 
   //Deletes currentStudent
-  console.log("SlicedStuds before", slicedStudents);
   studentSliced ? "" : slicedStudents.shift();
   studentSliced = true;
-  console.log("SlicedStuds after", slicedStudents);
 
   // Checks if there is any students left to question about
   if (slicedStudents.length > 0) {

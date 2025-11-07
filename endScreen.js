@@ -96,5 +96,5 @@ export function renderEndScreen(
   // Remove animation class
   setTimeout(() => {
     endScoreEl.classList.remove("embiggen");
-  }, 1800);
+  }, 2000);
 }
