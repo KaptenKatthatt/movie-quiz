@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "Londrina Shadow";
+  src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
+}
+
+h1,
+h2 {
+  font-family: "Londrina Shadow";
+}
 body {
   background-color: #1d7874;
 }
@@ -77,3 +86,17 @@ body {
     opacity: 1;
   }
 } */
+
+.embiggen {
+  animation: embiggen 1.5s ease-in-out;
+  border-radius: 5px;
+}
+
+@keyframes embiggen {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1.5;
+  }
+}

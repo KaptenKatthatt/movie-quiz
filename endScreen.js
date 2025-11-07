@@ -24,10 +24,10 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     })
     .join("");
   // Render wrong answer cards
-  wrongAnswersHeadingEl.innerText =
+  wrongAnswersHeadingEl.innerHTML =
     wrongAnswersArr.length > 0
       ? "These were wrong..."
-      : "No wrong answers! Good job!";
+      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   wrongAnswerCardsEl.innerHTML = wrongAnswersArr
     .map((student) => {
@@ -43,64 +43,40 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .join("");
 }
 
-let highscoreList = [1, 1, 1];
-let previousTry = [];
-function renderHighScoreList(finalScore) {
-  let rUWorthy = false;
+let highScoreList = [];
+function renderHighScoreList(finalScore, totalQuestions) {
+  //Creates object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list.
+  let highScoreObj = {
+    finalScore,
+    totalQuestions,
+    timeStamp: new Date(),
+    lastPlayer: false,
+  };
+  highScoreList.push(highScoreObj);
 
-  previousTry.push(finalScore);
-  console.log("Previous attempts", previousTry);
-  console.log("Last score", previousTry[previousTry.length - 1]);
+  // Goes through all players and resets lastPlayer to false for the styling to work on latest player in the next stage
+  highScoreList.forEach((player) => (player.lastPlayer = false));
 
-  previousTry.sort((a, b) => b - a);
-  highScoreListEl.innerHTML = previousTry
+  //Check if this player is the latest player and sets to true
+  if (highScoreList.length > 0) {
+    const latest = highScoreList.reduce((prev, current) =>
+      prev.timeStamp > current.timeStamp ? prev : current
+    );
+    latest.lastPlayer = true;
+  }
+
+  highScoreList.sort((a, b) => b.finalScore - a.finalScore);
+
+  highScoreListEl.innerHTML = highScoreList
     .map(
-      (score, index) =>
-        `<li class="list-group-item "> 
-        <span class="fw-bold">${score}</span></li>
-        `
+      (score) =>
+        `<li class="list-group-item ${
+          score.lastPlayer ? "bg-success text-light" : "bg-light text-dark"
+        }"> 
+    <span class="">${score.finalScore}/${score.totalQuestions}</span></li>
+    `
     )
     .join("");
-  /* 
-  // Check if finalScore is higher than lowest highscore
-  // Remove lowest score and replace with finalScore
-  let lowestHighScore = Math.min(...highscoreList);
-  console.log("Lowest highscore", lowestHighScore);
-  let highestHighScore = Math.max(...highscoreList);
-  console.log("Highest highscore", highestHighScore);
-
-  // Check if high score worthy, removes lowest score
-  if (finalScore > lowestHighScore) {
-    highscoreList.splice(
-      highscoreList.findIndex((score) => lowestHighScore < finalScore),
-      1
-    );
-    // Add score to high score list and sort list
-    highscoreList.push(finalScore);
-    highscoreList.sort((a, b) => b - a);
-    // r U worthy of high score?
-    rUWorthy = true;
-  }
-  // Check if finalScore is the highest score
-  if (finalScore > highestHighScore) {
-    console.log("Winner winner chicken dinner! Highest score!", finalScore);
-  }
-
-  console.log("rUWorthy", rUWorthy);
-  console.log("Highscore after", highscoreList);
-
-  // Check if high score worthy
-  if (finalScore > highestHighScore) {
-    console.log("You got the highest score!");
-  } else if (highscoreList.length < 3) {
-    console.log("You got a high score! List was not full");
-  } else {
-    console.log("No highscore, do gooder next time plz.");
-  }
- */
-  // highScoreListEl.innerHTML = previousTry
-  //   .map((score) => `<li>${score}</li>`)
-  //   .join("");
 }
 
 export function renderEndScreen(
@@ -109,10 +85,16 @@ export function renderEndScreen(
   rightAnswersArr,
   wrongAnswersArr
 ) {
+  // Start animation by adding class
+  endScoreEl.classList.add("embiggen");
   // Render score to DOM
-  endScoreEl.innerText = `You final score is ${finalScore}/${totalQuestions}`;
+  endScoreEl.innerHTML = `Your final score is <span class="bg-success">${finalScore}/${totalQuestions}</span>`;
 
-  renderHighScoreList(finalScore);
+  renderHighScoreList(finalScore, totalQuestions);
   // Display correct and wrong answers with name and photo with cards
   renderAnswerCards(rightAnswersArr, wrongAnswersArr);
+  // Remove animation class
+  setTimeout(() => {
+    endScoreEl.classList.remove("embiggen");
+  }, 1800);
 }
