@@ -84,7 +84,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .join("");
 }
 
-function renderHighScoreList(finalScore, totalQuestions, playerName) {
+function renderhighScoreList(finalScore, totalQuestions, playerName) {
   //Creates object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list.
   let highScoreObj = {
     finalScore,
@@ -93,6 +93,10 @@ function renderHighScoreList(finalScore, totalQuestions, playerName) {
     lastPlayer: false,
     playerName,
   };
+  if (localStorage.getItem("highScoreList" !== null)) {
+    highScoreList = localStorage.getItem("highScoreList");
+    highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+  }
   highScoreList.push(highScoreObj);
 
   // Goes through all players and resets lastPlayer to false for the styling to work on latest player in the next stage
@@ -117,6 +121,7 @@ function renderHighScoreList(finalScore, totalQuestions, playerName) {
     `
     )
     .join("");
+  localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 }
 
 export function renderEndScreen(
@@ -140,7 +145,7 @@ export function renderEndScreen(
   // Render score to DOM
   endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
 
-  renderHighScoreList(finalScore, totalQuestions, playerName);
+  renderhighScoreList(finalScore, totalQuestions, playerName);
   // Display correct and wrong answers with name and photo with cards
   renderAnswerCards(rightAnswersArr, wrongAnswersArr);
 }
