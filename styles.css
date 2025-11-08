@@ -13,7 +13,7 @@ body {
   overflow-x: hidden;
 }
 
-.allPhotosContainer {
+.startPhotosContainer {
   height: 35vh;
   overflow: hidden;
 }
@@ -25,14 +25,9 @@ body {
   transform: rotate(-3deg);
 }
 
-.allPhotosContainer img {
+.startPhotosContainer img {
   filter: hue-rotate(50deg);
   filter: contrast(5);
-}
-
-.allPhotosContainer .card-title {
-  /* font-family: Georgia, "Times New Roman", Times, serif; */
-  /* font-weight: 900; */
 }
 
 .photoContainer {

@@ -1,6 +1,7 @@
 import { renderEndScreen } from "./endScreen.js";
 
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
+const startPhotosContainerEl = document.querySelector(".startPhotosContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
@@ -37,7 +38,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  document.querySelector(".allPhotosContainer").innerHTML = students
+  document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
@@ -50,7 +51,30 @@ function renderStartScreen() {
     })
     .join("");
 }
-renderStartScreen();
+
+function startGame() {
+  // Shuffles the student array to create random order on buttons
+  shuffledStudents = cloneAndShuffleArray(students);
+  //Create an array with selected nbr of students
+  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
+
+  // Trigger view transition on game start
+  document.startViewTransition(() => {
+    document.querySelector(".welcomeHeader").classList.add("d-none");
+    // Hide startButtonContainer
+    startBtnContainerEl.classList.add("d-none");
+    //Hide startPhotosContainer
+
+    startPhotosContainerEl.classList.add("d-none");
+    // Show questionPage
+    questionScreenContainerEl.classList.remove("d-none");
+
+    //Reset and score first time
+    setScore(correctAnswer);
+    // Render the questionPage content
+    renderNewQuestion();
+  });
+}
 
 function setScore(correctAnswer) {
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
@@ -96,36 +120,25 @@ function restartGame() {
 
   endScreenEl.classList.add("d-none");
   startBtnContainerEl.classList.remove("d-none");
+  startPhotosContainerEl.classList.remove("d-none");
   document.querySelector(".welcomeHeader").classList.remove("d-none");
 }
 
+//Renders initial game screen
+renderStartScreen();
+
 //Eventlistener for selecting number of questions
 startBtnContainerEl.addEventListener("click", (e) => {
-  if (e.target.textContent.includes("5")) {
-    nbrOfSelectedStudents = 5;
-  } else if (e.target.textContent.includes("10")) {
-    nbrOfSelectedStudents = 10;
-  } else if (e.target.textContent.includes("Yes")) {
-    nbrOfSelectedStudents = students.length;
+  if (e.target.tagName === "BUTTON") {
+    if (e.target.textContent.includes("5")) {
+      nbrOfSelectedStudents = 5;
+    } else if (e.target.textContent.includes("10")) {
+      nbrOfSelectedStudents = 10;
+    } else if (e.target.textContent.includes("ALL")) {
+      nbrOfSelectedStudents = students.length;
+    }
+    startGame();
   }
-
-  // Shuffles the student array to create random order on buttons
-  shuffledStudents = cloneAndShuffleArray(students);
-  //Create an array with selected nbr of students
-  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
-
-  // Trigger view transition on game start
-  document.startViewTransition(() => {
-    document.querySelector(".welcomeHeader").classList.add("d-none");
-    // Hide startPage
-    startBtnContainerEl.classList.add("d-none");
-    // Show questionPage
-    questionScreenContainerEl.classList.remove("d-none");
-    //Update score
-    setScore();
-    // Render the questionPage content
-    renderNewQuestion();
-  });
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.

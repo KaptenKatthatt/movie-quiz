@@ -10,11 +10,15 @@
 
 Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
 
+Put restart game button in upper right corner?
+
 ## App general
 
 Add animationend eventlistener to all animations for safe removal after use.
 
 ### DONE
+
+Bug: Event listener starts game when clicking wherever on startscreen
 
 - Change font on question mark to a heavy dark font. Sans serif bold, inky black. More in style with image borders.
 
