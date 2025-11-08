@@ -10,7 +10,11 @@ h2 {
 body {
   background-color: #1d7874;
   /* background-color: #9ab87a; */
-  overflow-x: hidden;
+  overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
+}
+
+.siteContainer {
+  /* width: 75%; */
 }
 
 .startPhotosContainer {

@@ -5,6 +5,39 @@ const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 
+let highScoreList = [
+  {
+    finalScore: 8,
+    totalQuestions: 10,
+    timeStamp: new Date("2024-01-15"),
+    lastPlayer: false,
+  },
+  {
+    finalScore: 7,
+    totalQuestions: 10,
+    timeStamp: new Date("2024-01-16"),
+    lastPlayer: false,
+  },
+  {
+    finalScore: 6,
+    totalQuestions: 10,
+    timeStamp: new Date("2024-01-17"),
+    lastPlayer: false,
+  },
+  {
+    finalScore: 9,
+    totalQuestions: 10,
+    timeStamp: new Date("2024-01-18"),
+    lastPlayer: false,
+  },
+  {
+    finalScore: 5,
+    totalQuestions: 10,
+    timeStamp: new Date("2024-01-19"),
+    lastPlayer: false,
+  },
+];
+
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   // Checks whether some right answers or none
   rightAnswersHeadingEl.innerText =
@@ -45,7 +78,6 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .join("");
 }
 
-let highScoreList = [];
 function renderHighScoreList(finalScore, totalQuestions) {
   //Creates object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list.
   let highScoreObj = {

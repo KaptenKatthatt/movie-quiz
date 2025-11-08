@@ -16,6 +16,8 @@ Put restart game button in upper right corner?
 
 Add animationend eventlistener to all animations for safe removal after use.
 
+Non general font on buttons?
+
 ### DONE
 
 Bug: Event listener starts game when clicking wherever on startscreen
