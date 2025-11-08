@@ -12,6 +12,9 @@ const scoreBoardEl = document.querySelector(".scoreBoard");
 const restartGameBtn = document.querySelector(".restartGameBtn");
 const endScreenEl = document.querySelector(".endScreen");
 
+const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
+let playerName = "";
+
 let currentStudent = {};
 let nbrOfSelectedStudents = 0;
 let shuffledStudents = []; //All students shuffled
@@ -140,6 +143,13 @@ startBtnContainerEl.addEventListener("click", (e) => {
   }
 });
 
+playerNameInputFormEl.addEventListener("input", (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  playerName = e.target.value;
+  console.log(playerName);
+});
+
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 questionScreenContainerEl.addEventListener("click", (e) => {
   if (
@@ -193,7 +203,8 @@ nextQuestionBtnEl.addEventListener("click", () => {
       rightAnswers.length,
       nbrOfSelectedStudents,
       rightAnswers,
-      wrongAnswers
+      wrongAnswers,
+      playerName
     );
   }
 });

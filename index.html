@@ -22,14 +22,27 @@
       <!-- Start game container -->
       <div class="startPhotosContainer container d-flex flex-wrap justify-content-center gap-1 mb-3 w-75"></div>
       <div class="startBtnContainer">
-        <h2 class="display-6 mt-5 text-center fw-bold">How many students to guess?</h2>
+        <!-- Player name input field -->
+        <div class="mx-auto w-25 mb-3 d-flex justify-content-center align-items-center flex-column text-center">
+          <form class="playerNameInputForm">
+            <label for="playerNameInput" class="form-label fw-bold d-inline fs-5">Input Player Name</label>
+            <input type="text" class="form-control d-inline" id="playerNameInput" name="playerName"
+              aria-describedby="input Player Name">
+            <!-- <button type="submit" class="btn btn-warning  mt-1">Submit</button> -->
+          </form>
+        </div>
+
+        <h2 class="display-6 text-center fw-bold">How many students to guess?</h2>
+        <p class="output"></p>
         <div class="nbrQuestionsContainer container d-flex justify-content-center flex-wrap gap-3 p-3 w-75">
           <button class="btn btn-dark p-4 fs-3 rounded-top-5 ">5?</button>
-          <button class="btn btn-warning p-4 fs-3 rounded-top-5">10?!</button>
+          <button class="btn btn-warning p-4 fs-3 rounded-top-5">10?</button>
           <button class="btn btn-success p-4 fs-3 rounded-0">ALL!!!</button>
         </div>
       </div>
+
     </div>
+    <!-- Question screen container -->
     <div class="questionScreenContainer container d-flex flex-column align-items-center justify-content-center d-none ">
       <h2 class="display-4 text-center">Guess the face!</h2>
       <h2 class="scoreBoard display-5">0/0</h2>

@@ -12,30 +12,35 @@ let highScoreList = [
     totalQuestions: 10,
     timeStamp: new Date("2024-01-15"),
     lastPlayer: false,
+    playerName: "J.O",
   },
   {
     finalScore: 7,
     totalQuestions: 10,
     timeStamp: new Date("2024-01-16"),
     lastPlayer: false,
+    playerName: "J.O",
   },
   {
     finalScore: 6,
     totalQuestions: 10,
     timeStamp: new Date("2024-01-17"),
     lastPlayer: false,
+    playerName: "J.O",
   },
   {
     finalScore: 9,
     totalQuestions: 10,
     timeStamp: new Date("2024-01-18"),
     lastPlayer: false,
+    playerName: "J.O",
   },
   {
     finalScore: 5,
     totalQuestions: 10,
     timeStamp: new Date("2024-01-19"),
     lastPlayer: false,
+    playerName: "J.O",
   },
 ];
 
@@ -79,13 +84,14 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .join("");
 }
 
-function renderHighScoreList(finalScore, totalQuestions) {
+function renderHighScoreList(finalScore, totalQuestions, playerName) {
   //Creates object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list.
   let highScoreObj = {
     finalScore,
     totalQuestions,
     timeStamp: new Date(),
     lastPlayer: false,
+    playerName,
   };
   highScoreList.push(highScoreObj);
 
@@ -101,13 +107,12 @@ function renderHighScoreList(finalScore, totalQuestions) {
   }
   let timePlayed;
   highScoreList.sort((a, b) => b.finalScore - a.finalScore);
-  let playerName = "J.O";
   highScoreListEl.innerHTML = highScoreList
     .map(
       (score) =>
         `<li class="list-group-item ${
           score.lastPlayer ? "bg-success text-light" : "bg-light text-dark"
-        }"> ${playerName}
+        }"> ${score.playerName}
     <span class="">${score.finalScore}/${score.totalQuestions}</span></li>
     `
     )
@@ -118,7 +123,8 @@ export function renderEndScreen(
   finalScore,
   totalQuestions,
   rightAnswersArr,
-  wrongAnswersArr
+  wrongAnswersArr,
+  playerName
 ) {
   //Show endscreen
   endScreenEl.classList.remove("d-none");
@@ -127,7 +133,7 @@ export function renderEndScreen(
   // Render score to DOM
   endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
 
-  renderHighScoreList(finalScore, totalQuestions);
+  renderHighScoreList(finalScore, totalQuestions, playerName);
   // Display correct and wrong answers with name and photo with cards
   renderAnswerCards(rightAnswersArr, wrongAnswersArr);
 }
