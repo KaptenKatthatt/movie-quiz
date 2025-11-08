@@ -11,6 +11,7 @@ const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
 const endScreenEl = document.querySelector(".endScreen");
 const restartGameBtn = document.querySelector(".restartGameBtn");
+const siteContainerEl = document.querySelector(".siteContainer");
 
 let currentStudent = {};
 let nbrOfSelectedStudents = 0;
@@ -200,5 +201,11 @@ nextQuestionBtnEl.addEventListener("click", () => {
     );
   }
 });
-// Button to launch restart game function
-restartGameBtn.addEventListener("click", () => restartGame());
+//Restart game
+restartGameBtn.addEventListener("click", () => {
+  siteContainerEl.classList.add("flip");
+  siteContainerEl.addEventListener("animationend", () => {
+    restartGame();
+    siteContainerEl.classList.remove("flip");
+  });
+});

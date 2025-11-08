@@ -13,7 +13,8 @@
 }
 
 h1,
-h2 {
+h2,
+.startPhotosContainer .card-title {
   font-family: "Londrina Shadow";
 }
 
@@ -30,7 +31,6 @@ h2 {
   left: -14px;
 }
 .answerCardsContainer .card::after {
-  /* content: "🖈"; */
   content: "📌";
   position: absolute;
   top: -10px;
@@ -139,3 +139,25 @@ body {
     border-radius: 10px;
   }
 }
+
+.flip {
+  animation: flip 1.5s ease-in-out;
+  /* transform-style: preserve-3d; */
+}
+
+@keyframes flip {
+  from {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+    opacity: 0;
+  }
+}
+/* .siteContainer {
+  backface-visibility: hidden;
+} */
+/* body {
+  perspective: 1000px; 
+} */

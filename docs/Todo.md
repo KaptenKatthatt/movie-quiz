@@ -4,11 +4,7 @@
 
 - Input 3 char user name for high score. Save in array. After selection nbr of questions.
 
-- Put a pin in every photo at start page, like notice board. Make notice board background with CSS? Mobile friendly?
-
 ## End screen
-
-Put restart game button in upper right corner?
 
 Max nbr of names on high score to not break design when too long?
 
@@ -20,9 +16,13 @@ Animation on restart game?
 
 Add animationend eventlistener to all animations for safe removal after use.
 
+### DONE
+
 Non general font on buttons?
 
-### DONE
+DENIED. Put restart game button in upper right corner?
+
+- Put a pin in every photo at start page, like notice board. Make notice board background with CSS? Mobile friendly?
 
 Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
 
