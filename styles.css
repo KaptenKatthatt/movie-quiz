@@ -1,3 +1,12 @@
+/* Bootstrap Breakpoints:
+  xs: <576px (extra small devices, phones)
+  sm: ≥576px (small devices, phones)
+  md: ≥768px (medium devices, tablets)
+  lg: ≥992px (large devices, desktops)
+  xl: ≥1200px (extra large devices, large desktops)
+  xxl: ≥1400px (extra extra large devices, larger desktops)
+*/
+
 @font-face {
   font-family: "Londrina Shadow";
   src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
@@ -7,17 +16,32 @@ h1,
 h2 {
   font-family: "Londrina Shadow";
 }
+
+.btn,
+.card-title {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.answerCardsContainer .card::before {
+  content: "📌";
+  position: absolute;
+  transform: scaleX(-1);
+  top: -14px;
+  left: -14px;
+}
+.answerCardsContainer .card::after {
+  /* content: "🖈"; */
+  content: "📌";
+  position: absolute;
+  top: -15px;
+  right: -12px;
+  color: red;
+}
+
 body {
   background-color: #1d7874;
   /* background-color: #9ab87a; */
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
-}
-
-.siteContainer {
-  /* width: 75%; */
-}
-.answerCardsContainer {
-  /* width: 50%; */
 }
 
 .startPhotosContainer {
