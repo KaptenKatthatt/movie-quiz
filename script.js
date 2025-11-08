@@ -1,5 +1,5 @@
 import { renderEndScreen } from "./endScreen.js";
-
+const startScreenContainerEl = document.querySelector(".startScreenContainer");
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const startPhotosContainerEl = document.querySelector(".startPhotosContainer");
 const questionScreenContainerEl = document.querySelector(
@@ -9,7 +9,6 @@ const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
-const endScreenEl = document.querySelector(".endScreen");
 const restartGameBtn = document.querySelector(".restartGameBtn");
 const siteContainerEl = document.querySelector(".siteContainer");
 
@@ -60,21 +59,20 @@ function startGame() {
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
 
   // Trigger view transition on game start
-  document.startViewTransition(() => {
-    document.querySelector(".welcomeHeader").classList.add("d-none");
-    // Hide startButtonContainer
-    startBtnContainerEl.classList.add("d-none");
-    //Hide startPhotosContainer
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      // Hide startscreen
+      startScreenContainerEl.classList.add("d-none");
 
-    startPhotosContainerEl.classList.add("d-none");
-    // Show questionPage
-    questionScreenContainerEl.classList.remove("d-none");
+      // Show questionScreen
+      questionScreenContainerEl.classList.remove("d-none");
 
-    //Reset and score first time
-    setScore(correctAnswer);
-    // Render the questionPage content
-    renderNewQuestion();
-  });
+      //Reset score for first question
+      setScore(correctAnswer);
+      // Render the questionPage content
+      renderNewQuestion();
+    });
+  }
 }
 
 function setScore(correctAnswer) {
@@ -125,10 +123,12 @@ function restartGame() {
   document.querySelector(".welcomeHeader").classList.remove("d-none");
 }
 
+/* **************** GAME START****************** */
+
 //Renders initial game screen
 renderStartScreen();
 
-//Eventlistener for selecting number of questions
+//Listen for nbr of questions selected and start game
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
     if (e.target.textContent.includes("5")) {
@@ -190,8 +190,6 @@ nextQuestionBtnEl.addEventListener("click", () => {
     nextQuestionBtnEl.classList.add("d-none");
     questionScreenContainerEl.classList.add("d-none");
 
-    //Show endscreen
-    endScreenEl.classList.remove("d-none");
     // Render endscreen and send over nbr of correct answers and total nbr of questions
     renderEndScreen(
       rightAnswers.length,

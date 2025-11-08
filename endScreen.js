@@ -1,3 +1,4 @@
+const endScreenEl = document.querySelector(".endScreen");
 const endScoreEl = document.querySelector(".endScore");
 const highScoreListEl = document.querySelector(".highScoreList");
 const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
@@ -119,6 +120,8 @@ export function renderEndScreen(
   rightAnswersArr,
   wrongAnswersArr
 ) {
+  //Show endscreen
+  endScreenEl.classList.remove("d-none");
   // Start animation by adding class
   endScoreEl.classList.add("embiggenFinalScore");
   // Render score to DOM
