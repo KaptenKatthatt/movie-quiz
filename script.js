@@ -18,6 +18,7 @@ let studentSliced = false;
 let slicedStudents = []; //Student array sliced to nbr of selected guesses
 let filteredWrongStudents = []; //Student array with correct answer filtered out
 let questionButtonNames = []; //The four names on the question buttons
+let correctAnswer = false; //Boolean for score animation update
 
 //Result arrays
 let rightAnswers = [];
@@ -51,9 +52,9 @@ function renderStartScreen() {
 }
 renderStartScreen();
 
-function setScore() {
+function setScore(correctAnswer) {
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
-  if (rightAnswers.length > 0) {
+  if (rightAnswers.length > 0 && correctAnswer) {
     scoreBoardEl.classList.add("addScore");
     scoreBoardEl.addEventListener("animationend", () => {
       scoreBoardEl.classList.remove("addScore");
@@ -137,10 +138,12 @@ questionScreenContainerEl.addEventListener("click", (e) => {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
       rightAnswers.push(currentStudent);
+      correctAnswer = true;
     } else if (currentStudent.name !== e.target.textContent) {
       e.target.classList.add("btn-danger");
       e.target.classList.remove("btn-warning");
       wrongAnswers.push(currentStudent);
+      correctAnswer = false;
     }
 
     //Disables all buttons from being clicked twice
@@ -149,7 +152,7 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
     nextQuestionBtnEl.classList.remove("d-none");
     // Update scoreboard
-    setScore();
+    setScore(correctAnswer);
   }
 });
 

@@ -1,5 +1,7 @@
 ## Bugs
 
+Score point animation triggers when you press wrong question
+
 ## Start
 
 Change font on question mark to a heavy dark font. Sans serif bold, inky black. More in style with image borders.
