@@ -130,6 +130,13 @@ export function renderEndScreen(
   endScreenEl.classList.remove("d-none");
   // Start animation by adding class
   endScoreEl.classList.add("embiggenFinalScore");
+  endScoreEl.addEventListener(
+    "animationend",
+    () => {
+      endScoreEl.classList.remove("embiggenFinalScore");
+    },
+    { once: true }
+  );
   // Render score to DOM
   endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
 

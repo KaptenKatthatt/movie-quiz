@@ -13,6 +13,8 @@ const restartGameBtn = document.querySelector(".restartGameBtn");
 const endScreenEl = document.querySelector(".endScreen");
 
 const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
+const playerNameInputEl = document.querySelector("#playerNameInput");
+
 let playerName = "";
 
 let currentStudent = {};
@@ -41,6 +43,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
+  console.log("RenderStartScreen");
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
       return `
@@ -75,21 +78,19 @@ function startGame() {
       // Render the questionPage content
       renderNewQuestion();
     });
+  } else {
+    startScreenContainerEl.classList.add("d-none");
+    // Show questionScreen
+    questionScreenContainerEl.classList.remove("d-none");
+    //Reset score for first question
+    setScore(correctAnswer);
+    // Render the questionPage content
+    renderNewQuestion();
   }
-}
-
-function setScore(correctAnswer) {
-  // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
-  if (rightAnswers.length > 0 && correctAnswer) {
-    scoreBoardEl.classList.add("addScore");
-    scoreBoardEl.addEventListener("animationend", () => {
-      scoreBoardEl.classList.remove("addScore");
-    });
-  }
-  scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
 }
 
 function renderNewQuestion() {
+  console.log("renderNewQuestion");
   // Make first index currentStudent
   currentStudent = slicedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
@@ -117,12 +118,34 @@ function renderNewQuestion() {
 }
 
 function restartGame() {
+  console.log("RestartGame");
   rightAnswers = [];
   wrongAnswers = [];
+  correctAnswer = false;
+  console.log("Restartgame Array reset", rightAnswers, wrongAnswers);
 
   endScreenEl.classList.add("d-none");
   startScreenContainerEl.classList.remove("d-none");
 }
+
+function setScore(correctAnswer) {
+  console.log("Setscore");
+  console.log("setscore rightanswers", rightAnswers);
+  console.log("setscore wronganswers", wrongAnswers);
+  // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
+  if (rightAnswers.length > 0 && correctAnswer) {
+    scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
+    scoreBoardEl.classList.add("addScore");
+    scoreBoardEl.addEventListener("animationend", () => {
+      scoreBoardEl.classList.remove("addScore");
+    });
+  }
+}
+
+const setPlayerName = (playerName) => {
+  localStorage.setItem("playerName", playerName);
+};
+const getPlayerName = () => localStorage.getItem("playerName");
 
 /* **************** GAME START****************** */
 
@@ -146,8 +169,13 @@ startBtnContainerEl.addEventListener("click", (e) => {
 playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
   e.preventDefault();
-  playerName = e.target.value;
-  console.log(playerName);
+  console.log(e.target.value);
+  setPlayerName(e.target.value);
+  // if (localStorage.getItem("playerName" === null)) {
+  //   playerName = e.target.value;
+  // } else {
+  //   // playerNameInputEl.value = getPlayerName();
+  // }
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
@@ -204,15 +232,19 @@ nextQuestionBtnEl.addEventListener("click", () => {
       nbrOfSelectedStudents,
       rightAnswers,
       wrongAnswers,
-      playerName
+      getPlayerName()
     );
   }
 });
 //Restart game
 restartGameBtn.addEventListener("click", () => {
   siteContainerEl.classList.add("flip");
-  siteContainerEl.addEventListener("animationend", () => {
-    restartGame();
-    siteContainerEl.classList.remove("flip");
-  });
+  siteContainerEl.addEventListener(
+    "animationend",
+    () => {
+      restartGame();
+      siteContainerEl.classList.remove("flip");
+    },
+    { once: true }
+  );
 });
