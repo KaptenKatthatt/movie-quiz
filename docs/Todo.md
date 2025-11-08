@@ -12,6 +12,10 @@ Put restart game button in upper right corner?
 
 Max nbr of names on high score to not break design when too long?
 
+Save high score list in array in local storage?
+
+Animation on restart game?
+
 ## App general
 
 Add animationend eventlistener to all animations for safe removal after use.
