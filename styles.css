@@ -16,6 +16,9 @@ body {
 .siteContainer {
   /* width: 75%; */
 }
+.answerCardsContainer {
+  /* width: 50%; */
+}
 
 .startPhotosContainer {
   height: 35vh;

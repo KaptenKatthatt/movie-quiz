@@ -8,9 +8,9 @@
 
 ## End screen
 
-Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
-
 Put restart game button in upper right corner?
+
+Max nbr of names on high score to not break design when too long?
 
 ## App general
 
@@ -19,6 +19,8 @@ Add animationend eventlistener to all animations for safe removal after use.
 Non general font on buttons?
 
 ### DONE
+
+Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
 
 Bug: Event listener starts game when clicking wherever on startscreen
 

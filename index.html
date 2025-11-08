@@ -43,13 +43,13 @@
     </div>
 
     <!-- End screen container with high score and right/wrong cards -->
-    <div class=" endScreen container text-center d-none">
+    <div class=" endScreen text-center d-none">
       <div class="row">
         <h2 class="display-4 fw-bold">Game Finished!</h2>
         <h2 class="display-5 endScore">End score</h2>
       </div>
       <div class="row">
-        <div class="col-10">
+        <div class="col-md10 col-lg-10">
           <!-- Right/Wrong cards container -->
           <div class="answerCardsContainer container border border-dark rounded-3">
             <h2 class="display-5 text-success rightAnswersHeading mt-3">Right Answers</h2>
@@ -59,16 +59,20 @@
             <div class="wrongAnswerCards container d-flex flex-wrap justify-content-center gap-3 mb-3">
             </div>
           </div>
-          <!-- Restart game button -->
-          <button class="btn btn-success btn-lg p-4 my-3 restartGameBtn">Restart Game</button>
+
+
 
         </div>
-        <div class="col-2">
-          <div class="highScoreListcontainer container border border-warning rounded-3 p-3">
+        <div class="col-lg-2 mt-3 mt-lg-0">
+          <div class="highScoreListcontainer container border border-warning rounded-3 pb-3">
             <h2 class="text-decoration-underline">High Score!</h2>
             <ol class="highScoreList list-group list-group-numbered">
             </ol>
           </div>
+        </div>
+        <!-- Restart game button -->
+        <div class="row m-auto mt-2">
+          <button class="btn btn-success btn-lg restartGameBtn ">Restart Game</button>
         </div>
       </div>
     </div>
