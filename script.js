@@ -1,7 +1,7 @@
 import { renderEndScreen } from "./endScreen.js";
+const siteContainerEl = document.querySelector(".siteContainer");
 const startScreenContainerEl = document.querySelector(".startScreenContainer");
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
-const startPhotosContainerEl = document.querySelector(".startPhotosContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
@@ -10,11 +10,11 @@ const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 const scoreBoardEl = document.querySelector(".scoreBoard");
 const restartGameBtn = document.querySelector(".restartGameBtn");
-const siteContainerEl = document.querySelector(".siteContainer");
+const endScreenEl = document.querySelector(".endScreen");
 
 let currentStudent = {};
 let nbrOfSelectedStudents = 0;
-let shuffledStudents = []; //Complete shuffled student array
+let shuffledStudents = []; //All students shuffled
 let studentSliced = false;
 let slicedStudents = []; //Student array sliced to nbr of selected guesses
 let filteredWrongStudents = []; //Student array with correct answer filtered out
@@ -118,9 +118,7 @@ function restartGame() {
   wrongAnswers = [];
 
   endScreenEl.classList.add("d-none");
-  startBtnContainerEl.classList.remove("d-none");
-  startPhotosContainerEl.classList.remove("d-none");
-  document.querySelector(".welcomeHeader").classList.remove("d-none");
+  startScreenContainerEl.classList.remove("d-none");
 }
 
 /* **************** GAME START****************** */
