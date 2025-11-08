@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What's hisher face?</title>
+  <title>Welcome to Who's That Face!</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -16,7 +16,7 @@
   <!-- Site container -->
   <div class="container siteContainer border border-dark border-3 p-2 rounded-4 bg-light-subtle my-4 shadow-lg">
     <!-- Main header -->
-    <h1 class="display-3 m-3 text-center welcomeHeader">Welcome to who's that face!
+    <h1 class="display-3 m-3 text-center welcomeHeader">Welcome to Who's That Face!
     </h1>
     <!-- Start game container -->
     <div class="startBtnContainer">
@@ -25,15 +25,15 @@
       <div class="nbrQuestionsContainer container d-flex justify-content-center flex-wrap gap-3 p-3 w-75">
         <button class="btn btn-dark p-4 fs-3 rounded-top-5 ">5?</button>
         <button class="btn btn-warning p-4 fs-3 rounded-top-5">10?!</button>
-        <button class="btn btn-success p-4 fs-3 rounded-0">Yes.</button>
+        <button class="btn btn-success p-4 fs-3 rounded-0">ALL!!!</button>
       </div>
     </div>
 
     <div class="questionScreenContainer container d-flex flex-column align-items-center justify-content-center d-none ">
       <h2 class="display-4 text-center">Guess the face!</h2>
-      <h2 class="scoreBoard display-5"></h2>
+      <h2 class="scoreBoard display-5">0/0</h2>
 
-      <img class="photoContainer img-fluid rounded-5 " src="" alt="Photo of the person to guess">
+      <img class="photoContainer img-fluid rounded-5 " src="https://placehold.co/" alt="Photo of the person to guess">
       <div class="pointsContainer"></div>
       <!-- Question buttons container -->
       <div class="questionBtnContainer d-flex flex-wrap justify-content-center gap-3 my-5 w-75">
@@ -43,7 +43,7 @@
     <!-- End screen with high score and right/wrong cards -->
     <div class=" endScreen container text-center d-none">
       <h2 class="display-4 fw-bold">Game Finished!</h2>
-      <h2 class="display-5 endScore"></h2>
+      <h2 class="display-5 endScore">End score</h2>
       <div class="highScoreListcontainer container w-50 border border-warning rounded-3 p-3">
         <h2 class="text-decoration-underline">High Score list</h2>
         <ol class="highScoreList list-group list-group-numbered">
@@ -51,10 +51,10 @@
       </div>
 
       <div class="answerCardsContainer container border border-dark rounded-3 mt-3">
-        <h2 class="display-5 text-success rightAnswersHeading mt-3"></h2>
+        <h2 class="display-5 text-success rightAnswersHeading mt-3">Right Answers</h2>
         <div class="rightAnswerCards container d-flex flex-wrap justify-content-center gap-3">
         </div>
-        <h2 class="display-5 text-danger wrongAnswersHeading mt-3"></h2>
+        <h2 class="display-5 text-danger wrongAnswersHeading mt-3">Wrong Answers</h2>
         <div class="wrongAnswerCards container d-flex flex-wrap justify-content-center gap-3 mb-3">
         </div>
       </div>

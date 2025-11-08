@@ -9,11 +9,12 @@ h2 {
 }
 body {
   background-color: #1d7874;
-  overflow: hidden;
+  /* background-color: #9ab87a; */
+  overflow-x: hidden;
 }
 
 .allPhotosContainer {
-  height: 30vh;
+  height: 35vh;
   overflow: hidden;
 }
 
@@ -77,22 +78,11 @@ body {
   }
 }
 
-/* @keyframes slideUpIn {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-} */
-
-.embiggen {
-  animation: embiggen 1s ease-in-out alternate 6;
+.embiggenFinalScore {
+  animation: embiggenFinalScore 1s ease-in-out alternate 4;
 }
 
-@keyframes embiggen {
+@keyframes embiggenFinalScore {
   from {
     scale: 1;
   }
@@ -112,7 +102,7 @@ body {
     border-radius: 10px;
   }
   to {
-    scale: 1.5;
+    scale: 2;
     opacity: 0;
     background: #ffc107;
     border-radius: 10px;

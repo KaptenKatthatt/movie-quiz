@@ -1,8 +1,22 @@
 ## Bugs
 
+## Start
+
+Change font on question mark to a heavy dark font. Sans serif bold, inky black. More in style with image borders.
+
+Input 3 char user name for high score. Save in array.
+
 ## App general
 
+Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
+
+Add animationend eventlistener to all animations for safe removal after use.
+
+Put a pin in every photo at start page, like notice board. Make notice board background with CSS? Mobile friendly?
+
 ### DONE
+
+Cards get very long in high resolution. Fixed with height on cards.
 
 Can't base selector on length-1 since the list is sorted by nbr and the last nbr can be anything. Figure out some other way to select the last score
 

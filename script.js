@@ -39,7 +39,7 @@ function renderStartScreen() {
   document.querySelector(".allPhotosContainer").innerHTML = students
     .map((student) => {
       return `
-        <div class="card shadow-lg border-dark border-2" style="width: 6rem;">
+        <div class="card shadow-lg border-dark border-2" style="width: 6rem; height:11rem">
   <img src="${student.image}" class="card-img-top" alt="Images of students to guess the names of.">
   <div class="card-body">
     <h2 class="card-title text-center display-5" style="height: 1.5rem;">?</h2>
@@ -55,24 +55,15 @@ function setScore() {
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
   if (rightAnswers.length > 0) {
     scoreBoardEl.classList.add("addScore");
-    scoreBoardEl.addEventListener(
-      "animationend",
-      () => {
-        scoreBoardEl.classList.remove("addScore");
-      },
-      { once: true }
-    );
+    scoreBoardEl.addEventListener("animationend", () => {
+      scoreBoardEl.classList.remove("addScore");
+    });
   }
   scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
-  // previousScore = currentScore; // Uppdatera föregående poäng
 }
-// function setScore() {
-//   scoreBoardEl.classList.add("addScore");
-//   scoreBoardEl.innerText = `Score: ${rightAnswers.length}/${nbrOfSelectedStudents}`;
-// }
 
 function renderNewQuestion() {
-  // first index is currentStudent
+  // Make first index currentStudent
   currentStudent = slicedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
   filteredWrongStudents = shuffledStudents.filter(
@@ -122,7 +113,7 @@ startBtnContainerEl.addEventListener("click", (e) => {
   //Create an array with selected nbr of students
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
 
-  // Trigga view transition för siteContainer när spelet startar
+  // Trigger view transition on game start
   document.startViewTransition(() => {
     document.querySelector(".welcomeHeader").classList.add("d-none");
     // Hide startPage
@@ -171,7 +162,7 @@ nextQuestionBtnEl.addEventListener("click", () => {
 
   // Checks if there is any students left to question about
   if (slicedStudents.length > 0) {
-    document.startViewTransition
+    document.startViewTransition //Checks if view transition is supported, if not skip it.
       ? document.startViewTransition(() => {
           renderNewQuestion();
         })

@@ -6,11 +6,12 @@ const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  // Render right answer cards
+  // Checks whether some right answers or none
   rightAnswersHeadingEl.innerText =
     rightAnswersArr.length > 0
       ? "These were correct!"
       : "No right answers... try again";
+  // Render right answer cards
   rightAnswerCardsEl.innerHTML = rightAnswersArr
     .map((student) => {
       return `
@@ -23,12 +24,13 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     `;
     })
     .join("");
-  // Render wrong answer cards
+  // Checks whether some wrong answers or none
   wrongAnswersHeadingEl.innerHTML =
     wrongAnswersArr.length > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
+  // Render wrong answer cards
   wrongAnswerCardsEl.innerHTML = wrongAnswersArr
     .map((student) => {
       return `
@@ -64,15 +66,15 @@ function renderHighScoreList(finalScore, totalQuestions) {
     );
     latest.lastPlayer = true;
   }
-
+  let timePlayed;
   highScoreList.sort((a, b) => b.finalScore - a.finalScore);
-
+  let playerName = "J.O";
   highScoreListEl.innerHTML = highScoreList
     .map(
       (score) =>
         `<li class="list-group-item ${
           score.lastPlayer ? "bg-success text-light" : "bg-light text-dark"
-        }"> 
+        }"> ${playerName}
     <span class="">${score.finalScore}/${score.totalQuestions}</span></li>
     `
     )
@@ -86,7 +88,7 @@ export function renderEndScreen(
   wrongAnswersArr
 ) {
   // Start animation by adding class
-  endScoreEl.classList.add("embiggen");
+  endScoreEl.classList.add("embiggenFinalScore");
   // Render score to DOM
   endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
 
