@@ -43,7 +43,8 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  console.log("RenderStartScreen");
+  playerNameInputEl.value = getPlayerName();
+
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
       return `
@@ -90,7 +91,6 @@ function startGame() {
 }
 
 function renderNewQuestion() {
-  console.log("renderNewQuestion");
   // Make first index currentStudent
   currentStudent = slicedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
@@ -118,20 +118,15 @@ function renderNewQuestion() {
 }
 
 function restartGame() {
-  console.log("RestartGame");
   rightAnswers = [];
   wrongAnswers = [];
   correctAnswer = false;
-  console.log("Restartgame Array reset", rightAnswers, wrongAnswers);
 
   endScreenEl.classList.add("d-none");
   startScreenContainerEl.classList.remove("d-none");
 }
 
 function setScore(correctAnswer) {
-  console.log("Setscore");
-  console.log("setscore rightanswers", rightAnswers);
-  console.log("setscore wronganswers", wrongAnswers);
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
   if (rightAnswers.length > 0 && correctAnswer) {
     scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
@@ -168,14 +163,7 @@ startBtnContainerEl.addEventListener("click", (e) => {
 
 playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
-  e.preventDefault();
-  console.log(e.target.value);
   setPlayerName(e.target.value);
-  // if (localStorage.getItem("playerName" === null)) {
-  //   playerName = e.target.value;
-  // } else {
-  //   // playerNameInputEl.value = getPlayerName();
-  // }
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.

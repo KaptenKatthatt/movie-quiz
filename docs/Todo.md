@@ -1,12 +1,26 @@
 ## Bugs
 
+Remove Datestamp feature on highscore objects. Use a serial number instead.
+
+Delete lowest score when list reaches 10 scores.
+
 ## Start
+
+When you entered your playername and press enter inputfield should be replaced with "Welcome player ${playerName}"
 
 ## End screen
 
 Max nbr of names on high score to not break design when too long?
 
 ## App general
+
+## Future madness
+
+Switch to movie celebrities
+
+Connect to API at The MDB
+
+Save high score to Fire base DB
 
 ### DONE
 
