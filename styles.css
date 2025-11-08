@@ -30,6 +30,11 @@ body {
   filter: contrast(5);
 }
 
+.allPhotosContainer .card-title {
+  /* font-family: Georgia, "Times New Roman", Times, serif; */
+  /* font-weight: 900; */
+}
+
 .photoContainer {
   view-transition-name: photoContainer;
 }

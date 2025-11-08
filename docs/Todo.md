@@ -1,22 +1,24 @@
 ## Bugs
 
-Score point animation triggers when you press wrong question
-
 ## Start
 
-Change font on question mark to a heavy dark font. Sans serif bold, inky black. More in style with image borders.
+- Input 3 char user name for high score. Save in array. After selection nbr of questions.
 
-Input 3 char user name for high score. Save in array.
+- Put a pin in every photo at start page, like notice board. Make notice board background with CSS? Mobile friendly?
 
-## App general
+## End screen
 
 Put the high score list in a sidebar to the right to make endContainer shorter and make Restart game more visible.
 
+## App general
+
 Add animationend eventlistener to all animations for safe removal after use.
 
-Put a pin in every photo at start page, like notice board. Make notice board background with CSS? Mobile friendly?
-
 ### DONE
+
+- Change font on question mark to a heavy dark font. Sans serif bold, inky black. More in style with image borders.
+
+Bug: Score point animation triggers when you press wrong question
 
 Cards get very long in high resolution. Fixed with height on cards.
 

@@ -40,10 +40,10 @@ function renderStartScreen() {
   document.querySelector(".allPhotosContainer").innerHTML = students
     .map((student) => {
       return `
-        <div class="card shadow-lg border-dark border-2" style="width: 6rem; height:11rem">
+        <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
   <img src="${student.image}" class="card-img-top" alt="Images of students to guess the names of.">
   <div class="card-body">
-    <h2 class="card-title text-center display-5" style="height: 1.5rem;">?</h2>
+    <h2 class="card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
   </div>
 </div>
     `;
