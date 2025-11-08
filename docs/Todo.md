@@ -2,21 +2,20 @@
 
 ## Start
 
-- Input 3 char user name for high score. Save in array. After selection nbr of questions.
-
 ## End screen
 
 Max nbr of names on high score to not break design when too long?
 
-Save high score list in array in local storage?
-
-Animation on restart game?
-
 ## App general
 
-Add animationend eventlistener to all animations for safe removal after use.
-
 ### DONE
+
+Add animationend eventlistener to all animations for safe removal after use.
+Input player name for high score. Save in array. After selection nbr of questions.
+
+Animation on restart game
+
+Save high score list in array in local storage
 
 Non general font on buttons?
 

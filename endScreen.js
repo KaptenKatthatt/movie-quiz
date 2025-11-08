@@ -93,10 +93,11 @@ function renderhighScoreList(finalScore, totalQuestions, playerName) {
     lastPlayer: false,
     playerName,
   };
-  if (localStorage.getItem("highScoreList" !== null)) {
+  if (localStorage.getItem("highScoreList") !== null) {
     highScoreList = localStorage.getItem("highScoreList");
     highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
   }
+
   highScoreList.push(highScoreObj);
 
   // Goes through all players and resets lastPlayer to false for the styling to work on latest player in the next stage
