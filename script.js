@@ -135,6 +135,7 @@ function setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents) {
     pointsEl.classList.add("addScore");
     pointsEl.addEventListener(
       "animationend",
+
       () => {
         pointsEl.classList.remove("addScore");
       },
@@ -158,8 +159,8 @@ startBtnContainerEl.addEventListener("click", (e) => {
     } else if (e.target.textContent.includes("ALL")) {
       nbrOfSelectedStudents = students.length;
     }
+    startGame();
   }
-  startGame();
 });
 
 playerNameInputFormEl.addEventListener("input", (e) => {
