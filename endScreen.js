@@ -11,54 +11,60 @@ const getPlayerName = () => localStorage.getItem("playerName");
 let highScoreList = [
   {
     id: 1,
-    finalScore: 8,
+    finalScore: 10,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 2,
-    finalScore: 7,
+    finalScore: 9,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 3,
-    finalScore: 6,
+    finalScore: 8,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 4,
-    finalScore: 5,
+    finalScore: 7,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 5,
-    finalScore: 4,
+    finalScore: 6,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 6,
-    finalScore: 3,
+    finalScore: 5,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 7,
-    finalScore: 2,
+    finalScore: 4,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 8,
-    finalScore: 1,
+    finalScore: 3,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 9,
+    finalScore: 2,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 10,
     finalScore: 0,
     totalQuestions: 10,
     name: "J.O",
@@ -106,22 +112,35 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 }
 
 function renderHighScoreList(playerObj) {
-  //Creates high score object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list. Convert to player object and send through game instead?
-  // let highScoreObj = {
-  //   id: latestPlayerId + 1,
-  //   finalScore,
-  //   totalQuestions,
-  //   playerName,
-  // };
-
   //Checks if there is a HS-list in localStore, then go get it.
   if (localStorage.getItem("highScoreList") !== null) {
     highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
   }
   // Adds current player to HS-list
-  highScoreList.push(playerObj);
+  //
 
-  //**TODO**Find lowest score and remove from HSL if HSL is 10 indexes
+  //Before adding player player to HSL, check if score higher than lowest score.
+  // Yes? Remove lowest score before push. No? Don't add
+
+  if (highScoreList.length >= 10) {
+    // let lowestScore = highScoreList.reduce((lowest, curr) => {
+    //   return curr.finalScore > lowest.finalScore
+    //     ? curr.finalScore
+    //     : lowest.finalScore;
+    // });
+    let lowestScore = Math.min(
+      ...highScoreList.map((player) => player.finalScore)
+    );
+    console.log("lowest score", lowestScore);
+    console.log("playerobj", playerObj);
+    if (playerObj.finalScore > lowestScore) {
+      highScoreList.pop();
+      highScoreList.push(playerObj);
+      console.log("player pushed score:", playerObj.finalScore);
+    }
+  } else {
+    highScoreList.push(playerObj);
+  }
 
   //Find the playerObj.id with the highest id and set playerObj.name as the latest player on HSL
   let lastPlayerObj = highScoreList.reduce((highest, curr) => {
@@ -132,19 +151,6 @@ function renderHighScoreList(playerObj) {
   function isLastPlayer(playerObj) {
     return playerObj.id === lastPlayerObj.id;
   }
-
-  // Goes through all players and resets lastPlayer to false for the styling to work on latest player in the next stage
-  // highScoreList.forEach((player) => (player.lastPlayer = false));
-
-  //Check if this player is the latest player and sets to true
-  // if (highScoreList.length > 0) {
-  //   const latest = highScoreList.reduce((prev, current) =>
-  //     prev.timeStamp > current.timeStamp ? prev : current
-  //   );
-  //   latest.lastPlayer = true;
-  // }
-
-  // let timePlayed;
 
   // Sorts HSL on finalScore.
   highScoreList.sort((a, b) => b.finalScore - a.finalScore);
@@ -171,7 +177,6 @@ export function renderEndScreen(
   );
 
   console.log("Highest id:", latestPlayerId);
-
   //Create player object
   let playerObj = {
     id: latestPlayerId + 1,

@@ -220,7 +220,7 @@ nextQuestionBtnEl.addEventListener("click", () => {
     nextQuestionBtnEl.classList.add("d-none");
     questionScreenContainerEl.classList.add("d-none");
 
-    // Render endscreen and send over nbr of correct answers and total nbr of questions, playerName
+    // Render endscreen in endScreen.js, send over nbrOfStudents(totalQuestions), right/wrong answersArr
     renderEndScreen(nbrOfSelectedStudents, rightAnswers, wrongAnswers);
   }
 });
