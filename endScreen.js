@@ -6,43 +6,140 @@ const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 
+const getPlayerName = () => localStorage.getItem("playerName");
+
 let highScoreList = [
   {
-    finalScore: 8,
+    id: 1,
+    finalScore: 10,
     totalQuestions: 10,
-    timeStamp: new Date("2024-01-15"),
-    lastPlayer: false,
-    playerName: "J.O",
+    name: "J.O",
   },
   {
-    finalScore: 7,
-    totalQuestions: 10,
-    timeStamp: new Date("2024-01-16"),
-    lastPlayer: false,
-    playerName: "J.O",
-  },
-  {
-    finalScore: 6,
-    totalQuestions: 10,
-    timeStamp: new Date("2024-01-17"),
-    lastPlayer: false,
-    playerName: "J.O",
-  },
-  {
+    id: 2,
     finalScore: 9,
     totalQuestions: 10,
-    timeStamp: new Date("2024-01-18"),
-    lastPlayer: false,
-    playerName: "J.O",
+    name: "J.O",
   },
   {
+    id: 3,
+    finalScore: 8,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 4,
+    finalScore: 7,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 5,
+    finalScore: 6,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 6,
     finalScore: 5,
     totalQuestions: 10,
-    timeStamp: new Date("2024-01-19"),
-    lastPlayer: false,
-    playerName: "J.O",
+    name: "J.O",
+  },
+  {
+    id: 7,
+    finalScore: 4,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 8,
+    finalScore: 3,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 9,
+    finalScore: 2,
+    totalQuestions: 10,
+    name: "J.O",
+  },
+  {
+    id: 10,
+    finalScore: 0,
+    totalQuestions: 10,
+    name: "J.O",
   },
 ];
+function renderHighScoreList(totalQuestions, rightAnswersArr) {
+  //Checks if there is a HS-list in localStore, then go get it.
+  if (localStorage.getItem("highScoreList") !== null) {
+    highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+  } else {
+    localStorage.setItem("highScoreList", highScoreList);
+  }
+
+  let latestPlayerId = Math.max(0, ...highScoreList.map((player) => player.id));
+
+  // console.log("Highest id:", latestPlayerId);
+  //Create player object
+  let playerObj = {
+    id: latestPlayerId + 1,
+    finalScore: rightAnswersArr.length,
+    totalQuestions: totalQuestions,
+    name: getPlayerName() || "someDude",
+  };
+
+  // Adds current player to HS-list
+  //Before adding player player to HSL, check if score higher than lowest score.
+  // Yes? Remove lowest score before push. No? Don't add
+  if (highScoreList.length >= 10) {
+    // let lowestScore = highScoreList.reduce((lowest, curr) => {
+    //   return curr.finalScore > lowest.finalScore
+    //     ? curr.finalScore
+    //     : lowest.finalScore;
+    // });
+    let lowestScore = Math.min(
+      ...highScoreList.map((player) => player.finalScore)
+    );
+    console.log("lowest score", lowestScore);
+    console.log("playerobj", playerObj);
+    if (playerObj.finalScore > lowestScore) {
+      highScoreList.pop();
+      highScoreList.push(playerObj);
+      // console.log("player pushed score:", playerObj.finalScore);
+    } else {
+      alert("Too low score, no high score list for you!");
+    }
+  } else {
+    highScoreList.push(playerObj);
+  }
+
+  //Find the playerObj.id with the highest id and set playerObj.name as the latest player on HSL
+  // let lastPlayerObj = highScoreList.reduce((highest, curr) => {
+  //   return curr.id > highest.id ? curr : highest;
+  // }, highScoreList[0]);
+
+  //Checks if the current player is the latest player
+  function isLastPlayer(player) {
+    // console.log("islastplayer playerobj:", playerObj);
+    return player.id === playerObj.id;
+  }
+
+  // Sorts HSL on finalScore.
+  highScoreList.sort((a, b) => b.finalScore - a.finalScore);
+  highScoreListEl.innerHTML = highScoreList
+    .map(
+      (player) =>
+        `<li class="list-group-item ${
+          isLastPlayer(player) ? "fw-bolder" : ""
+        }">${player.name} ${player.finalScore}/${player.totalQuestions}</li>`
+    )
+    .join("");
+  localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+
+  // Render score to DOM
+  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${playerObj.finalScore}/${playerObj.totalQuestions}</span>`;
+}
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   // Checks whether some right answers or none
@@ -55,11 +152,11 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
     .map((student) => {
       return `
         <div class="card" style="width: 9rem;">
-  <img src="${student.image}" class="card-img-top" alt="${student.name}">
-  <div class="card-body">
-    <h5 class="card-title">${student.name}</h5>
-  </div>
-</div>
+         <img src="${student.image}" class="card-img-top" alt="${student.name}">
+          <div class="card-body">
+            <h5 class="card-title">${student.name}</h5>
+          </div>
+        </div>
     `;
     })
     .join("");
@@ -73,65 +170,28 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   wrongAnswerCardsEl.innerHTML = wrongAnswersArr
     .map((student) => {
       return `
-            <div class="card" style="width: 9rem;">
-    <img src="${student.image}" class="card-img-top" alt="${student.name}">
-    <div class="card-body">
-      <h5 class="card-title">${student.name}</h5>
-    </div>
-  </div>
+        <div class="card" style="width: 9rem;">
+          <img src="${student.image}" class="card-img-top" alt="${student.name}">
+          <div class="card-body">
+            <h5 class="card-title">${student.name}</h5>
+          </div>
+        </div>
       `;
     })
     .join("");
 }
-
-function renderhighScoreList(finalScore, totalQuestions, playerName) {
-  //Creates object with both score and nbrOfQuestions that game. Sort on finalScore for highscore list.
-  let highScoreObj = {
-    finalScore,
-    totalQuestions,
-    timeStamp: new Date(),
-    lastPlayer: false,
-    playerName,
-  };
-  if (localStorage.getItem("highScoreList") !== null) {
-    highScoreList = localStorage.getItem("highScoreList");
-    highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
-  }
-
-  highScoreList.push(highScoreObj);
-
-  // Goes through all players and resets lastPlayer to false for the styling to work on latest player in the next stage
-  highScoreList.forEach((player) => (player.lastPlayer = false));
-
-  //Check if this player is the latest player and sets to true
-  if (highScoreList.length > 0) {
-    const latest = highScoreList.reduce((prev, current) =>
-      prev.timeStamp > current.timeStamp ? prev : current
-    );
-    latest.lastPlayer = true;
-  }
-  let timePlayed;
-  highScoreList.sort((a, b) => b.finalScore - a.finalScore);
-  highScoreListEl.innerHTML = highScoreList
-    .map(
-      (score) =>
-        `<li class="list-group-item ${
-          score.lastPlayer ? "bg-success text-light" : "bg-light text-dark"
-        }"> ${score.playerName}
-    <span class="">${score.finalScore}/${score.totalQuestions}</span></li>
-    `
-    )
-    .join("");
-  localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
-}
-
 export function renderEndScreen(
-  finalScore,
   totalQuestions,
   rightAnswersArr,
-  wrongAnswersArr,
-  playerName
+  wrongAnswersArr
 ) {
+  //Find the highest id of players on the HSL.
+  // let latestPlayerId = highScoreList.reduce(
+  //   (max, curr) => (curr.id > max ? curr.id : max),
+  //   0
+  // );
+  // Finds highest id of player on HSL. Used for styling last player on HSL and creating new player obj.
+
   //Show endscreen
   endScreenEl.classList.remove("d-none");
   // Start animation by adding class
@@ -143,10 +203,10 @@ export function renderEndScreen(
     },
     { once: true }
   );
-  // Render score to DOM
-  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${finalScore}/${totalQuestions}</span>`;
+  // // Render HSL
+  // endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${playerObj.finalScore}/${playerObj.totalQuestions}</span>`;
+  renderHighScoreList(totalQuestions, rightAnswersArr);
 
-  renderhighScoreList(finalScore, totalQuestions, playerName);
-  // Display correct and wrong answers with name and photo with cards
+  // Display correct and wrong answers with name and photo with BS-cards
   renderAnswerCards(rightAnswersArr, wrongAnswersArr);
 }
