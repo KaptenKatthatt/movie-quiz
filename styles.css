@@ -20,7 +20,8 @@ label[for="playerNameInput"] {
 }
 
 .btn,
-.card-title {
+.card-title,
+input {
   font-family: "Courier New", Courier, monospace;
 }
 

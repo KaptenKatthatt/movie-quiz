@@ -1,7 +1,5 @@
 ## Bugs
 
-Set so yellow animation on score is only on the points. Use existing span
-
 Remove Datestamp feature on highscore objects. Use a serial number instead.
 
 Remove lastPlayer and use highest id instead to indicate last player
@@ -27,6 +25,8 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 ### DONE
+
+Set so yellow animation on score is only on the points. Use existing span
 
 Score broke. FIXED: Had removed once: true from animationend, so it wasn't removed and caused some kind of problem it wasn't telling me about...
 
