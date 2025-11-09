@@ -64,8 +64,10 @@ function startGame() {
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
+  //Initiate score counter
+  setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents);
 
-  // Trigger view transition on game start
+  // Trigger view transition on game start if supported
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // Hide startscreen
@@ -74,8 +76,6 @@ function startGame() {
       // Show questionScreen
       questionScreenContainerEl.classList.remove("d-none");
 
-      //Reset score for first question
-      setScore(correctAnswer);
       // Render the questionPage content
       renderNewQuestion();
     });
@@ -83,8 +83,6 @@ function startGame() {
     startScreenContainerEl.classList.add("d-none");
     // Show questionScreen
     questionScreenContainerEl.classList.remove("d-none");
-    //Reset score for first question
-    setScore(correctAnswer);
     // Render the questionPage content
     renderNewQuestion();
   }
@@ -126,12 +124,13 @@ function restartGame() {
   startScreenContainerEl.classList.remove("d-none");
 }
 
-function setScore(correctAnswer) {
-  // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
+function setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents) {
+  const pointsEl = document.querySelector(".points");
+  //Initialize score
+  pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
 
+  // Checks if array is > 0 so the animation does not run on first question. Then removes class after animation end. Checks for correctAnswer so animation doesn't run on wrong answer.
   if (rightAnswers.length > 0 && correctAnswer) {
-    const pointsEl = document.querySelector(".points");
-    pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
     // Add/remove animation
     pointsEl.classList.add("addScore");
     pointsEl.addEventListener(
@@ -159,8 +158,8 @@ startBtnContainerEl.addEventListener("click", (e) => {
     } else if (e.target.textContent.includes("ALL")) {
       nbrOfSelectedStudents = students.length;
     }
-    startGame();
   }
+  startGame();
 });
 
 playerNameInputFormEl.addEventListener("input", (e) => {
@@ -192,7 +191,7 @@ questionScreenContainerEl.addEventListener("click", (e) => {
 
     nextQuestionBtnEl.classList.remove("d-none");
     // Update scoreboard
-    setScore(correctAnswer);
+    setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents);
   }
 });
 

@@ -80,7 +80,6 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
 
   let latestPlayerId = Math.max(0, ...highScoreList.map((player) => player.id));
 
-  // console.log("Highest id:", latestPlayerId);
   //Create player object
   let playerObj = {
     id: latestPlayerId + 1,
@@ -93,20 +92,12 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
   if (highScoreList.length >= 10) {
-    // let lowestScore = highScoreList.reduce((lowest, curr) => {
-    //   return curr.finalScore > lowest.finalScore
-    //     ? curr.finalScore
-    //     : lowest.finalScore;
-    // });
     let lowestScore = Math.min(
       ...highScoreList.map((player) => player.finalScore)
     );
-    console.log("lowest score", lowestScore);
-    console.log("playerobj", playerObj);
     if (playerObj.finalScore > lowestScore) {
       highScoreList.pop();
       highScoreList.push(playerObj);
-      // console.log("player pushed score:", playerObj.finalScore);
     } else {
       alert("Too low score, no high score list for you!");
     }
@@ -114,14 +105,8 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
     highScoreList.push(playerObj);
   }
 
-  //Find the playerObj.id with the highest id and set playerObj.name as the latest player on HSL
-  // let lastPlayerObj = highScoreList.reduce((highest, curr) => {
-  //   return curr.id > highest.id ? curr : highest;
-  // }, highScoreList[0]);
-
   //Checks if the current player is the latest player
   function isLastPlayer(player) {
-    // console.log("islastplayer playerobj:", playerObj);
     return player.id === playerObj.id;
   }
 
@@ -185,13 +170,6 @@ export function renderEndScreen(
   rightAnswersArr,
   wrongAnswersArr
 ) {
-  //Find the highest id of players on the HSL.
-  // let latestPlayerId = highScoreList.reduce(
-  //   (max, curr) => (curr.id > max ? curr.id : max),
-  //   0
-  // );
-  // Finds highest id of player on HSL. Used for styling last player on HSL and creating new player obj.
-
   //Show endscreen
   endScreenEl.classList.remove("d-none");
   // Start animation by adding class
@@ -204,7 +182,6 @@ export function renderEndScreen(
     { once: true }
   );
   // // Render HSL
-  // endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${playerObj.finalScore}/${playerObj.totalQuestions}</span>`;
   renderHighScoreList(totalQuestions, rightAnswersArr);
 
   // Display correct and wrong answers with name and photo with BS-cards
