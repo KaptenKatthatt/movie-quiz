@@ -8,7 +8,7 @@ const questionScreenContainerEl = document.querySelector(
 const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
-const scoreBoardEl = document.querySelector(".scoreBoard");
+// const scoreBoardEl = document.querySelector(".scoreBoard");
 const restartGameBtn = document.querySelector(".restartGameBtn");
 const endScreenEl = document.querySelector(".endScreen");
 
@@ -60,6 +60,23 @@ function renderStartScreen() {
 }
 
 function startGame() {
+  //Find the highest id of players on the HSL.
+  function getLatestPlayerId() {
+    let latestPlayerId = highScoreList.reduce(
+      (max, curr) => (curr.id > max ? curr.id : max),
+      0
+    );
+    console.log("Highest id:", latestPlayerId);
+  }
+
+  //Create player object
+  let playerObj = {
+    id: getLatestPlayerId() + 1,
+    finalScore: rightAnswers.length,
+    totalQuestions: nbrOfSelectedStudents,
+    name: getPlayerName() || "someDude",
+  };
+
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
@@ -154,6 +171,8 @@ const getPlayerName = () => localStorage.getItem("playerName");
 //Renders initial game screen
 renderStartScreen();
 
+renderEndScreen();
+
 //Listen for nbr of questions selected and start game
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
@@ -227,7 +246,8 @@ nextQuestionBtnEl.addEventListener("click", () => {
       nbrOfSelectedStudents,
       rightAnswers,
       wrongAnswers,
-      getPlayerName()
+      getPlayerName(),
+      playerObj
     );
   }
 });
