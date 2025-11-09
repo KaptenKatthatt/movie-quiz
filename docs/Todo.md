@@ -1,21 +1,4 @@
-### HSL Refactor
-
-- getHSL()
-- setHSL()
-- create playerObj(){
-  - id: latestPlayerId + , <- Kräver tillgång till HSL
-    finalScore,
-    totalQuestions,
-    playerName,
-    }
-
 ## Bugs
-
-Remove Datestamp feature on highscore objects. Use a serial number instead.
-
-Remove lastPlayer and use highest id instead to indicate last player
-
-Delete lowest score when list reaches 10 scores AND IF score is higher than lowest score.
 
 ## Start
 
@@ -23,11 +6,7 @@ When you entered your playername and press enter inputfield should be replaced w
 
 ## End screen
 
-Max nbr of names on high score to not break design when too long?
-
 ## App general
-
-Create player object that contains name and score that is handled through app, instead of variables?
 
 ## Future madness
 
@@ -38,6 +17,27 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 # DONE
+
+Max nbr of names on high score to not break design when too long?
+
+Remove Datestamp feature on highscore objects. Use a serial number instead.
+
+Remove lastPlayer and use highest id instead to indicate last player
+
+Delete lowest score when list reaches 10 scores AND IF score is higher than lowest score.
+
+Create player object that contains name and score that is handled through app, instead of variables?
+
+### HSL Refactor
+
+- getHSL()
+- setHSL()
+- create playerObj(){
+  - id: latestPlayerId + , <- Kräver tillgång till HSL
+    finalScore,
+    totalQuestions,
+    playerName,
+    }
 
 Set so yellow animation on score is only on the points. Use existing span
 
