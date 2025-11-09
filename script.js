@@ -144,10 +144,6 @@ function setScore(correctAnswer) {
   }
 }
 
-const setPlayerName = (playerName) => {
-  localStorage.setItem("playerName", playerName);
-};
-
 /* **************** GAME START****************** */
 
 //Renders initial game screen
@@ -169,7 +165,7 @@ startBtnContainerEl.addEventListener("click", (e) => {
 
 playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
-  setPlayerName(e.target.value);
+  localStorage.setItem("playerName", e.target.value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
