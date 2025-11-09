@@ -1,6 +1,12 @@
 ## Bugs
 
+Score broke
+
+Set so yellow animation on score is only on the points. Use existing span
+
 Remove Datestamp feature on highscore objects. Use a serial number instead.
+
+Remove lastPlayer and use highest id instead to indicate last player
 
 Delete lowest score when list reaches 10 scores.
 
