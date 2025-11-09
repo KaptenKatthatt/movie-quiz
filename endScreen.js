@@ -6,6 +6,8 @@ const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 
+const getPlayerName = () => localStorage.getItem("playerName");
+
 let highScoreList = [
   {
     id: 1,
@@ -158,12 +160,26 @@ function renderHighScoreList(playerObj) {
 }
 
 export function renderEndScreen(
-  finalScore,
   totalQuestions,
   rightAnswersArr,
-  wrongAnswersArr,
-  playerObj
+  wrongAnswersArr
 ) {
+  //Find the highest id of players on the HSL.
+  let latestPlayerId = highScoreList.reduce(
+    (max, curr) => (curr.id > max ? curr.id : max),
+    0
+  );
+
+  console.log("Highest id:", latestPlayerId);
+
+  //Create player object
+  let playerObj = {
+    id: latestPlayerId + 1,
+    finalScore: rightAnswersArr.length,
+    totalQuestions: totalQuestions,
+    name: getPlayerName() || "someDude",
+  };
+
   //Show endscreen
   endScreenEl.classList.remove("d-none");
   // Start animation by adding class

@@ -43,7 +43,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  playerNameInputEl.value = getPlayerName();
+  playerNameInputEl.value = localStorage.getItem("playerName");
 
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
@@ -60,23 +60,6 @@ function renderStartScreen() {
 }
 
 function startGame() {
-  //Find the highest id of players on the HSL.
-  function getLatestPlayerId() {
-    let latestPlayerId = highScoreList.reduce(
-      (max, curr) => (curr.id > max ? curr.id : max),
-      0
-    );
-    console.log("Highest id:", latestPlayerId);
-  }
-
-  //Create player object
-  let playerObj = {
-    id: getLatestPlayerId() + 1,
-    finalScore: rightAnswers.length,
-    totalQuestions: nbrOfSelectedStudents,
-    name: getPlayerName() || "someDude",
-  };
-
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
@@ -164,14 +147,11 @@ function setScore(correctAnswer) {
 const setPlayerName = (playerName) => {
   localStorage.setItem("playerName", playerName);
 };
-const getPlayerName = () => localStorage.getItem("playerName");
 
 /* **************** GAME START****************** */
 
 //Renders initial game screen
 renderStartScreen();
-
-renderEndScreen();
 
 //Listen for nbr of questions selected and start game
 startBtnContainerEl.addEventListener("click", (e) => {
@@ -241,14 +221,7 @@ nextQuestionBtnEl.addEventListener("click", () => {
     questionScreenContainerEl.classList.add("d-none");
 
     // Render endscreen and send over nbr of correct answers and total nbr of questions, playerName
-    renderEndScreen(
-      rightAnswers.length,
-      nbrOfSelectedStudents,
-      rightAnswers,
-      wrongAnswers,
-      getPlayerName(),
-      playerObj
-    );
+    renderEndScreen(nbrOfSelectedStudents, rightAnswers, wrongAnswers);
   }
 });
 //Restart game
