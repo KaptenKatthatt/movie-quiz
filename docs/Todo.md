@@ -1,7 +1,5 @@
 ## Bugs
 
-Score broke
-
 Set so yellow animation on score is only on the points. Use existing span
 
 Remove Datestamp feature on highscore objects. Use a serial number instead.
@@ -29,6 +27,8 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 ### DONE
+
+Score broke. FIXED: Had removed once: true from animationend, so it wasn't removed and caused some kind of problem it wasn't telling me about...
 
 Add animationend eventlistener to all animations for safe removal after use.
 Input player name for high score. Save in array. After selection nbr of questions.

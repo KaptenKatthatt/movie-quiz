@@ -130,10 +130,15 @@ function setScore(correctAnswer) {
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
   if (rightAnswers.length > 0 && correctAnswer) {
     scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
+    // Add/remove animation
     scoreBoardEl.classList.add("addScore");
-    scoreBoardEl.addEventListener("animationend", () => {
-      scoreBoardEl.classList.remove("addScore");
-    });
+    scoreBoardEl.addEventListener(
+      "animationend",
+      () => {
+        scoreBoardEl.classList.remove("addScore");
+      },
+      { once: true }
+    );
   }
 }
 
@@ -214,7 +219,7 @@ nextQuestionBtnEl.addEventListener("click", () => {
     nextQuestionBtnEl.classList.add("d-none");
     questionScreenContainerEl.classList.add("d-none");
 
-    // Render endscreen and send over nbr of correct answers and total nbr of questions
+    // Render endscreen and send over nbr of correct answers and total nbr of questions, playerName
     renderEndScreen(
       rightAnswers.length,
       nbrOfSelectedStudents,
