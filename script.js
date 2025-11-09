@@ -128,14 +128,16 @@ function restartGame() {
 
 function setScore(correctAnswer) {
   // Checks if it is > 0 so it does not run on first question. Then removes class after animation end.
+
   if (rightAnswers.length > 0 && correctAnswer) {
-    scoreBoardEl.innerHTML = `Score: <span class="fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
+    const pointsEl = document.querySelector(".points");
+    pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
     // Add/remove animation
-    scoreBoardEl.classList.add("addScore");
-    scoreBoardEl.addEventListener(
+    pointsEl.classList.add("addScore");
+    pointsEl.addEventListener(
       "animationend",
       () => {
-        scoreBoardEl.classList.remove("addScore");
+        pointsEl.classList.remove("addScore");
       },
       { once: true }
     );
