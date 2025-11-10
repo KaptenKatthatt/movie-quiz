@@ -82,33 +82,33 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   let latestPlayerId = Math.max(0, ...highScoreList.map((player) => player.id));
 
   //Create player object
-  let playerObj = {
+  let currentPlayerObj = {
     id: latestPlayerId + 1,
     finalScore: rightAnswersArr.length,
     totalQuestions: totalQuestions,
     name: getPlayerName() || "someNonameDude",
   };
 
-  // Adds current player to HS-list
+  // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
   if (highScoreList.length >= 10) {
     let lowestScore = Math.min(
       ...highScoreList.map((player) => player.finalScore)
     );
-    if (playerObj.finalScore > lowestScore) {
+    if (currentPlayerObj.finalScore > lowestScore) {
       highScoreList.pop();
-      highScoreList.push(playerObj);
+      highScoreList.push(currentPlayerObj);
     } else {
       noHighScoreEl.classList.remove("d-none");
     }
   } else {
-    highScoreList.push(playerObj);
+    highScoreList.push(currentPlayerObj);
   }
 
   //Checks if the current player is the latest player
   function isLastPlayer(player) {
-    return player.id === playerObj.id;
+    return player.id === currentPlayerObj.id;
   }
 
   // Sorts HSL on finalScore.
@@ -124,7 +124,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 
   // Render score to DOM
-  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${playerObj.finalScore}/${playerObj.totalQuestions}</span>`;
+  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}</span>`;
 }
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
