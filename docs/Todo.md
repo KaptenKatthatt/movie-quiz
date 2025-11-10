@@ -2,7 +2,7 @@
 
 ## Start
 
-When you entered your playername and press enter inputfield should be replaced with "Welcome player ${playerName}"
+When you entered your playername and press enter, inputfield should be replaced with "Welcome player ${playerName}"
 
 ## End screen
 

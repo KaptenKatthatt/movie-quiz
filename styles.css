@@ -12,17 +12,19 @@
   src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
-h1,
-h2,
-.startPhotosContainer .card-title,
-label[for="playerNameInput"] {
-  font-family: "Londrina Shadow";
-}
-
+body,
 .btn,
 .card-title,
 input {
   font-family: "Courier New", Courier, monospace;
+}
+
+h1,
+h2,
+.startPhotosContainer .card-title,
+label[for="playerNameInput"],
+.noHighScore {
+  font-family: "Londrina Shadow";
 }
 
 .answerCardsContainer .card::before {

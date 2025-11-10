@@ -5,6 +5,7 @@ const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
 const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
+const noHighScoreEl = document.querySelector(".noHighScore");
 
 const getPlayerName = () => localStorage.getItem("playerName");
 
@@ -85,7 +86,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
     id: latestPlayerId + 1,
     finalScore: rightAnswersArr.length,
     totalQuestions: totalQuestions,
-    name: getPlayerName() || "someDude",
+    name: getPlayerName() || "someNonameDude",
   };
 
   // Adds current player to HS-list
@@ -99,7 +100,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
       highScoreList.pop();
       highScoreList.push(playerObj);
     } else {
-      alert("Too low score, no high score list for you!");
+      noHighScoreEl.classList.remove("d-none");
     }
   } else {
     highScoreList.push(playerObj);
@@ -127,15 +128,10 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
 }
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  // Checks whether some right answers or none
-  rightAnswersHeadingEl.innerText =
-    rightAnswersArr.length > 0
-      ? "These were correct!"
-      : "No right answers... try again";
-  // Render right answer cards
-  rightAnswerCardsEl.innerHTML = rightAnswersArr
-    .map((student) => {
-      return `
+  function drawCards(arr) {
+    return arr
+      .map((student) => {
+        return `
         <div class="card" style="width: 9rem;">
          <img src="${student.image}" class="card-img-top" alt="${student.name}">
           <div class="card-body">
@@ -143,8 +139,18 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
           </div>
         </div>
     `;
-    })
-    .join("");
+      })
+      .join("");
+  }
+
+  // Checks whether some right answers or none
+  rightAnswersHeadingEl.innerText =
+    rightAnswersArr.length > 0
+      ? "These were correct!"
+      : "No right answers... try again";
+  // Render right answer cards
+  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr);
+
   // Checks whether some wrong answers or none
   wrongAnswersHeadingEl.innerHTML =
     wrongAnswersArr.length > 0
@@ -152,18 +158,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  wrongAnswerCardsEl.innerHTML = wrongAnswersArr
-    .map((student) => {
-      return `
-        <div class="card" style="width: 9rem;">
-          <img src="${student.image}" class="card-img-top" alt="${student.name}">
-          <div class="card-body">
-            <h5 class="card-title">${student.name}</h5>
-          </div>
-        </div>
-      `;
-    })
-    .join("");
+  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr);
 }
 export function renderEndScreen(
   totalQuestions,

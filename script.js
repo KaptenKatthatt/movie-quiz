@@ -5,17 +5,19 @@ const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
+
 const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 // const scoreBoardEl = document.querySelector(".scoreBoard");
+const noHighScoreEl = document.querySelector(".noHighScore");
 const restartGameBtn = document.querySelector(".restartGameBtn");
 const endScreenEl = document.querySelector(".endScreen");
 
 const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
 const playerNameInputEl = document.querySelector("#playerNameInput");
 
-let playerName = "";
+// let playerName = "";
 
 let currentStudent = {};
 let nbrOfSelectedStudents = 0;
@@ -120,6 +122,7 @@ function restartGame() {
   wrongAnswers = [];
   correctAnswer = false;
 
+  noHighScoreEl.classList.add("d-none");
   endScreenEl.classList.add("d-none");
   startScreenContainerEl.classList.remove("d-none");
 }
