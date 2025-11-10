@@ -7,75 +7,22 @@
   xxl: ≥1400px (extra extra large devices, larger desktops)
 */
 
+/* Color palette: Watermelon Sorbet*/
+:root {
+  --red: rgb(239, 71, 111);
+  --yellow: rgb(255, 209, 102);
+  --green: rgb(6, 214, 160);
+  --blue: rgb(17, 138, 178);
+  --dBlue: rgb(7, 59, 76);
+}
+
 @font-face {
   font-family: "Londrina Shadow";
   src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
-body,
-.btn,
-.card-title,
-input {
-  font-family: "Courier New", Courier, monospace;
-}
-
-h1,
-h2,
-.startPhotosContainer .card-title,
-label[for="playerNameInput"],
-.noHighScore {
-  font-family: "Londrina Shadow";
-}
-
-.startScreenContainer .btn {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid black;
-}
-
-.answerCardsContainer .card {
-  border: 1px solid gray;
-}
-.answerCardsContainer {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.highScoreListcontainer {
-  animation: pulseShadowRed 1s ease-in-out infinite alternate;
-}
-.HSL-header {
-  text-decoration: underline 4px solid black;
-  animation: pulseUnderline 1.5s ease-in-out infinite alternate;
-}
-
-input {
-  animation: pulseShadowBlack 1s ease-in-out infinite alternate;
-}
-
-@keyframes pulseShadowBlack {
-  from {
-    box-shadow: 0 0 20px #ffc107;
-  }
-  to {
-    box-shadow: 0 0 20px #198754;
-  }
-}
-
-@keyframes pulseShadowRed {
-  from {
-    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.7);
-  }
-  to {
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
-  }
-}
-
-@keyframes pulseUnderline {
-  from {
-    text-decoration-color: rgba(255, 255, 255, 0);
-  }
-  to {
-    text-decoration-color: rgba(255, 0, 0, 0.7);
-  }
+.addScore {
+  animation: addScore 1s ease-in-out;
 }
 
 .answerCardsContainer .card::before {
@@ -92,22 +39,37 @@ input {
   right: -12px;
 }
 
+.answerCardsContainer .card {
+  border: 1px solid gray;
+}
+.answerCardsContainer {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body,
+.btn,
+.card-title,
+input {
+  font-family: "Courier New", Courier, monospace;
+}
 body {
-  background-color: #ef476f;
+  background-color: var(--red);
   /* background-color: #1d7874; */
   /* background-color: #9ab87a; */
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
 }
-.siteContainer {
-  box-shadow: 0 0 20px #ffd166;
-}
-.welcomeHeader {
-  text-shadow: 0 0 20px #ffd166;
-}
 
-.startPhotosContainer {
-  height: 35vh;
-  overflow: hidden;
+.btn-select5 {
+  background-color: var(--red);
+}
+.btn-select10 {
+  background-color: var(--yellow);
+}
+.btn-select10:hover {
+  background-color: #dcb14e;
+}
+.btn-selectAll {
+  background-color: var(--green);
 }
 
 .card:nth-child(odd) {
@@ -117,20 +79,93 @@ body {
   transform: rotate(-3deg);
 }
 
-.startPhotosContainer img {
-  filter: hue-rotate(50deg);
-  filter: contrast(5);
+.embiggenFinalScore {
+  animation: embiggenFinalScore 1s ease-in-out alternate 4;
 }
 
-.photoContainer {
-  view-transition-name: photoContainer;
-}
-::view-transition-old(photoContainer) {
-  animation: slideOut 0.8s ease-in-out;
+.endScreen .card {
+  border: 2px double black;
 }
 
-::view-transition-new(photoContainer) {
-  animation: slideIn 0.8s ease-in-out;
+.flip {
+  animation: flip 1.5s ease-in-out;
+}
+
+.finalScore {
+  background-color: var(--yellow);
+  box-shadow: 0 0 40px rgb(255, 209, 102);
+  /* text-shadow: 0 0 20px var(--yellow); */
+  padding: 10px;
+  border-radius: 50%;
+  font-weight: 600;
+  text-decoration: underline 5px;
+  /* text-shadow: 5px 5px 80px black; */
+}
+
+.finalScoreText {
+  text-shadow: 0 0 20px var(--yellow);
+  color: var(--red);
+}
+
+h1,
+h2,
+.startPhotosContainer .card-title,
+label[for="playerNameInput"],
+.noHighScore {
+  font-family: "Londrina Shadow";
+}
+
+.highScoreListcontainer {
+  animation: pulseShadowRed 1.5s ease-in-out infinite alternate;
+}
+
+.HSL-header {
+  text-decoration: underline 4px solid black;
+  animation: pulseUnderline 3s ease-in-out infinite alternate;
+}
+
+input {
+  animation: pulseShadowBlack 1s ease-in-out infinite alternate;
+}
+@keyframes addScore {
+  from {
+    scale: 1;
+    opacity: 1;
+    background: var(--yellow);
+    border-radius: 10px;
+  }
+  to {
+    scale: 2;
+    opacity: 0;
+    background: var(--yellow);
+    border-radius: 10px;
+  }
+}
+@keyframes pulseShadowBlack {
+  from {
+    box-shadow: 0 0 20px var(--yellow);
+  }
+  to {
+    box-shadow: 0 0 20px var(--green);
+  }
+}
+
+@keyframes pulseShadowRed {
+  from {
+    box-shadow: 0 4px 8px var(--red);
+  }
+  to {
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulseUnderline {
+  from {
+    text-decoration-color: rgba(255, 255, 255, 0);
+  }
+  to {
+    text-decoration-color: var(--red);
+  }
 }
 
 @keyframes slideOut {
@@ -151,27 +186,11 @@ body {
   }
 }
 
-.startBtnContainer {
-  view-transition-name: startScreen;
-}
-
-::view-transition-old(startScreen) {
-  animation: slideUpOut 0.7s forwards;
-}
-/* Removed because start page should only be removed, the new that replaces it comes from the photoContainer */
-/* ::view-transition-new(startScreen) {
-  animation: slideUpIn 0.7s forwards;
-} */
-
 @keyframes slideUpOut {
   to {
     transform: translateY(-100px);
     opacity: 0;
   }
-}
-
-.embiggenFinalScore {
-  animation: embiggenFinalScore 1s ease-in-out alternate 4;
 }
 
 @keyframes embiggenFinalScore {
@@ -181,29 +200,6 @@ body {
   to {
     scale: 2;
   }
-}
-
-.addScore {
-  animation: addScore 1s ease-in-out;
-}
-@keyframes addScore {
-  from {
-    scale: 1;
-    opacity: 1;
-    background: #ffc107;
-    border-radius: 10px;
-  }
-  to {
-    scale: 2;
-    opacity: 0;
-    background: #ffc107;
-    border-radius: 10px;
-  }
-}
-
-.flip {
-  animation: flip 1.5s ease-in-out;
-  /* transform-style: preserve-3d; */
 }
 
 @keyframes flip {
@@ -216,9 +212,71 @@ body {
     opacity: 0;
   }
 }
-/* .siteContainer {
-  backface-visibility: hidden;
+
+.nextQuestionBtn {
+  background-color: var(--red);
+  box-shadow: 0 0 20px var(--red);
+  color: black;
+}
+
+.photoContainer {
+  border: 2px double black;
+  box-shadow: 0 0px 20px var(--yellow);
+
+  view-transition-name: photoContainer;
+}
+
+.questionBtnContainer .btn:hover {
+  box-shadow: 0 0 20px var(--red);
+}
+.rightColor {
+  box-shadow: 0 0 10px var(--green);
+}
+
+.startBtnContainer {
+  view-transition-name: startScreen;
+}
+
+.siteContainer,
+.questionBtnContainer .btn {
+  box-shadow: 0 0 40px var(--yellow);
+}
+.startScreenContainer .btn {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid black;
+}
+
+.startPhotosContainer {
+  height: 35vh;
+  overflow: hidden;
+}
+
+.startPhotosContainer img {
+  filter: hue-rotate(50deg);
+  filter: contrast(5);
+}
+
+::view-transition-old(photoContainer) {
+  animation: slideOut 0.8s ease-in-out;
+}
+
+::view-transition-new(photoContainer) {
+  animation: slideIn 0.8s ease-in-out;
+}
+
+::view-transition-old(startScreen) {
+  animation: slideUpOut 0.7s forwards;
+}
+/* Removed because start page should only be removed, the new that replaces it comes from the photoContainer */
+/* ::view-transition-new(startScreen) {
+  animation: slideUpIn 0.7s forwards;
 } */
-/* body {
-  perspective: 1000px; 
-} */
+
+.welcomeHeader,
+.questionScreenContainer h2 {
+  text-shadow: var(--yellow) 0 0 40px;
+}
+
+.wrongColor {
+  box-shadow: 0 0 10px var(--red);
+}

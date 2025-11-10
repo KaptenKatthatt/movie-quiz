@@ -36,16 +36,16 @@
         <h2 class="display-6 text-center fw-bold">How many students to guess?</h2>
         <p class="output"></p>
         <div class="nbrQuestionsContainer container d-flex justify-content-center flex-wrap gap-3 p-3 w-75">
-          <button class="btn btn-dark p-4 fs-3 rounded-top-5 ">5?</button>
-          <button class="btn btn-warning p-4 fs-3 rounded-top-5">10?</button>
-          <button class="btn btn-success p-4 fs-3 rounded-1">ALL!!!</button>
+          <button class="btn btn-danger p-4 fs-3 rounded-top-5 btn-select5">5?</button>
+          <button class="btn fs-3 rounded-top-5 btn-select10">10?</button>
+          <button class="btn btn-success fs-3 rounded-1 btn-selectAll">ALL!!!</button>
         </div>
       </div>
 
     </div>
     <!-- Question screen container -->
     <div class="questionScreenContainer container d-flex flex-column align-items-center justify-content-center d-none ">
-      <h2 class="display-4 text-center">Guess the face!</h2>
+      <h2 class="display-4 text-center questionHeader">Guess the face!</h2>
       <h2 class="scoreBoard display-5">Score: <span class="points d-inline-block fw-bold">0/0</span></h2>
 
       <img class="photoContainer img-fluid rounded-5 " src="https://placehold.co/" alt="Photo of the person to guess">
@@ -53,14 +53,14 @@
       <!-- Question buttons container -->
       <div class="questionBtnContainer d-flex flex-wrap justify-content-center gap-3 my-5 w-75">
       </div>
-      <button class=" d-none nextQuestionBtn button btn btn-secondary btn-lg text-center">Next question</button>
+      <button class=" d-none nextQuestionBtn button btn btn-outline-danger btn-lg text-center">Next question</button>
     </div>
 
     <!-- End screen container with high score and right/wrong cards -->
     <div class=" endScreen text-center d-none">
-      <div class="row">
-        <h2 class="display-4 fw-bold">Game Finished!</h2>
-        <h2 class="display-5 endScore">End score</h2>
+      <div class="row endRow">
+        <h2 class="display-4 fw-bold finishedHeader">Game Finished!</h2>
+        <h2 class="display-5 endScore p-2">End score</h2>
       </div>
       <div class="row">
         <div class="col-lg-9">

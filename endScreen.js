@@ -124,15 +124,17 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 
   // Render score to DOM
-  endScoreEl.innerHTML = `Your final score is <span class="bg-success rounded-3">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}</span>`;
+  endScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
 }
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  function drawCards(arr) {
+  function drawCards(arr, isRight) {
     return arr
       .map((student) => {
         return `
-        <div class="card" style="width: 9rem;">
+        <div class="card ${
+          isRight ? "rightColor" : "wrongColor"
+        }" style="width: 9rem;">
          <img src="${student.image}" class="card-img-top" alt="${student.name}">
           <div class="card-body">
             <h5 class="card-title">${student.name}</h5>
@@ -147,9 +149,9 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   rightAnswersHeadingEl.innerText =
     rightAnswersArr.length > 0
       ? "These were correct!"
-      : "No right answers... try again";
+      : "No right answers... Try again!🙃";
   // Render right answer cards
-  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr);
+  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
 
   // Checks whether some wrong answers or none
   wrongAnswersHeadingEl.innerHTML =
@@ -158,7 +160,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr);
+  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
 }
 export function renderEndScreen(
   totalQuestions,
