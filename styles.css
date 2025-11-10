@@ -27,6 +27,57 @@ label[for="playerNameInput"],
   font-family: "Londrina Shadow";
 }
 
+.startScreenContainer .btn {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid black;
+}
+
+.answerCardsContainer .card {
+  border: 1px solid gray;
+}
+.answerCardsContainer {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.highScoreListcontainer {
+  animation: pulseShadowRed 1s ease-in-out infinite alternate;
+}
+.HSL-header {
+  text-decoration: underline 4px solid black;
+  animation: pulseUnderline 1.5s ease-in-out infinite alternate;
+}
+
+input {
+  animation: pulseShadowBlack 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulseShadowBlack {
+  from {
+    box-shadow: 0 0 20px #ffc107;
+  }
+  to {
+    box-shadow: 0 0 20px #198754;
+  }
+}
+
+@keyframes pulseShadowRed {
+  from {
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.7);
+  }
+  to {
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes pulseUnderline {
+  from {
+    text-decoration-color: rgba(255, 255, 255, 0);
+  }
+  to {
+    text-decoration-color: rgba(255, 0, 0, 0.7);
+  }
+}
+
 .answerCardsContainer .card::before {
   content: "📌";
   position: absolute;
@@ -42,9 +93,16 @@ label[for="playerNameInput"],
 }
 
 body {
-  background-color: #1d7874;
+  background-color: #ef476f;
+  /* background-color: #1d7874; */
   /* background-color: #9ab87a; */
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
+}
+.siteContainer {
+  box-shadow: 0 0 20px #ffd166;
+}
+.welcomeHeader {
+  text-shadow: 0 0 20px #ffd166;
 }
 
 .startPhotosContainer {

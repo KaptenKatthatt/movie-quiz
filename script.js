@@ -5,7 +5,6 @@ const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
-
 const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
@@ -103,17 +102,19 @@ function renderNewQuestion() {
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
-  // Generate one button for each student
-  let buttonMeButtons = questionButtonNames.map(
-    (student) =>
-      `<button class="btn btn-warning btn-lg">${student.name}</button>`
-  );
+  // Generate one button for each student name alternative
+  let buttonMeButtons = questionButtonNames
+    .map(
+      (student) =>
+        `<button class="btn btn-warning btn-lg">${student.name}</button>`
+    )
+    .join("");
 
   // Add image to currentStudent from students array
   photoContainerEl.src = currentStudent.image;
 
   //Inject buttons into html and join array
-  questionBtnContainerEl.innerHTML = buttonMeButtons.join("");
+  questionBtnContainerEl.innerHTML = buttonMeButtons;
   nextQuestionBtnEl.classList.add("d-none");
 }
 
