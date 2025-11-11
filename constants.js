@@ -88,25 +88,3 @@ let highScoreList = [
     name: "J.O",
   },
 ];
-
-//Create player object
-export const currentPlayerObj = {
-  id: latestPlayerId + 1,
-  score: rightAnswersArr.length,
-  totalQuestions: totalQuestions,
-  name: getPlayerName() || "someNonameDude",
-};
-
-//Maybe make a single object to bind them all?
-export const game = {
-  score: 0,
-  nbrOfRightAnswers: 0,
-  nbrOfWrongAnswers: 0,
-  nbrOfQuestions: 0,
-  player: {
-    id: latestPlayerId + 1,
-    score: rightAnswersArr.length,
-    totalQuestions: totalQuestions,
-    name: getPlayerName() || "someNonameDude",
-  },
-};

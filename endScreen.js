@@ -4,7 +4,7 @@ import {
   setHighScoreList,
   getPlayerName,
 } from "./storage.js";
-import { ui, highScoreList, currentPlayerObj } from "./constants.js";
+import { ui, highScoreList } from "./constants.js";
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   function formatCards(arr, isRight) {
@@ -51,6 +51,14 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   }
 
   let latestPlayerId = Math.max(0, ...highScoreList.map((player) => player.id));
+
+  //Create player object
+  let currentPlayerObj = {
+    id: latestPlayerId + 1,
+    score: rightAnswersArr.length,
+    totalQuestions: totalQuestions,
+    name: getPlayerName() || "someNonameDude",
+  };
 
   // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
