@@ -21,8 +21,8 @@
   src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
-.addScore {
-  animation: addScore 1s ease-in-out;
+.addScoreAnimation {
+  animation: addScoreAnimation 1s ease-in-out;
 }
 
 .answerCardsContainer .card::before {
@@ -127,7 +127,7 @@ label[for="playerNameInput"],
 input {
   animation: pulseShadowBlack 1s ease-in-out infinite alternate;
 }
-@keyframes addScore {
+@keyframes addScoreAnimation {
   from {
     scale: 1;
     opacity: 1;

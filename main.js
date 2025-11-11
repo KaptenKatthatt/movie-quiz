@@ -8,6 +8,8 @@ const ui = {
   photoContainerEl: document.querySelector(".photoContainer"),
   playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
   playerNameInputEl: document.querySelector("#playerNameInput"),
+  pointsEl: document.querySelector(".points"),
+
   questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
   startScreenContainerEl: document.querySelector(".startScreenContainer"),
   startBtnContainerEl: document.querySelector(".startBtnContainer"),
@@ -20,7 +22,6 @@ let filteredWrongStudents = []; //Student array with correct answer filtered out
 let nbrOfSelectedQuestions = 0;
 let questionButtonNames = []; //The four names on the question buttons
 let shuffledStudents = []; //All students shuffled
-// let studentSliced = false;
 let slicedStudents = []; //Student array sliced to nbr of selected guesses
 
 //Result arrays
@@ -71,8 +72,8 @@ function startGame() {
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
   slicedStudents = shuffledStudents.slice(0, nbrOfSelectedQuestions);
-  //Initiate score counter
-  setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions);
+
+  updateScoreDisplay(isCorrectAnswer && rightAnswersArr.length > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -124,20 +125,22 @@ function renderNewQuestion() {
   ui.nextQuestionBtnEl.classList.add("d-none");
 }
 
-function setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions) {
-  const pointsEl = document.querySelector(".points");
-  //Initialize score
-  pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswersArr.length}/${nbrOfSelectedQuestions}</span>`;
+function formatScoreText(rightCount, totalQuestions) {
+  return `<span class="points d-inline-block fw-bold">${rightCount}/${totalQuestions}</span>`;
+}
 
-  // Checks if array is > 0 so the animation does not run on first question. Then removes class after animation end. Checks for isCorrectAnswer so animation doesn't run on wrong answer.
-  if (rightAnswersArr.length > 0 && isCorrectAnswer) {
-    // Add/remove animation
-    pointsEl.classList.add("addScore");
-    pointsEl.addEventListener(
+function updateScoreDisplay(shouldAnimate = false) {
+  ui.pointsEl.innerHTML = formatScoreText(
+    rightAnswersArr.length,
+    nbrOfSelectedQuestions
+  );
+
+  if (shouldAnimate) {
+    ui.pointsEl.classList.add("addScoreAnimation");
+    ui.pointsEl.addEventListener(
       "animationend",
-
       () => {
-        pointsEl.classList.remove("addScore");
+        ui.pointsEl.classList.remove("addScoreAnimation");
       },
       { once: true }
     );
@@ -192,19 +195,13 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
       .forEach((button) => (button.disabled = true));
 
     ui.nextQuestionBtnEl.classList.remove("d-none");
-    // Update scoreboard
-    setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions);
+
+    updateScoreDisplay(isCorrectAnswer && rightAnswersArr.length > 0);
   }
 });
 
 ui.nextQuestionBtnEl.addEventListener("click", () => {
   slicedStudents.shift();
-
-  // studentSliced = false;
-
-  // //Deletes currentStudent
-  // studentSliced ? "" : slicedStudents.shift();
-  // studentSliced = true;
 
   // Checks if there is any students left to question about
   if (slicedStudents.length > 0) {

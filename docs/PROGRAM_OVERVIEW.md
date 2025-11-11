@@ -4,30 +4,35 @@
 
 ### Variables
 
-| Variable                | Type        | Usage Count | Description                          |
-| ----------------------- | ----------- | ----------- | ------------------------------------ |
-| `highScoreList`         | Array       | 8           | Stores all high score entries        |
-| `finalScore`            | DOM-element | 4           | Reference to the final score element |
-| `endScreenEl`           | DOM-element | 2           | Reference to the end screen          |
-| `highScoreListEl`       | DOM-element | 2           | Reference to the high score list     |
-| `rightAnswerCardsEl`    | DOM-element | 2           | Reference to correct answer cards    |
-| `rightAnswersHeadingEl` | DOM-element | 2           | Heading for correct answers          |
-| `wrongAnswerCardsEl`    | DOM-element | 2           | Reference to incorrect answer cards  |
-| `wrongAnswersHeadingEl` | DOM-element | 2           | Heading for incorrect answers        |
-| `noHighScoreEl`         | DOM-element | 2           | Reference to "no high score" message |
-| `siteContainerEl`       | DOM-element | 2           | Reference to main site container     |
-| `restartGameBtnEl`      | DOM-element | 1           | Reference to restart button          |
+| Variable        | Type   | Usage Count | Description                   |
+| --------------- | ------ | ----------- | ----------------------------- |
+| `ui`            | Object | 11          | DOM element references        |
+| `highScoreList` | Array  | 8           | Stores all high score entries |
 
 ### Functions
 
 | Function                 | Usage Count  | Description                                                |
 | ------------------------ | ------------ | ---------------------------------------------------------- |
 | `renderEndScreen()`      | 1 (exported) | Main function to display the end screen                    |
-| `getPlayerName()`        | 1 (exported) | Retrieves the player's name from localStorage              |
 | `renderHighScoreList()`  | 1            | Renders the high score list and adds the current player    |
 | `renderAnswerCards()`    | 1            | Renders cards for correct and incorrect answers            |
 | `drawCards()` (local)    | 2            | Internal helper function that generates card HTML          |
 | `isLastPlayer()` (local) | 1            | Internal helper function to check if player was last added |
+
+### DOM Elements (ui object)
+
+| Property              | Selector               | Usage Count |
+| --------------------- | ---------------------- | ----------- |
+| `endScreen`           | `.endScreen`           | 2           |
+| `finalScore`          | `.finalScore`          | 4           |
+| `highScoreList`       | `.highScoreList`       | 2           |
+| `noHighScore`         | `.noHighScore`         | 2           |
+| `restartGameBtn`      | `.restartGameBtn`      | 1           |
+| `rightAnswerCards`    | `.rightAnswerCards`    | 2           |
+| `rightAnswersHeading` | `.rightAnswersHeading` | 2           |
+| `siteContainer`       | `.siteContainer`       | 2           |
+| `wrongAnswerCards`    | `.wrongAnswerCards`    | 2           |
+| `wrongAnswersHeading` | `.wrongAnswersHeading` | 2           |
 
 ---
 
@@ -35,38 +40,46 @@
 
 ### Variables
 
-| Variable                    | Type        | Usage Count | Description                           |
-| --------------------------- | ----------- | ----------- | ------------------------------------- |
-| `nextQuestionBtnEl`         | DOM-element | 5           | "Next question" button                |
-| `questionScreenContainerEl` | DOM-element | 4           | Question screen's container           |
-| `questionBtnContainerEl`    | DOM-element | 4           | Container for answer option buttons   |
-| `shuffledStudents`          | Array       | 4           | Shuffled array of all students        |
-| `slicedStudents`            | Array       | 4           | Students limited to selected number   |
-| `currentStudent`            | Object      | 6           | Current student to be guessed         |
-| `rightAnswersArr`           | Array       | 5           | Array of correct answers              |
-| `nbrOfSelectedQuestions`    | Number      | 5           | Number of selected students           |
-| `startScreenContainerEl`    | DOM-element | 3           | Start screen's container              |
-| `questionButtonNames`       | Array       | 3           | Names for answer buttons              |
-| `endScreenEl`               | DOM-element | 2           | End screen's container                |
-| `photoContainerEl`          | DOM-element | 2           | Image element for current student     |
-| `startBtnContainerEl`       | DOM-element | 2           | Container for start buttons           |
-| `filteredWrongStudents`     | Array       | 2           | Students excluding the correct answer |
-| `playerNameInputFormEl`     | DOM-element | 1           | Form for player name input            |
-| `playerNameInputEl`         | DOM-element | 2           | Input field for player name           |
-| `noHighScoreEl`             | DOM-element | 1           | "No high score" message               |
-| `isCorrectAnswer`           | Boolean     | 5           | Flag for correct/incorrect answer     |
-| `wrongAnswersArr`           | Array       | 4           | Array of incorrect answers            |
+| Variable                 | Type    | Usage Count | Description                           |
+| ------------------------ | ------- | ----------- | ------------------------------------- |
+| `ui`                     | Object  | 40+         | DOM element references                |
+| `isCorrectAnswer`        | Boolean | 5           | Flag for correct/incorrect answer     |
+| `currentStudent`         | Object  | 6           | Current student to be guessed         |
+| `filteredWrongStudents`  | Array   | 2           | Students excluding the correct answer |
+| `nbrOfSelectedQuestions` | Number  | 5           | Number of selected students           |
+| `questionButtonNames`    | Array   | 3           | Names for answer buttons              |
+| `shuffledStudents`       | Array   | 4           | Shuffled array of all students        |
+| `slicedStudents`         | Array   | 4           | Students limited to selected number   |
+| `rightAnswersArr`        | Array   | 5           | Array of correct answers              |
+| `wrongAnswersArr`        | Array   | 4           | Array of incorrect answers            |
 
 ### Functions
 
 | Function                 | Usage Count  | Description                                  |
 | ------------------------ | ------------ | -------------------------------------------- |
 | `cloneAndShuffleArray()` | 4            | Fisher-Yates algorithm to shuffle an array   |
+| `renderStartScreen()`    | 1            | Renders the start screen with student cards  |
+| `restartGame()`          | 1 (exported) | Resets the game to initial state             |
+| `startGame()`            | 1            | Initializes a new game                       |
 | `renderNewQuestion()`    | 2            | Renders next question with image and buttons |
 | `setScore()`             | 2            | Updates score and animates score increase    |
-| `renderStartScreen()`    | 1            | Renders the start screen with student cards  |
-| `startGame()`            | 1            | Initializes a new game                       |
-| `restartGame()`          | 1 (exported) | Resets the game to initial state             |
+
+### DOM Elements (ui object)
+
+| Property                  | Selector                   | Usage Count |
+| ------------------------- | -------------------------- | ----------- |
+| `nextQuestionBtn`         | `.nextQuestionBtn`         | 5           |
+| `noHighScore`             | `.noHighScore`             | 1           |
+| `endScreen`               | `.endScreen`               | 2           |
+| `photoContainer`          | `.photoContainer`          | 2           |
+| `playerNameInputForm`     | `.playerNameInputForm`     | 1           |
+| `playerNameInput`         | `#playerNameInput`         | 2           |
+| `questionBtnContainer`    | `.questionBtnContainer`    | 4           |
+| `startScreenContainer`    | `.startScreenContainer`    | 3           |
+| `startBtnContainer`       | `.startBtnContainer`       | 2           |
+| `questionScreenContainer` | `.questionScreenContainer` | 4           |
+| `startPhotosContainer`    | `.startPhotosContainer`    | 1           |
+| `points`                  | `.points`                  | 2           |
 
 ---
 
@@ -121,13 +134,15 @@
 
    - ✅Create `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
    - ✅Replace direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
+   - **Status**: ✅ COMPLETED
    - **Benefit**: Centralized storage access, easier testing, single point of change
 
 2. ✅**Group DOM element selections**
 
-- ✅In `main.js`: Create a `const ui = { nextQuestionBtn: ..., photoContainer: ..., ... }` object at the top
-- ✅In `endScreen.js`: Create a similar `const ui = { ... }` object
-- **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
+   - ✅In `main.js`: Create a `const ui = { ... }` object with all DOM selectors at the top
+   - ✅In `endScreen.js`: Create a similar `const ui = { ... }` object
+   - **Status**: ✅ COMPLETED
+   - **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
 
 3. **Split `setScore()` function** ⚠️ **Current Issue**
 
@@ -135,11 +150,16 @@
    - Suggested split:
      - `formatScoreText(rightCount, totalQuestions)` — returns string only (pure function)
      - `updateScoreDisplay(text, shouldAnimate)` — handles DOM updates and animation
+   - **Status**: ⏳ NOT STARTED
    - **Benefit**: Better testability, clearer separation of concerns, easier to reuse
 
-4. **Remove unused/commented code**
-   - Remove the commented-out lines related to `studentSliced` logic (lines with `// studentSliced = false;` etc.)
-   - Remove unused `// const scoreBoardEl = document.querySelector(".scoreBoard");`
+4. ✅**Remove unused/commented code**
+
+   ✅- Remove the commented-out lines: `// let studentSliced = false;`
+
+   -✅ Remove any other commented-out code blocks
+
+   - **Status**: ⏳ IN PROGRESS (partially done)
    - **Benefit**: Cleaner codebase, reduces confusion
 
 ### Medium Priority
@@ -148,61 +168,79 @@
 
    - `nbrOfSelectedQuestions` → `questionCount` (shorter, clearer)
    - `isCorrectAnswer` → `lastAnswerWasCorrect` (more descriptive of what it represents)
+   - **Status**: ⏳ NOT STARTED
    - **Benefit**: Better code readability
 
 6. **Separate data from rendering in high score logic**
 
    - Extract pure logic from `renderHighScoreList()`:
-     - `computeHighScoreEntry(playerName, score, totalQuestions)` — creates entry object
-     - `shouldAddToHighScores(entry, list)` — checks if entry qualifies
-     - Keep `renderHighScoreListUI()` for DOM updates only
-   - **Benefit**: Testable business logic, reusable functions
+     - `createHighScoreEntry(playerName, score, totalQuestions)` — creates entry object
+     - `shouldAddToHighScores(entry, list)` — checks if entry qualifies (returns boolean)
+     - `sortHighScoreList(list)` — sorts list by score (pure function)
+     - Keep `renderHighScoreListUI(list)` for DOM updates only
+   - Move default high score list to separate constant or data file
+   - **Status**: ⏳ NOT STARTED
+   - **Benefit**: Testable business logic, reusable functions, easier to debug
 
 7. **Create a game state object**
 
-   - Introduce: `const gameState = { playerName, totalQuestions, rightAnswers: [], wrongAnswers: [], remaining: [] }`
-   - Pass `gameState` to functions instead of multiple individual variables
-   - **Benefit**: Cleaner function signatures, easier to debug, scales better with new features
+   - Consolidate game variables into: `const gameState = { playerName, questionCount, currentIndex: 0, rightAnswers: [], wrongAnswers: [] }`
+   - Pass `gameState` to functions instead of multiple individual parameters
+   - **Status**: ⏳ NOT STARTED
+   - **Benefit**: Cleaner function signatures, easier to debug, scales better with new features, easier to save/restore state
 
 8. **Fix high score insertion logic**
-   - Current: uses `pop()` which removes last element, but list should be sorted by score
-   - Better: Find index of lowest score with `findIndex()` and replace it directly
-   - **Benefit**: Correct behavior, clearer intent
+
+   - Current: uses `pop()` to remove last element, but should remove lowest score entry
+   - Better: Use `findIndex()` to locate lowest score and replace it directly
+   - Example: `const lowestIndex = list.findIndex(player => player.finalScore === Math.min(...list.map(p => p.finalScore)));`
+   - **Status**: ⏳ NOT STARTED
+   - **Benefit**: Correct behavior, clearer intent, handles edge cases better
 
 ### Low Priority (UX/Accessibility)
 
 9. **Improve focus management**
 
-   - After `renderNewQuestion()`, move focus to first answer button: `firstAnswerButton.focus()`
-   - **Benefit**: Better keyboard navigation, improved accessibility
+   - After `renderNewQuestion()`, move focus to first answer button: `ui.questionBtnContainer.querySelector("button").focus()`
+   - After `renderStartScreen()`, move focus to first question count button
+   - **Status**: ⏳ NOT STARTED
+   - **Benefit**: Better keyboard navigation, improved accessibility for keyboard users
 
 10. **Add ARIA live region for score updates**
 
-    - Wrap score element with `aria-live="polite"` for screen reader announcements
+    - Wrap score element with `aria-live="polite"` and `aria-atomic="true"` in HTML
+    - Add `role="status"` for screen reader announcements
+    - **Status**: ⏳ NOT STARTED
     - **Benefit**: Better accessibility for users with screen readers
 
-11. **Consider TypeScript or JSDoc**
+11. **Add JSDoc type hints**
 
-    - Add JSDoc type hints for functions and important objects
-    - Example: `/** @param {Student} student @returns {string} */`
-    - **Benefit**: Better IDE support, clearer documentation, fewer bugs
+    - Add JSDoc comments to functions with parameter and return types
+    - Example: `/** @param {Array<Student>} students @returns {Array<Student>} */`
+    - **Status**: ⏳ NOT STARTED
+    - **Benefit**: Better IDE support, clearer documentation, easier to spot type-related bugs
 
 12. **Move inline styles to CSS**
+
     - In `renderAnswerCards()`: inline `style="width: 9rem;"` should be a CSS class
     - In `renderStartScreen()`: inline `style="width: 6rem; height:10rem"` should be a CSS class
-    - **Benefit**: Better maintainability, easier to update styling
+    - **Status**: ⏳ NOT STARTED
+    - **Benefit**: Better maintainability, easier to update styling, cleaner HTML templates
 
-### Code Quality Issues Found
+### Code Quality Issues
 
-- ⚠️ **Circular import risk**: `main.js` imports from `endScreen.js` AND `endScreen.js` imports from `main.js` (via `restartGame`). Consider using event-based communication instead.
-- ⚠️ **Magic string "Next question"** used in event listener — consider using data attributes
-- ⚠️ **High score list default entries** hardcoded with placeholder names — should be empty by default
-- ℹ️ **View transitions API** — Good progressive enhancement, but consider testing in older browsers
+- ⚠️ **Magic string "Next question"** used in event listener (line in `questionScreenContainer` listener) — consider using `data-*` attributes instead
+- ⚠️ **High score list default entries** hardcoded with placeholder names — should start empty
+- ℹ️ **View transitions API** — Good progressive enhancement, but consider browser compatibility testing
+- ℹ️ **Animation listeners** — Multiple `addEventListener` calls with `{ once: true }` — consider abstracting to helper function
 
 ### Suggested Implementation Order
 
-1. **First**: Extract `storage.js` (quick win, immediate benefit)
-2. **Second**: Group DOM selections into `ui` objects (improves readability)
-3. **Third**: Split `setScore()` function (improves code quality)
-4. **Fourth**: Remove commented code (cleanup)
-5. **Then**: Implement remaining suggestions based on priority
+1. **✅ DONE**: Extract `storage.js`
+2. **✅ DONE**: Group DOM selections into `ui` objects
+3. **NEXT**: Remove commented code (cleanup)
+4. **THEN**: Split `setScore()` function (improves code quality)
+5. **THEN**: Improve variable naming (readability)
+6. **THEN**: Separate data from rendering in high score logic (testability)
+7. **THEN**: Create game state object (scalability)
+8. **THEN**: Implement accessibility improvements (UX)
