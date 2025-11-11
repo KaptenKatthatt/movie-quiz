@@ -110,7 +110,7 @@ function renderNewQuestion() {
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
   // Generate one button for each student name alternative
-  let buttonMeButtons = questionButtonNames
+  let fourQuestionButtons = questionButtonNames
     .map(
       (student) =>
         `<button class="btn btn-warning btn-lg">${student.name}</button>`
@@ -121,19 +121,12 @@ function renderNewQuestion() {
   ui.photoContainerEl.src = currentStudent.image;
 
   //Inject buttons into html and join array
-  ui.questionBtnContainerEl.innerHTML = buttonMeButtons;
+  ui.questionBtnContainerEl.innerHTML = fourQuestionButtons;
   ui.nextQuestionBtnEl.classList.add("d-none");
 }
 
-function formatScoreText(rightCount, totalQuestions) {
-  return `<span class="points d-inline-block fw-bold">${rightCount}/${totalQuestions}</span>`;
-}
-
 function updateScoreDisplay(shouldAnimate = false) {
-  ui.pointsEl.innerHTML = formatScoreText(
-    rightAnswersArr.length,
-    nbrOfSelectedQuestions
-  );
+  ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswersArr.length}/${nbrOfSelectedQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl.classList.add("addScoreAnimation");

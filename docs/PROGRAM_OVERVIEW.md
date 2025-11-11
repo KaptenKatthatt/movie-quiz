@@ -239,7 +239,7 @@
 2. ✅ Group DOM selections into `ui` objects
 3. ✅ Remove commented code (cleanup)
 4. ✅ Improve variable naming (readability)
-5. ⏳ **NEXT**: Split `setScore()` function (improves code quality)
-6. ⏳ Separate data from rendering in high score logic (testability)
-7. ⏳ Create game state object (scalability)
+5. ✅ : Split `setScore()` function (improves code quality)
+6. ⏳ Create game state object (scalability)
+7. ⏳ Separate data from rendering in high score logic (testability)
 8. ⏳ Implement accessibility improvements (UX)
