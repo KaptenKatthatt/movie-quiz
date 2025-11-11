@@ -1,14 +1,17 @@
+import { restartGame } from "./main.js";
+
 const endScreenEl = document.querySelector(".endScreen");
 const endScoreEl = document.querySelector(".endScore");
 const highScoreListEl = document.querySelector(".highScoreList");
+const noHighScoreEl = document.querySelector(".noHighScore");
 const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
 const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
+const restartGameBtnEl = document.querySelector(".restartGameBtn");
+const siteContainerEl = document.querySelector(".siteContainer");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
-const noHighScoreEl = document.querySelector(".noHighScore");
-const restartGameBtn = document.querySelector(".restartGameBtn");
 
-const getPlayerName = () => localStorage.getItem("playerName");
+export const getPlayerName = () => localStorage.getItem("playerName");
 
 let highScoreList = [
   {
@@ -72,6 +75,43 @@ let highScoreList = [
     name: "J.O",
   },
 ];
+
+function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
+  function drawCards(arr, isRight) {
+    return arr
+      .map((student) => {
+        return `
+        <div class="card ${
+          isRight ? "rightColor" : "wrongColor"
+        }" style="width: 9rem;">
+         <img src="${student.image}" class="card-img-top" alt="${student.name}">
+          <div class="card-body">
+            <h5 class="card-title">${student.name}</h5>
+          </div>
+        </div>
+    `;
+      })
+      .join("");
+  }
+
+  // Checks whether some right answers or none
+  rightAnswersHeadingEl.innerText =
+    rightAnswersArr.length > 0
+      ? "These were correct!"
+      : "No right answers... Try again!🙃";
+  // Render right answer cards
+  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
+
+  // Checks whether some wrong answers or none
+  wrongAnswersHeadingEl.innerHTML =
+    wrongAnswersArr.length > 0
+      ? "These were wrong..."
+      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
+
+  // Render wrong answer cards
+  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
+}
+
 function renderHighScoreList(totalQuestions, rightAnswersArr) {
   //Checks if there is a HS-list in localStore, then go get it.
   if (localStorage.getItem("highScoreList") !== null) {
@@ -128,52 +168,8 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   endScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
 }
 
-function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  function drawCards(arr, isRight) {
-    return arr
-      .map((student) => {
-        return `
-        <div class="card ${
-          isRight ? "rightColor" : "wrongColor"
-        }" style="width: 9rem;">
-         <img src="${student.image}" class="card-img-top" alt="${student.name}">
-          <div class="card-body">
-            <h5 class="card-title">${student.name}</h5>
-          </div>
-        </div>
-    `;
-      })
-      .join("");
-  }
-
-  // Checks whether some right answers or none
-  rightAnswersHeadingEl.innerText =
-    rightAnswersArr.length > 0
-      ? "These were correct!"
-      : "No right answers... Try again!🙃";
-  // Render right answer cards
-  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
-
-  // Checks whether some wrong answers or none
-  wrongAnswersHeadingEl.innerHTML =
-    wrongAnswersArr.length > 0
-      ? "These were wrong..."
-      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
-
-  // Render wrong answer cards
-  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
-}
-function restartGame() {
-  rightAnswers = [];
-  wrongAnswers = [];
-  correctAnswer = false;
-
-  noHighScoreEl.classList.add("d-none");
-  endScreenEl.classList.add("d-none");
-  startScreenContainerEl.classList.remove("d-none");
-}
 //Restart game
-restartGameBtn.addEventListener("click", () => {
+restartGameBtnEl.addEventListener("click", () => {
   siteContainerEl.classList.add("flip");
   siteContainerEl.addEventListener(
     "animationend",
@@ -192,7 +188,7 @@ export function renderEndScreen(
 ) {
   //Show endscreen
   endScreenEl.classList.remove("d-none");
-  // Start animation by adding class
+  // Controls animation of final score
   endScoreEl.classList.add("embiggenFinalScore");
   endScoreEl.addEventListener(
     "animationend",

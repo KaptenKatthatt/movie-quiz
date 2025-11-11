@@ -48,15 +48,15 @@
 | `playerNameInputFormEl`     | DOM-element | 1           | Form for player name input                |
 | `playerNameInputEl`         | DOM-element | 2           | Input field for player name               |
 | `currentStudent`            | Object      | 6           | Current student to be guessed             |
-| `nbrOfSelectedStudents`     | Number      | 5           | Number of selected students               |
+| `nbrOfSelectedQuestions`    | Number      | 5           | Number of selected students               |
 | `shuffledStudents`          | Array       | 4           | Shuffled array of all students            |
 | `studentSliced`             | Boolean     | 3           | Flag to check if student has been removed |
 | `slicedStudents`            | Array       | 4           | Students limited to selected number       |
 | `filteredWrongStudents`     | Array       | 2           | Students excluding the correct answer     |
 | `questionButtonNames`       | Array       | 3           | Names for answer buttons                  |
-| `correctAnswer`             | Boolean     | 5           | Flag for correct/incorrect answer         |
-| `rightAnswers`              | Array       | 5           | Array of correct answers                  |
-| `wrongAnswers`              | Array       | 4           | Array of incorrect answers                |
+| `isCorrectAnswer`           | Boolean     | 5           | Flag for correct/incorrect answer         |
+| `rightAnswersArr`           | Array       | 5           | Array of correct answers                  |
+| `wrongAnswersArr`           | Array       | 4           | Array of incorrect answers                |
 
 ### Functions
 
@@ -119,8 +119,8 @@
 ### Variables to Consider:
 
 - **`studentSliced`** - Used in an odd way (3 times). The logic could be simplified.
-- **`correctAnswer`** - Slightly confusing flag name. Consider renaming to something clearer.
-- **`nbrOfSelectedStudents`** - Long name. Consider `selectedCount` or `questionCount`.
+- **`isCorrectAnswer`** - Slightly confusing flag name. Consider renaming to something clearer.
+- **`nbrOfSelectedQuestions`** - Long name. Consider `selectedCount` or `questionCount`.
 
 ### Functions to Consider:
 

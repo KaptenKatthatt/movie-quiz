@@ -1,35 +1,35 @@
-import { renderEndScreen } from "./endScreen.js";
-// const siteContainerEl = document.querySelector(".siteContainer");
+import { renderEndScreen, getPlayerName } from "./endScreen.js";
+
+const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
+const noHighScoreEl = document.querySelector(".noHighScore");
+const endScreenEl = document.querySelector(".endScreen");
+const photoContainerEl = document.querySelector(".photoContainer");
+const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
+const playerNameInputEl = document.querySelector("#playerNameInput");
+const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const startScreenContainerEl = document.querySelector(".startScreenContainer");
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
   ".questionScreenContainer"
 );
-const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
-const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
-const photoContainerEl = document.querySelector(".photoContainer");
 // const scoreBoardEl = document.querySelector(".scoreBoard");
-// const noHighScoreEl = document.querySelector(".noHighScore");
 
 // const endScreenEl = document.querySelector(".endScreen");
 
-const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
-const playerNameInputEl = document.querySelector("#playerNameInput");
-
 // let playerName = "";
 
+let isCorrectAnswer = false; //Boolean for score animation update
 let currentStudent = {};
-let nbrOfSelectedStudents = 0;
-let shuffledStudents = []; //All students shuffled
-let studentSliced = false;
-let slicedStudents = []; //Student array sliced to nbr of selected guesses
 let filteredWrongStudents = []; //Student array with correct answer filtered out
+let nbrOfSelectedQuestions = 0;
 let questionButtonNames = []; //The four names on the question buttons
-let correctAnswer = false; //Boolean for score animation update
+let shuffledStudents = []; //All students shuffled
+// let studentSliced = false;
+let slicedStudents = []; //Student array sliced to nbr of selected guesses
 
 //Result arrays
-let rightAnswers = [];
-let wrongAnswers = [];
+let rightAnswersArr = [];
+let wrongAnswersArr = [];
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -44,7 +44,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  playerNameInputEl.value = localStorage.getItem("playerName");
+  playerNameInputEl.value = getPlayerName();
 
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
@@ -60,13 +60,23 @@ function renderStartScreen() {
     .join("");
 }
 
+export function restartGame() {
+  rightAnswersArr = [];
+  wrongAnswersArr = [];
+  isCorrectAnswer = false;
+
+  noHighScoreEl.classList.add("d-none");
+  endScreenEl.classList.add("d-none");
+  startScreenContainerEl.classList.remove("d-none");
+}
+
 function startGame() {
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
-  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedStudents);
+  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedQuestions);
   //Initiate score counter
-  setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents);
+  setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -118,13 +128,13 @@ function renderNewQuestion() {
   nextQuestionBtnEl.classList.add("d-none");
 }
 
-function setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents) {
+function setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions) {
   const pointsEl = document.querySelector(".points");
   //Initialize score
-  pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswers.length}/${nbrOfSelectedStudents}</span>`;
+  pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswersArr.length}/${nbrOfSelectedQuestions}</span>`;
 
-  // Checks if array is > 0 so the animation does not run on first question. Then removes class after animation end. Checks for correctAnswer so animation doesn't run on wrong answer.
-  if (rightAnswers.length > 0 && correctAnswer) {
+  // Checks if array is > 0 so the animation does not run on first question. Then removes class after animation end. Checks for isCorrectAnswer so animation doesn't run on wrong answer.
+  if (rightAnswersArr.length > 0 && isCorrectAnswer) {
     // Add/remove animation
     pointsEl.classList.add("addScore");
     pointsEl.addEventListener(
@@ -147,11 +157,11 @@ renderStartScreen();
 startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
     if (e.target.textContent.includes("5")) {
-      nbrOfSelectedStudents = 5;
+      nbrOfSelectedQuestions = 5;
     } else if (e.target.textContent.includes("10")) {
-      nbrOfSelectedStudents = 10;
+      nbrOfSelectedQuestions = 10;
     } else if (e.target.textContent.includes("ALL")) {
-      nbrOfSelectedStudents = students.length;
+      nbrOfSelectedQuestions = students.length;
     }
     startGame();
   }
@@ -171,31 +181,34 @@ questionScreenContainerEl.addEventListener("click", (e) => {
     if (currentStudent.name === e.target.textContent) {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
-      rightAnswers.push(currentStudent);
-      correctAnswer = true;
+      rightAnswersArr.push(currentStudent);
+      isCorrectAnswer = true;
     } else if (currentStudent.name !== e.target.textContent) {
       e.target.classList.add("btn-danger");
       e.target.classList.remove("btn-warning");
-      wrongAnswers.push(currentStudent);
-      correctAnswer = false;
+      wrongAnswersArr.push(currentStudent);
+      isCorrectAnswer = false;
     }
 
     //Disables all buttons from being clicked twice
-    const buttons = questionBtnContainerEl.querySelectorAll("button");
-    buttons.forEach((button) => (button.disabled = true));
+    questionBtnContainerEl
+      .querySelectorAll("button")
+      .forEach((button) => (button.disabled = true));
 
     nextQuestionBtnEl.classList.remove("d-none");
     // Update scoreboard
-    setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents);
+    setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions);
   }
 });
 
 nextQuestionBtnEl.addEventListener("click", () => {
-  studentSliced = false;
+  slicedStudents.shift();
 
-  //Deletes currentStudent
-  studentSliced ? "" : slicedStudents.shift();
-  studentSliced = true;
+  // studentSliced = false;
+
+  // //Deletes currentStudent
+  // studentSliced ? "" : slicedStudents.shift();
+  // studentSliced = true;
 
   // Checks if there is any students left to question about
   if (slicedStudents.length > 0) {
@@ -211,6 +224,6 @@ nextQuestionBtnEl.addEventListener("click", () => {
     questionScreenContainerEl.classList.add("d-none");
 
     // Render endscreen in endScreen.js, send over nbrOfStudents(totalQuestions), right/wrong answersArr
-    renderEndScreen(nbrOfSelectedStudents, rightAnswers, wrongAnswers);
+    renderEndScreen(nbrOfSelectedQuestions, rightAnswersArr, wrongAnswersArr);
   }
 });

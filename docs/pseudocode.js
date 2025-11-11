@@ -20,7 +20,7 @@
 //make an array with the correct name and three wrong ones. Randomize the array before showing it.
 
 // User clicks on an option
-//  Correct? (clicked button id === correctAnswer.id)Change class to correct which colors the button green(bs-success)
+//  Correct? (clicked button id === isCorrectAnswer.id)Change class to correct which colors the button green(bs-success)
 //Wrong? Change class to wrong that makes the button red(bs-danger).
 
 //Enable Next question button -> Generates next question

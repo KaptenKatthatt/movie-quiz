@@ -1,3 +1,7 @@
+## Refactoring
+
+Move noHighScore p out o index.html and only inject it when used. Make an easier to understand class name.
+
 ## Bugs
 
 ## Start
