@@ -6,20 +6,16 @@ import {
 } from "./storage.js";
 
 const ui = {
-  finalScore: document.querySelector(".finalScore"),
   endScreenEl: document.querySelector(".endScreen"),
-  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
+  finalScore: document.querySelector(".finalScore"),
+  highScoreListEl: document.querySelector(".highScoreList"),
   noHighScoreEl: document.querySelector(".noHighScore"),
-  playerNameInputEl: document.querySelector("#playerNameInput"),
-  playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
-  photoContainerEl: document.querySelector(".photoContainer"),
-  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
-  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
   restartGameBtnEl: document.querySelector(".restartGameBtn"),
-  startBtnContainerEl: document.querySelector(".startBtnContainer"),
-  startScreenContainerEl: document.querySelector(".startScreenContainer"),
-  startPhotosContainer: document.querySelector(".startPhotosContainer"),
-  pointsEl: document.querySelector(".points"),
+  rightAnswerCardsEl: document.querySelector(".rightAnswerCards"),
+  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading"),
+  siteContainerEl: document.querySelector(".siteContainer"),
+  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards"),
+  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading"),
 };
 
 let highScoreList = [
