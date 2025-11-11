@@ -6,6 +6,7 @@ const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
 const noHighScoreEl = document.querySelector(".noHighScore");
+const restartGameBtn = document.querySelector(".restartGameBtn");
 
 const getPlayerName = () => localStorage.getItem("playerName");
 
@@ -162,6 +163,28 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   // Render wrong answer cards
   wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
 }
+function restartGame() {
+  rightAnswers = [];
+  wrongAnswers = [];
+  correctAnswer = false;
+
+  noHighScoreEl.classList.add("d-none");
+  endScreenEl.classList.add("d-none");
+  startScreenContainerEl.classList.remove("d-none");
+}
+//Restart game
+restartGameBtn.addEventListener("click", () => {
+  siteContainerEl.classList.add("flip");
+  siteContainerEl.addEventListener(
+    "animationend",
+    () => {
+      restartGame();
+      siteContainerEl.classList.remove("flip");
+    },
+    { once: true }
+  );
+});
+
 export function renderEndScreen(
   totalQuestions,
   rightAnswersArr,

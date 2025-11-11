@@ -1,5 +1,5 @@
 import { renderEndScreen } from "./endScreen.js";
-const siteContainerEl = document.querySelector(".siteContainer");
+// const siteContainerEl = document.querySelector(".siteContainer");
 const startScreenContainerEl = document.querySelector(".startScreenContainer");
 const startBtnContainerEl = document.querySelector(".startBtnContainer");
 const questionScreenContainerEl = document.querySelector(
@@ -9,9 +9,9 @@ const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const photoContainerEl = document.querySelector(".photoContainer");
 // const scoreBoardEl = document.querySelector(".scoreBoard");
-const noHighScoreEl = document.querySelector(".noHighScore");
-const restartGameBtn = document.querySelector(".restartGameBtn");
-const endScreenEl = document.querySelector(".endScreen");
+// const noHighScoreEl = document.querySelector(".noHighScore");
+
+// const endScreenEl = document.querySelector(".endScreen");
 
 const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
 const playerNameInputEl = document.querySelector("#playerNameInput");
@@ -118,16 +118,6 @@ function renderNewQuestion() {
   nextQuestionBtnEl.classList.add("d-none");
 }
 
-function restartGame() {
-  rightAnswers = [];
-  wrongAnswers = [];
-  correctAnswer = false;
-
-  noHighScoreEl.classList.add("d-none");
-  endScreenEl.classList.add("d-none");
-  startScreenContainerEl.classList.remove("d-none");
-}
-
 function setScore(correctAnswer, rightAnswers, nbrOfSelectedStudents) {
   const pointsEl = document.querySelector(".points");
   //Initialize score
@@ -223,16 +213,4 @@ nextQuestionBtnEl.addEventListener("click", () => {
     // Render endscreen in endScreen.js, send over nbrOfStudents(totalQuestions), right/wrong answersArr
     renderEndScreen(nbrOfSelectedStudents, rightAnswers, wrongAnswers);
   }
-});
-//Restart game
-restartGameBtn.addEventListener("click", () => {
-  siteContainerEl.classList.add("flip");
-  siteContainerEl.addEventListener(
-    "animationend",
-    () => {
-      restartGame();
-      siteContainerEl.classList.remove("flip");
-    },
-    { once: true }
-  );
 });
