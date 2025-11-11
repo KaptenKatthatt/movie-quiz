@@ -118,7 +118,7 @@
 | `answerCardsContainer`    | class | 1           | Container for answer cards             |
 | `noHighScore`             | class | 2           | "Too Low Score" message                |
 | `highScoreListcontainer`  | class | 1           | Container for high score list          |
-| `HSL-header`              | class | 1           | High score heading                     |
+| `highScoreListHeader`     | class | 1           | High score heading                     |
 | `restartGameBtn`          | class | 2           | Restart button                         |
 | `playerNameInputForm`     | class | 1           | Form for name input                    |
 | `playerNameInput`         | id    | 2           | Input field for name                   |

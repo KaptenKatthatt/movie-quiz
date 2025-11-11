@@ -4,71 +4,7 @@ import {
   setHighScoreList,
   getPlayerName,
 } from "./storage.js";
-
-import { ui } from "./constants.js";
-
-let highScoreList = [
-  {
-    id: 1,
-    score: 10,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 2,
-    score: 9,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 3,
-    score: 8,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 4,
-    score: 7,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 5,
-    score: 6,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 6,
-    score: 5,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 7,
-    score: 4,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 8,
-    score: 3,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 9,
-    score: 2,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-  {
-    id: 10,
-    score: 0,
-    totalQuestions: 10,
-    name: "J.O",
-  },
-];
+import { ui, highScoreList } from "./constants.js";
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   function formatCards(arr, isRight) {
@@ -76,7 +12,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
       .map((student) => {
         return `
         <div class="card ${
-          isRight ? "rightColor" : "wrongColor"
+          isRight ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
         }" style="width: 9rem;">
          <img src="${student.image}" class="card-img-top" alt="${student.name}">
           <div class="card-body">

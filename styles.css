@@ -94,16 +94,12 @@ body {
 .finalScore {
   background-color: var(--yellow);
   box-shadow: 0 0 40px rgb(255, 209, 102);
-  /* text-shadow: 0 0 20px var(--yellow); */
-  /* padding: 10px; */
   border-radius: 50%;
   font-weight: 600;
   text-decoration: underline 5px;
-  /* text-shadow: 5px 5px 80px black; */
 }
 
 .finalScoreText {
-  /* text-shadow: 0 0 20px var(--yellow); */
   color: var(--red);
 }
 
@@ -119,13 +115,13 @@ label[for="playerNameInput"],
   animation: pulseShadowRed 1s ease-in-out infinite alternate;
 }
 
-.HSL-header {
+.highScoreListHeader {
   text-decoration: underline 4px solid black;
   animation: pulseUnderline 1s ease-in-out infinite alternate;
 }
 
 input {
-  animation: pulseShadowBlack 1s ease-in-out infinite alternate;
+  animation: pulseShadowYellowGreen 1s ease-in-out infinite alternate;
 }
 @keyframes addScoreAnimation {
   from {
@@ -141,7 +137,7 @@ input {
     border-radius: 10px;
   }
 }
-@keyframes pulseShadowBlack {
+@keyframes pulseShadowYellowGreen {
   from {
     box-shadow: 0 0 20px var(--yellow);
   }
@@ -222,14 +218,13 @@ input {
 .photoContainer {
   border: 2px double black;
   box-shadow: 0 0px 20px var(--yellow);
-
   view-transition-name: photoContainer;
 }
 
 .questionBtnContainer .btn:hover {
   box-shadow: 0 0 20px var(--red);
 }
-.rightColor {
+.rightAnswerCardShadow {
   box-shadow: 0 0 10px var(--green);
 }
 
@@ -267,7 +262,7 @@ input {
 ::view-transition-old(startScreen) {
   animation: slideUpOut 0.7s forwards;
 }
-/* Removed because start page should only be removed, the new that replaces it comes from the photoContainer */
+/* Removed because start page should only be removed, the new one that replaces it comes from the photoContainer */
 /* ::view-transition-new(startScreen) {
   animation: slideUpIn 0.7s forwards;
 } */
@@ -277,6 +272,6 @@ input {
   text-shadow: var(--yellow) 0 0 40px;
 }
 
-.wrongColor {
+.wrongAnswerCardShadow {
   box-shadow: 0 0 10px var(--red);
 }
