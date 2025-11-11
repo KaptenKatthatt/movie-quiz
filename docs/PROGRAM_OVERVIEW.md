@@ -117,10 +117,10 @@
 
 ### High Priority
 
-1. **Extract localStorage logic into a utility module**
+1. ✅**Extract localStorage logic into a utility module**
 
-   - Create `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
-   - Replace direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
+   - ✅Create `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
+   - ✅Replace direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
    - **Benefit**: Centralized storage access, easier testing, single point of change
 
 2. **Group DOM element selections**
