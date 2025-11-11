@@ -22,7 +22,7 @@ let filteredWrongStudents = []; //Student array with correct answer filtered out
 let nbrOfSelectedQuestions = 0;
 let questionButtonNames = []; //The four names on the question buttons
 let shuffledStudents = []; //All students shuffled
-let slicedStudents = []; //Student array sliced to nbr of selected guesses
+let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesses
 
 //Result arrays
 let rightAnswersArr = [];
@@ -71,7 +71,7 @@ function startGame() {
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
-  slicedStudents = shuffledStudents.slice(0, nbrOfSelectedQuestions);
+  nbrOfSelectedStudents = shuffledStudents.slice(0, nbrOfSelectedQuestions);
 
   updateScoreDisplay(isCorrectAnswer && rightAnswersArr.length > 0);
 
@@ -98,7 +98,7 @@ function startGame() {
 
 function renderNewQuestion() {
   // Make first index currentStudent
-  currentStudent = slicedStudents[0];
+  currentStudent = nbrOfSelectedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
   filteredWrongStudents = shuffledStudents.filter(
     (student) => student.id !== currentStudent.id
@@ -201,10 +201,10 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
 });
 
 ui.nextQuestionBtnEl.addEventListener("click", () => {
-  slicedStudents.shift();
+  nbrOfSelectedStudents.shift();
 
   // Checks if there is any students left to question about
-  if (slicedStudents.length > 0) {
+  if (nbrOfSelectedStudents.length > 0) {
     document.startViewTransition //Checks if view transition is supported, if not skip it.
       ? document.startViewTransition(() => {
           renderNewQuestion();

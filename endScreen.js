@@ -7,7 +7,7 @@ import {
 
 const ui = {
   endScreenEl: document.querySelector(".endScreen"),
-  finalScore: document.querySelector(".finalScore"),
+  finalScoreEl: document.querySelector(".finalScore"),
   highScoreListEl: document.querySelector(".highScoreList"),
   noHighScoreEl: document.querySelector(".noHighScore"),
   restartGameBtnEl: document.querySelector(".restartGameBtn"),
@@ -21,68 +21,68 @@ const ui = {
 let highScoreList = [
   {
     id: 1,
-    finalScore: 10,
+    score: 10,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 2,
-    finalScore: 9,
+    score: 9,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 3,
-    finalScore: 8,
+    score: 8,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 4,
-    finalScore: 7,
+    score: 7,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 5,
-    finalScore: 6,
+    score: 6,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 6,
-    finalScore: 5,
+    score: 5,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 7,
-    finalScore: 4,
+    score: 4,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 8,
-    finalScore: 3,
+    score: 3,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 9,
-    finalScore: 2,
+    score: 2,
     totalQuestions: 10,
     name: "J.O",
   },
   {
     id: 10,
-    finalScore: 0,
+    score: 0,
     totalQuestions: 10,
     name: "J.O",
   },
 ];
 
 function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
-  function drawCards(arr, isRight) {
+  function formatCards(arr, isRight) {
     return arr
       .map((student) => {
         return `
@@ -105,7 +105,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
       ? "These were correct!"
       : "No right answers... Try again!🙃";
   // Render right answer cards
-  ui.rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
+  ui.rightAnswerCardsEl.innerHTML = formatCards(rightAnswersArr, true);
 
   // Checks whether some wrong answers or none
   ui.wrongAnswersHeadingEl.innerHTML =
@@ -114,7 +114,7 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  ui.wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
+  ui.wrongAnswerCardsEl.innerHTML = formatCards(wrongAnswersArr, false);
 }
 
 function renderHighScoreList(totalQuestions, rightAnswersArr) {
@@ -130,7 +130,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   //Create player object
   let currentPlayerObj = {
     id: latestPlayerId + 1,
-    finalScore: rightAnswersArr.length,
+    score: rightAnswersArr.length,
     totalQuestions: totalQuestions,
     name: getPlayerName() || "someNonameDude",
   };
@@ -139,10 +139,8 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
   if (highScoreList.length >= 10) {
-    let lowestScore = Math.min(
-      ...highScoreList.map((player) => player.finalScore)
-    );
-    if (currentPlayerObj.finalScore > lowestScore) {
+    let lowestScore = Math.min(...highScoreList.map((player) => player.score));
+    if (currentPlayerObj.score > lowestScore) {
       highScoreList.pop();
       highScoreList.push(currentPlayerObj);
     } else {
@@ -157,20 +155,20 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
     return player.id === currentPlayerObj.id;
   }
 
-  // Sorts HSL on finalScore.
-  highScoreList.sort((a, b) => b.finalScore - a.finalScore);
+  // Sorts HSL on score.
+  highScoreList.sort((a, b) => b.score - a.score);
   ui.highScoreListEl.innerHTML = highScoreList
     .map(
       (player) =>
         `<li class="list-group-item ${
           isLastPlayer(player) ? "fw-bolder" : ""
-        }">${player.name} ${player.finalScore}/${player.totalQuestions}</li>`
+        }">${player.name} ${player.score}/${player.totalQuestions}</li>`
     )
     .join("");
   setHighScoreList(highScoreList);
 
   // Render score to DOM
-  ui.finalScore.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.score}/${currentPlayerObj.totalQuestions}!!!</span>`;
 }
 
 //Restart game
@@ -194,11 +192,11 @@ export function renderEndScreen(
   //Show endscreen
   ui.endScreenEl.classList.remove("d-none");
   // Controls animation of final score
-  ui.finalScore.classList.add("embiggenFinalScore");
-  ui.finalScore.addEventListener(
+  ui.finalScoreEl.classList.add("embiggenFinalScore");
+  ui.finalScoreEl.addEventListener(
     "animationend",
     () => {
-      ui.finalScore.classList.remove("embiggenFinalScore");
+      ui.finalScoreEl.classList.remove("embiggenFinalScore");
     },
     { once: true }
   );

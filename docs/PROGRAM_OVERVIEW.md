@@ -40,18 +40,18 @@
 
 ### Variables
 
-| Variable                 | Type    | Usage Count | Description                           |
-| ------------------------ | ------- | ----------- | ------------------------------------- |
-| `ui`                     | Object  | 40+         | DOM element references                |
-| `isCorrectAnswer`        | Boolean | 5           | Flag for correct/incorrect answer     |
-| `currentStudent`         | Object  | 6           | Current student to be guessed         |
-| `filteredWrongStudents`  | Array   | 2           | Students excluding the correct answer |
-| `nbrOfSelectedQuestions` | Number  | 5           | Number of selected students           |
-| `questionButtonNames`    | Array   | 3           | Names for answer buttons              |
-| `shuffledStudents`       | Array   | 4           | Shuffled array of all students        |
-| `slicedStudents`         | Array   | 4           | Students limited to selected number   |
-| `rightAnswersArr`        | Array   | 5           | Array of correct answers              |
-| `wrongAnswersArr`        | Array   | 4           | Array of incorrect answers            |
+| Variable                | Type    | Usage Count | Description                           |
+| ----------------------- | ------- | ----------- | ------------------------------------- |
+| `ui`                    | Object  | 40+         | DOM element references                |
+| `isCorrectAnswer`       | Boolean | 5           | Flag for correct/incorrect answer     |
+| `currentStudent`        | Object  | 6           | Current student to be guessed         |
+| `filteredWrongStudents` | Array   | 2           | Students excluding the correct answer |
+| `questionCount`         | Number  | 5           | Number of selected students           |
+| `questionButtonNames`   | Array   | 3           | Names for answer buttons              |
+| `shuffledStudents`      | Array   | 4           | Shuffled array of all students        |
+| `selectedStudents`      | Array   | 4           | Students limited to selected number   |
+| `rightAnswersArr`       | Array   | 5           | Array of correct answers              |
+| `wrongAnswersArr`       | Array   | 4           | Array of incorrect answers            |
 
 ### Functions
 
@@ -126,50 +126,47 @@
 
 ---
 
-## Refactoring Suggestions
+## ✅ COMPLETED
 
-### High Priority
+### 1. Extract localStorage logic into a utility module
 
-1. ✅**Extract localStorage logic into a utility module**
+- Created `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
+- Replaced direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
+- **Benefit**: Centralized storage access, easier testing, single point of change
 
-   - ✅Create `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
-   - ✅Replace direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
-   - **Status**: ✅ COMPLETED
-   - **Benefit**: Centralized storage access, easier testing, single point of change
+### 2. Group DOM element selections
 
-2. ✅**Group DOM element selections**
+- In `main.js`: Created `const ui = { ... }` object with all DOM selectors at the top
+- In `endScreen.js`: Created similar `const ui = { ... }` object
+- **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
 
-   - ✅In `main.js`: Create a `const ui = { ... }` object with all DOM selectors at the top
-   - ✅In `endScreen.js`: Create a similar `const ui = { ... }` object
-   - **Status**: ✅ COMPLETED
-   - **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
+### 3. Remove unused/commented code
 
-3. **Split `setScore()` function** ⚠️ **Current Issue**
+- Removed commented-out lines: `// let studentSliced = false;`
+- Removed other commented-out code blocks
+- **Benefit**: Cleaner codebase, reduces confusion
 
+### 4. Improve variable naming
+
+- Renamed `nbrOfSelectedQuestions` → `questionCount` (shorter, clearer)
+- Renamed `nbrOfSelectedStudents` → `selectedStudents` (more concise)
+- **Benefit**: Better code readability
+
+---
+
+5. **Split `setScore()` function**
    - Currently does both: updates HTML text AND triggers animation
    - Suggested split:
      - `formatScoreText(rightCount, totalQuestions)` — returns string only (pure function)
      - `updateScoreDisplay(text, shouldAnimate)` — handles DOM updates and animation
-   - **Status**: ⏳ NOT STARTED
+   - **Status**: DONE
    - **Benefit**: Better testability, clearer separation of concerns, easier to reuse
 
-4. ✅**Remove unused/commented code**
+## ⏳ IN PROGRESS
 
-   ✅- Remove the commented-out lines: `// let studentSliced = false;`
-
-   -✅ Remove any other commented-out code blocks
-
-   - **Status**: ⏳ IN PROGRESS (partially done)
-   - **Benefit**: Cleaner codebase, reduces confusion
+### High Priority
 
 ### Medium Priority
-
-5. **Improve variable naming**
-
-   - `nbrOfSelectedQuestions` → `questionCount` (shorter, clearer)
-   - `isCorrectAnswer` → `lastAnswerWasCorrect` (more descriptive of what it represents)
-   - **Status**: ⏳ NOT STARTED
-   - **Benefit**: Better code readability
 
 6. **Separate data from rendering in high score logic**
 
@@ -179,22 +176,21 @@
      - `sortHighScoreList(list)` — sorts list by score (pure function)
      - Keep `renderHighScoreListUI(list)` for DOM updates only
    - Move default high score list to separate constant or data file
-   - **Status**: ⏳ NOT STARTED
+   - **Status**: NOT STARTED
    - **Benefit**: Testable business logic, reusable functions, easier to debug
 
 7. **Create a game state object**
 
    - Consolidate game variables into: `const gameState = { playerName, questionCount, currentIndex: 0, rightAnswers: [], wrongAnswers: [] }`
    - Pass `gameState` to functions instead of multiple individual parameters
-   - **Status**: ⏳ NOT STARTED
+   - **Status**: NOT STARTED
    - **Benefit**: Cleaner function signatures, easier to debug, scales better with new features, easier to save/restore state
 
 8. **Fix high score insertion logic**
-
    - Current: uses `pop()` to remove last element, but should remove lowest score entry
    - Better: Use `findIndex()` to locate lowest score and replace it directly
    - Example: `const lowestIndex = list.findIndex(player => player.finalScore === Math.min(...list.map(p => p.finalScore)));`
-   - **Status**: ⏳ NOT STARTED
+   - **Status**: NOT STARTED
    - **Benefit**: Correct behavior, clearer intent, handles edge cases better
 
 ### Low Priority (UX/Accessibility)
@@ -203,44 +199,47 @@
 
    - After `renderNewQuestion()`, move focus to first answer button: `ui.questionBtnContainer.querySelector("button").focus()`
    - After `renderStartScreen()`, move focus to first question count button
-   - **Status**: ⏳ NOT STARTED
+   - **Status**: NOT STARTED
    - **Benefit**: Better keyboard navigation, improved accessibility for keyboard users
 
 10. **Add ARIA live region for score updates**
 
     - Wrap score element with `aria-live="polite"` and `aria-atomic="true"` in HTML
     - Add `role="status"` for screen reader announcements
-    - **Status**: ⏳ NOT STARTED
+    - **Status**: NOT STARTED
     - **Benefit**: Better accessibility for users with screen readers
 
 11. **Add JSDoc type hints**
 
     - Add JSDoc comments to functions with parameter and return types
     - Example: `/** @param {Array<Student>} students @returns {Array<Student>} */`
-    - **Status**: ⏳ NOT STARTED
+    - **Status**: NOT STARTED
     - **Benefit**: Better IDE support, clearer documentation, easier to spot type-related bugs
 
 12. **Move inline styles to CSS**
-
     - In `renderAnswerCards()`: inline `style="width: 9rem;"` should be a CSS class
     - In `renderStartScreen()`: inline `style="width: 6rem; height:10rem"` should be a CSS class
-    - **Status**: ⏳ NOT STARTED
+    - **Status**: NOT STARTED
     - **Benefit**: Better maintainability, easier to update styling, cleaner HTML templates
 
-### Code Quality Issues
+---
 
-- ⚠️ **Magic string "Next question"** used in event listener (line in `questionScreenContainer` listener) — consider using `data-*` attributes instead
+## Code Quality Issues
+
+- ⚠️ **Magic string "Next question"** used in event listener — consider using `data-*` attributes instead
 - ⚠️ **High score list default entries** hardcoded with placeholder names — should start empty
 - ℹ️ **View transitions API** — Good progressive enhancement, but consider browser compatibility testing
 - ℹ️ **Animation listeners** — Multiple `addEventListener` calls with `{ once: true }` — consider abstracting to helper function
 
-### Suggested Implementation Order
+---
 
-1. **✅ DONE**: Extract `storage.js`
-2. **✅ DONE**: Group DOM selections into `ui` objects
-3. **NEXT**: Remove commented code (cleanup)
-4. **THEN**: Split `setScore()` function (improves code quality)
-5. **THEN**: Improve variable naming (readability)
-6. **THEN**: Separate data from rendering in high score logic (testability)
-7. **THEN**: Create game state object (scalability)
-8. **THEN**: Implement accessibility improvements (UX)
+## Suggested Implementation Order
+
+1. ✅ Extract `storage.js`
+2. ✅ Group DOM selections into `ui` objects
+3. ✅ Remove commented code (cleanup)
+4. ✅ Improve variable naming (readability)
+5. ⏳ **NEXT**: Split `setScore()` function (improves code quality)
+6. ⏳ Separate data from rendering in high score logic (testability)
+7. ⏳ Create game state object (scalability)
+8. ⏳ Implement accessibility improvements (UX)

@@ -95,7 +95,7 @@ body {
   background-color: var(--yellow);
   box-shadow: 0 0 40px rgb(255, 209, 102);
   /* text-shadow: 0 0 20px var(--yellow); */
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 50%;
   font-weight: 600;
   text-decoration: underline 5px;
@@ -103,7 +103,7 @@ body {
 }
 
 .finalScoreText {
-  text-shadow: 0 0 20px var(--yellow);
+  /* text-shadow: 0 0 20px var(--yellow); */
   color: var(--red);
 }
 
@@ -116,12 +116,12 @@ label[for="playerNameInput"],
 }
 
 .highScoreListcontainer {
-  animation: pulseShadowRed 1.5s ease-in-out infinite alternate;
+  animation: pulseShadowRed 1s ease-in-out infinite alternate;
 }
 
 .HSL-header {
   text-decoration: underline 4px solid black;
-  animation: pulseUnderline 3s ease-in-out infinite alternate;
+  animation: pulseUnderline 1s ease-in-out infinite alternate;
 }
 
 input {
