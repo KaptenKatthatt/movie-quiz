@@ -7,7 +7,7 @@
 | Variable                | Type        | Usage Count | Description                          |
 | ----------------------- | ----------- | ----------- | ------------------------------------ |
 | `highScoreList`         | Array       | 8           | Stores all high score entries        |
-| `endScoreEl`            | DOM-element | 4           | Reference to the final score element |
+| `finalScore`            | DOM-element | 4           | Reference to the final score element |
 | `endScreenEl`           | DOM-element | 2           | Reference to the end screen          |
 | `highScoreListEl`       | DOM-element | 2           | Reference to the high score list     |
 | `rightAnswerCardsEl`    | DOM-element | 2           | Reference to correct answer cards    |
@@ -80,7 +80,7 @@
 | `startScreenContainer`    | class | 3           | Start screen wrapper                   |
 | `questionScreenContainer` | class | 4           | Question screen wrapper                |
 | `questionBtnContainer`    | class | 4           | Container for answer buttons           |
-| `endScore`                | class | 4           | Final score element                    |
+| `finalScore`              | class | 4           | Final score element                    |
 | `points`                  | class | 2           | Points counter                         |
 | `nextQuestionBtn`         | class | 5           | Next question button                   |
 | `endScreen`               | class | 2           | End screen wrapper                     |
@@ -123,11 +123,11 @@
    - ✅Replace direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
    - **Benefit**: Centralized storage access, easier testing, single point of change
 
-2. **Group DOM element selections**
+2. ✅**Group DOM element selections**
 
-   - In `main.js`: Create a `const ui = { nextQuestionBtn: ..., photoContainer: ..., ... }` object at the top
-   - In `endScreen.js`: Create a similar `const ui = { ... }` object
-   - **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
+- ✅In `main.js`: Create a `const ui = { nextQuestionBtn: ..., photoContainer: ..., ... }` object at the top
+- ✅In `endScreen.js`: Create a similar `const ui = { ... }` object
+- **Benefit**: Improved readability, easier to refactor selectors, better overview of DOM dependencies
 
 3. **Split `setScore()` function** ⚠️ **Current Issue**
 

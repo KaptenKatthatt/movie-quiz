@@ -1,23 +1,18 @@
 import { renderEndScreen } from "./endScreen.js";
 import { getPlayerName, setPlayerName } from "./storage.js";
 
-const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
-const noHighScoreEl = document.querySelector(".noHighScore");
-const endScreenEl = document.querySelector(".endScreen");
-const photoContainerEl = document.querySelector(".photoContainer");
-const playerNameInputFormEl = document.querySelector(".playerNameInputForm");
-const playerNameInputEl = document.querySelector("#playerNameInput");
-const questionBtnContainerEl = document.querySelector(".questionBtnContainer");
-const startScreenContainerEl = document.querySelector(".startScreenContainer");
-const startBtnContainerEl = document.querySelector(".startBtnContainer");
-const questionScreenContainerEl = document.querySelector(
-  ".questionScreenContainer"
-);
-// const scoreBoardEl = document.querySelector(".scoreBoard");
-
-// const endScreenEl = document.querySelector(".endScreen");
-
-// let playerName = "";
+const ui = {
+  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
+  noHighScoreEl: document.querySelector(".noHighScore"),
+  endScreenEl: document.querySelector(".endScreen"),
+  photoContainerEl: document.querySelector(".photoContainer"),
+  playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
+  playerNameInputEl: document.querySelector("#playerNameInput"),
+  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
+  startScreenContainerEl: document.querySelector(".startScreenContainer"),
+  startBtnContainerEl: document.querySelector(".startBtnContainer"),
+  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
+};
 
 let isCorrectAnswer = false; //Boolean for score animation update
 let currentStudent = {};
@@ -45,7 +40,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  playerNameInputEl.value = getPlayerName();
+  ui.playerNameInputEl.value = getPlayerName();
 
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
@@ -66,9 +61,9 @@ export function restartGame() {
   wrongAnswersArr = [];
   isCorrectAnswer = false;
 
-  noHighScoreEl.classList.add("d-none");
-  endScreenEl.classList.add("d-none");
-  startScreenContainerEl.classList.remove("d-none");
+  ui.noHighScoreEl.classList.add("d-none");
+  ui.endScreenEl.classList.add("d-none");
+  ui.startScreenContainerEl.classList.remove("d-none");
 }
 
 function startGame() {
@@ -83,18 +78,18 @@ function startGame() {
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // Hide startscreen
-      startScreenContainerEl.classList.add("d-none");
+      ui.startScreenContainerEl.classList.add("d-none");
 
       // Show questionScreen
-      questionScreenContainerEl.classList.remove("d-none");
+      ui.questionScreenContainerEl.classList.remove("d-none");
 
       // Render the questionPage content
       renderNewQuestion();
     });
   } else {
-    startScreenContainerEl.classList.add("d-none");
+    ui.startScreenContainerEl.classList.add("d-none");
     // Show questionScreen
-    questionScreenContainerEl.classList.remove("d-none");
+    ui.questionScreenContainerEl.classList.remove("d-none");
     // Render the questionPage content
     renderNewQuestion();
   }
@@ -122,11 +117,11 @@ function renderNewQuestion() {
     .join("");
 
   // Add image to currentStudent from students array
-  photoContainerEl.src = currentStudent.image;
+  ui.photoContainerEl.src = currentStudent.image;
 
   //Inject buttons into html and join array
-  questionBtnContainerEl.innerHTML = buttonMeButtons;
-  nextQuestionBtnEl.classList.add("d-none");
+  ui.questionBtnContainerEl.innerHTML = buttonMeButtons;
+  ui.nextQuestionBtnEl.classList.add("d-none");
 }
 
 function setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions) {
@@ -155,7 +150,7 @@ function setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions) {
 renderStartScreen();
 
 //Listen for nbr of questions selected and start game
-startBtnContainerEl.addEventListener("click", (e) => {
+ui.startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
     if (e.target.textContent.includes("5")) {
       nbrOfSelectedQuestions = 5;
@@ -168,13 +163,13 @@ startBtnContainerEl.addEventListener("click", (e) => {
   }
 });
 
-playerNameInputFormEl.addEventListener("input", (e) => {
+ui.playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
   setPlayerName(e.target.value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
-questionScreenContainerEl.addEventListener("click", (e) => {
+ui.questionScreenContainerEl.addEventListener("click", (e) => {
   if (
     e.target.tagName === "BUTTON" &&
     e.target.textContent !== "Next question"
@@ -192,17 +187,17 @@ questionScreenContainerEl.addEventListener("click", (e) => {
     }
 
     //Disables all buttons from being clicked twice
-    questionBtnContainerEl
+    ui.questionBtnContainerEl
       .querySelectorAll("button")
       .forEach((button) => (button.disabled = true));
 
-    nextQuestionBtnEl.classList.remove("d-none");
+    ui.nextQuestionBtnEl.classList.remove("d-none");
     // Update scoreboard
     setScore(isCorrectAnswer, rightAnswersArr, nbrOfSelectedQuestions);
   }
 });
 
-nextQuestionBtnEl.addEventListener("click", () => {
+ui.nextQuestionBtnEl.addEventListener("click", () => {
   slicedStudents.shift();
 
   // studentSliced = false;
@@ -221,8 +216,8 @@ nextQuestionBtnEl.addEventListener("click", () => {
   } else {
     // Game is over, go to endScreen
     //Hide question screen
-    nextQuestionBtnEl.classList.add("d-none");
-    questionScreenContainerEl.classList.add("d-none");
+    ui.nextQuestionBtnEl.classList.add("d-none");
+    ui.questionScreenContainerEl.classList.add("d-none");
 
     // Render endscreen in endScreen.js, send over nbrOfStudents(totalQuestions), right/wrong answersArr
     renderEndScreen(nbrOfSelectedQuestions, rightAnswersArr, wrongAnswersArr);

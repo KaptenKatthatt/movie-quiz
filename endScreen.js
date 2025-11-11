@@ -5,16 +5,22 @@ import {
   getPlayerName,
 } from "./storage.js";
 
-const endScreenEl = document.querySelector(".endScreen");
-const endScoreEl = document.querySelector(".endScore");
-const highScoreListEl = document.querySelector(".highScoreList");
-const noHighScoreEl = document.querySelector(".noHighScore");
-const rightAnswerCardsEl = document.querySelector(".rightAnswerCards");
-const rightAnswersHeadingEl = document.querySelector(".rightAnswersHeading");
-const restartGameBtnEl = document.querySelector(".restartGameBtn");
-const siteContainerEl = document.querySelector(".siteContainer");
-const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
-const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
+const ui = {
+  finalScore: document.querySelector(".finalScore"),
+  endScreenEl: document.querySelector(".endScreen"),
+  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
+  noHighScoreEl: document.querySelector(".noHighScore"),
+  playerNameInputEl: document.querySelector("#playerNameInput"),
+  playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
+  photoContainerEl: document.querySelector(".photoContainer"),
+  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
+  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
+  restartGameBtnEl: document.querySelector(".restartGameBtn"),
+  startBtnContainerEl: document.querySelector(".startBtnContainer"),
+  startScreenContainerEl: document.querySelector(".startScreenContainer"),
+  startPhotosContainer: document.querySelector(".startPhotosContainer"),
+  pointsEl: document.querySelector(".points"),
+};
 
 let highScoreList = [
   {
@@ -98,21 +104,21 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
   }
 
   // Checks whether some right answers or none
-  rightAnswersHeadingEl.innerText =
+  ui.rightAnswersHeadingEl.innerText =
     rightAnswersArr.length > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
   // Render right answer cards
-  rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
+  ui.rightAnswerCardsEl.innerHTML = drawCards(rightAnswersArr, true);
 
   // Checks whether some wrong answers or none
-  wrongAnswersHeadingEl.innerHTML =
+  ui.wrongAnswersHeadingEl.innerHTML =
     wrongAnswersArr.length > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
+  ui.wrongAnswerCardsEl.innerHTML = drawCards(wrongAnswersArr, false);
 }
 
 function renderHighScoreList(totalQuestions, rightAnswersArr) {
@@ -144,7 +150,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
       highScoreList.pop();
       highScoreList.push(currentPlayerObj);
     } else {
-      noHighScoreEl.classList.remove("d-none");
+      ui.noHighScoreEl.classList.remove("d-none");
     }
   } else {
     highScoreList.push(currentPlayerObj);
@@ -157,7 +163,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
 
   // Sorts HSL on finalScore.
   highScoreList.sort((a, b) => b.finalScore - a.finalScore);
-  highScoreListEl.innerHTML = highScoreList
+  ui.highScoreListEl.innerHTML = highScoreList
     .map(
       (player) =>
         `<li class="list-group-item ${
@@ -168,17 +174,17 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
   setHighScoreList(highScoreList);
 
   // Render score to DOM
-  endScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
+  ui.finalScore.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
 }
 
 //Restart game
-restartGameBtnEl.addEventListener("click", () => {
-  siteContainerEl.classList.add("flip");
-  siteContainerEl.addEventListener(
+ui.restartGameBtnEl.addEventListener("click", () => {
+  ui.siteContainerEl.classList.add("flip");
+  ui.siteContainerEl.addEventListener(
     "animationend",
     () => {
       restartGame();
-      siteContainerEl.classList.remove("flip");
+      ui.siteContainerEl.classList.remove("flip");
     },
     { once: true }
   );
@@ -190,13 +196,13 @@ export function renderEndScreen(
   wrongAnswersArr
 ) {
   //Show endscreen
-  endScreenEl.classList.remove("d-none");
+  ui.endScreenEl.classList.remove("d-none");
   // Controls animation of final score
-  endScoreEl.classList.add("embiggenFinalScore");
-  endScoreEl.addEventListener(
+  ui.finalScore.classList.add("embiggenFinalScore");
+  ui.finalScore.addEventListener(
     "animationend",
     () => {
-      endScoreEl.classList.remove("embiggenFinalScore");
+      ui.finalScore.classList.remove("embiggenFinalScore");
     },
     { once: true }
   );
