@@ -43,9 +43,9 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 }
 
 function renderHighScoreList(totalQuestions, rightAnswersArr) {
-  //Checks if there is a HS-list in localStore, then go get it.
-  if (getHighScoreList() !== null) {
-    highScoreList = JSON.parse(getHighScoreList());
+  const storedList = getHighScoreList();
+  if (storedList) {
+    highScoreList = JSON.parse(storedList);
   } else {
     setHighScoreList(highScoreList);
   }
