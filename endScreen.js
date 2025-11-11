@@ -5,18 +5,7 @@ import {
   getPlayerName,
 } from "./storage.js";
 
-const ui = {
-  endScreenEl: document.querySelector(".endScreen"),
-  finalScoreEl: document.querySelector(".finalScore"),
-  highScoreListEl: document.querySelector(".highScoreList"),
-  noHighScoreEl: document.querySelector(".noHighScore"),
-  restartGameBtnEl: document.querySelector(".restartGameBtn"),
-  rightAnswerCardsEl: document.querySelector(".rightAnswerCards"),
-  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading"),
-  siteContainerEl: document.querySelector(".siteContainer"),
-  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards"),
-  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading"),
-};
+import { ui } from "./constants.js";
 
 let highScoreList = [
   {

@@ -1,20 +1,6 @@
 import { renderEndScreen } from "./endScreen.js";
 import { getPlayerName, setPlayerName } from "./storage.js";
-
-const ui = {
-  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
-  noHighScoreEl: document.querySelector(".noHighScore"),
-  endScreenEl: document.querySelector(".endScreen"),
-  photoContainerEl: document.querySelector(".photoContainer"),
-  playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
-  playerNameInputEl: document.querySelector("#playerNameInput"),
-  pointsEl: document.querySelector(".points"),
-
-  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
-  startScreenContainerEl: document.querySelector(".startScreenContainer"),
-  startBtnContainerEl: document.querySelector(".startBtnContainer"),
-  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
-};
+import { ui } from "./constants.js";
 
 let isCorrectAnswer = false; //Boolean for score animation update
 let currentStudent = {};
