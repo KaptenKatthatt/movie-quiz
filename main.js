@@ -1,9 +1,5 @@
-import {
-  renderEndScreen,
-  getPlayerName,
-  getHighScoreList,
-} from "./endScreen.js";
-import { setPlayerName } from "./storage.js";
+import { renderEndScreen } from "./endScreen.js";
+import { getPlayerName, setPlayerName } from "./storage.js";
 
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const noHighScoreEl = document.querySelector(".noHighScore");
