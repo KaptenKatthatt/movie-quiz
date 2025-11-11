@@ -1,4 +1,9 @@
-import { renderEndScreen, getPlayerName } from "./endScreen.js";
+import {
+  renderEndScreen,
+  getPlayerName,
+  getHighScoreList,
+} from "./endScreen.js";
+import { setPlayerName } from "./storage.js";
 
 const nextQuestionBtnEl = document.querySelector(".nextQuestionBtn");
 const noHighScoreEl = document.querySelector(".noHighScore");
@@ -169,7 +174,7 @@ startBtnContainerEl.addEventListener("click", (e) => {
 
 playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
-  localStorage.setItem("playerName", e.target.value);
+  setPlayerName(e.target.value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.

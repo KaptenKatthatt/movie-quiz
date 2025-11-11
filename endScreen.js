@@ -1,4 +1,9 @@
 import { restartGame } from "./main.js";
+import {
+  getHighScoreList,
+  setHighScoreList,
+  getPlayerName,
+} from "./storage.js";
 
 const endScreenEl = document.querySelector(".endScreen");
 const endScoreEl = document.querySelector(".endScore");
@@ -10,8 +15,6 @@ const restartGameBtnEl = document.querySelector(".restartGameBtn");
 const siteContainerEl = document.querySelector(".siteContainer");
 const wrongAnswerCardsEl = document.querySelector(".wrongAnswerCards");
 const wrongAnswersHeadingEl = document.querySelector(".wrongAnswersHeading");
-
-export const getPlayerName = () => localStorage.getItem("playerName");
 
 let highScoreList = [
   {
@@ -114,10 +117,10 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 
 function renderHighScoreList(totalQuestions, rightAnswersArr) {
   //Checks if there is a HS-list in localStore, then go get it.
-  if (localStorage.getItem("highScoreList") !== null) {
-    highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+  if (getHighScoreList() !== null) {
+    highScoreList = JSON.parse(getHighScoreList());
   } else {
-    localStorage.setItem("highScoreList", highScoreList);
+    setHighScoreList(highScoreList);
   }
 
   let latestPlayerId = Math.max(0, ...highScoreList.map((player) => player.id));
@@ -162,7 +165,7 @@ function renderHighScoreList(totalQuestions, rightAnswersArr) {
         }">${player.name} ${player.finalScore}/${player.totalQuestions}</li>`
     )
     .join("");
-  localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+  setHighScoreList(highScoreList);
 
   // Render score to DOM
   endScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${currentPlayerObj.finalScore}/${currentPlayerObj.totalQuestions}!!!</span>`;
