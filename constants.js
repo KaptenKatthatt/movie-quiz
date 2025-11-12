@@ -1,5 +1,5 @@
 export const ui = {
-  // Main
+  // Main.js
   photoContainerEl: document.querySelector(".photoContainer"),
   playerNameInputEl: document.querySelector("#playerNameInput"),
   playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
@@ -10,7 +10,7 @@ export const ui = {
   startBtnContainerEl: document.querySelector(".startBtnContainer"),
   startScreenContainerEl: document.querySelector(".startScreenContainer"),
 
-  // Endscreen
+  // Endscreen.js
   finalScoreEl: document.querySelector(".finalScore"),
   highScoreListEl: document.querySelector(".highScoreList"),
   restartGameBtnEl: document.querySelector(".restartGameBtn"),
