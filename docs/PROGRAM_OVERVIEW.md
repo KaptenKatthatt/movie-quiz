@@ -40,18 +40,18 @@
 
 ### Variables
 
-| Variable                | Type    | Usage Count | Description                           |
-| ----------------------- | ------- | ----------- | ------------------------------------- |
-| `ui`                    | Object  | 40+         | DOM element references                |
-| `isCorrectAnswer`       | Boolean | 5           | Flag for correct/incorrect answer     |
-| `currentStudent`        | Object  | 6           | Current student to be guessed         |
-| `filteredWrongStudents` | Array   | 2           | Students excluding the correct answer |
-| `questionCount`         | Number  | 5           | Number of selected students           |
-| `questionButtonNames`   | Array   | 3           | Names for answer buttons              |
-| `shuffledStudents`      | Array   | 4           | Shuffled array of all students        |
-| `selectedStudents`      | Array   | 4           | Students limited to selected number   |
-| `rightAnswersArr`       | Array   | 5           | Array of correct answers              |
-| `wrongAnswersArr`       | Array   | 4           | Array of incorrect answers            |
+| Variable                      | Type    | Usage Count | Description                           |
+| ----------------------------- | ------- | ----------- | ------------------------------------- |
+| `ui`                          | Object  | 40+         | DOM element references                |
+| `game.isCurrentAnswerCorrect` | Boolean | 5           | Flag for correct/incorrect answer     |
+| `currentStudent`              | Object  | 6           | Current student to be guessed         |
+| `filteredWrongStudents`       | Array   | 2           | Students excluding the correct answer |
+| `questionCount`               | Number  | 5           | Number of selected students           |
+| `questionButtonNames`         | Array   | 3           | Names for answer buttons              |
+| `shuffledStudents`            | Array   | 4           | Shuffled array of all students        |
+| `selectedStudents`            | Array   | 4           | Students limited to selected number   |
+| `rightAnswersArr`             | Array   | 5           | Array of correct answers              |
+| `wrongAnswersArr`             | Array   | 4           | Array of incorrect answers            |
 
 ### Functions
 
@@ -148,7 +148,7 @@
 
 ### 4. Improve variable naming
 
-- Renamed `nbrOfSelectedQuestions` → `questionCount` (shorter, clearer)
+- Renamed `game.nbrOfQuestions` → `questionCount` (shorter, clearer)
 - Renamed `nbrOfSelectedStudents` → `selectedStudents` (more concise)
 - **Benefit**: Better code readability
 
@@ -157,7 +157,7 @@
 5. **Split `setScore()` function**
    - Currently does both: updates HTML text AND triggers animation
    - Suggested split:
-     - `formatScoreText(rightCount, totalQuestions)` — returns string only (pure function)
+     - `formatScoreText(rightCount, nbrOfQuestions)` — returns string only (pure function)
      - `updateScoreDisplay(text, shouldAnimate)` — handles DOM updates and animation
    - **Status**: DONE
    - **Benefit**: Better testability, clearer separation of concerns, easier to reuse
@@ -171,7 +171,7 @@
 6. **Separate data from rendering in high score logic**
 
    - Extract pure logic from `renderHighScoreList()`:
-     - `createHighScoreEntry(playerName, score, totalQuestions)` — creates entry object
+     - `createHighScoreEntry(playerName, score, nbrOfQuestions)` — creates entry object
      - `shouldAddToHighScores(entry, list)` — checks if entry qualifies (returns boolean)
      - `sortHighScoreList(list)` — sorts list by score (pure function)
      - Keep `renderHighScoreListUI(list)` for DOM updates only

@@ -36,10 +36,10 @@ Create player object that contains name and score that is handled through app, i
 
 - getHSL()
 - setHSL()
-- create currentPlayerObj(){
+- create game.player(){
   - id: latestPlayerId + , <- Kräver tillgång till HSL
     finalScore,
-    totalQuestions,
+    nbrOfQuestions,
     playerName,
     }
 

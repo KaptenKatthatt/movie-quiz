@@ -1,18 +1,18 @@
 import { renderEndScreen } from "./endScreen.js";
 import { getPlayerName, setPlayerName } from "./storage.js";
-import { ui } from "./constants.js";
+import { ui, game } from "./constants.js";
 
-let isCorrectAnswer = false; //Boolean for score animation update
-let currentStudent = {};
+// let game.isCurrentAnswerCorrect = false; //Boolean for score animation update
+// let game.currentStudent = {};
 let filteredWrongStudents = []; //Student array with correct answer filtered out
-let nbrOfSelectedQuestions = 0;
+// let game.nbrOfQuestions = 0;
 let questionButtonNames = []; //The four names on the question buttons
 let shuffledStudents = []; //All students shuffled
 let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesses
 
 //Result arrays
-let rightAnswersArr = [];
-let wrongAnswersArr = [];
+// let rightAnswersArr = [];
+// let wrongAnswersArr = [];
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -44,9 +44,11 @@ function renderStartScreen() {
 }
 
 export function restartGame() {
-  rightAnswersArr = [];
-  wrongAnswersArr = [];
-  isCorrectAnswer = false;
+  // rightAnswersArr = [];
+  // wrongAnswersArr = [];
+  // game.isCurrentAnswerCorrect = false;
+
+  game.restart();
 
   ui.noHighScoreEl.classList.add("d-none");
   ui.endScreenEl.classList.add("d-none");
@@ -57,9 +59,9 @@ function startGame() {
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
-  nbrOfSelectedStudents = shuffledStudents.slice(0, nbrOfSelectedQuestions);
+  nbrOfSelectedStudents = shuffledStudents.slice(0, game.nbrOfQuestions);
 
-  updateScoreDisplay(isCorrectAnswer && rightAnswersArr.length > 0);
+  updateScoreDisplay(game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -83,15 +85,18 @@ function startGame() {
 }
 
 function renderNewQuestion() {
-  // Make first index currentStudent
-  currentStudent = nbrOfSelectedStudents[0];
+  // Make first index game.currentStudent
+  game.currentStudent = nbrOfSelectedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
   filteredWrongStudents = shuffledStudents.filter(
-    (student) => student.id !== currentStudent.id
+    (student) => student.id !== game.currentStudent.id
   );
-  //Take currentStudent and throw into an array with three randos
-  let threeRandos = cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
-  questionButtonNames = [currentStudent, ...threeRandos];
+  //Take game.currentStudent and throw into an array with three randos
+  let threeRandomStudents = cloneAndShuffleArray(filteredWrongStudents).slice(
+    0,
+    3
+  );
+  questionButtonNames = [game.currentStudent, ...threeRandomStudents];
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
@@ -103,8 +108,8 @@ function renderNewQuestion() {
     )
     .join("");
 
-  // Add image to currentStudent from students array
-  ui.photoContainerEl.src = currentStudent.image;
+  // Add image to game.currentStudent from students array
+  ui.photoContainerEl.src = game.currentStudent.image;
 
   //Inject buttons into html and join array
   ui.questionBtnContainerEl.innerHTML = fourQuestionButtons;
@@ -112,7 +117,7 @@ function renderNewQuestion() {
 }
 
 function updateScoreDisplay(shouldAnimate = false) {
-  ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${rightAnswersArr.length}/${nbrOfSelectedQuestions}</span>`;
+  ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl.classList.add("addScoreAnimation");
@@ -135,11 +140,11 @@ renderStartScreen();
 ui.startBtnContainerEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
     if (e.target.textContent.includes("5")) {
-      nbrOfSelectedQuestions = 5;
+      game.nbrOfQuestions = 5;
     } else if (e.target.textContent.includes("10")) {
-      nbrOfSelectedQuestions = 10;
+      game.nbrOfQuestions = 10;
     } else if (e.target.textContent.includes("ALL")) {
-      nbrOfSelectedQuestions = students.length;
+      game.nbrOfQuestions = students.length;
     }
     startGame();
   }
@@ -156,16 +161,16 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
     e.target.tagName === "BUTTON" &&
     e.target.textContent !== "Next question"
   ) {
-    if (currentStudent.name === e.target.textContent) {
+    if (game.currentStudent.name === e.target.textContent) {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
-      rightAnswersArr.push(currentStudent);
-      isCorrectAnswer = true;
-    } else if (currentStudent.name !== e.target.textContent) {
+      game.rightAnswersArr.push(game.currentStudent);
+      game.isCurrentAnswerCorrect = true;
+    } else if (game.currentStudent.name !== e.target.textContent) {
       e.target.classList.add("btn-danger");
       e.target.classList.remove("btn-warning");
-      wrongAnswersArr.push(currentStudent);
-      isCorrectAnswer = false;
+      game.wrongAnswersArr.push(game.currentStudent);
+      game.isCurrentAnswerCorrect = false;
     }
 
     //Disables all buttons from being clicked twice
@@ -175,7 +180,9 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
 
     ui.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(isCorrectAnswer && rightAnswersArr.length > 0);
+    updateScoreDisplay(
+      game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0
+    );
   }
 });
 
@@ -195,7 +202,7 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
     ui.nextQuestionBtnEl.classList.add("d-none");
     ui.questionScreenContainerEl.classList.add("d-none");
 
-    // Render endscreen in endScreen.js, send over nbrOfStudents(totalQuestions), right/wrong answersArr
-    renderEndScreen(nbrOfSelectedQuestions, rightAnswersArr, wrongAnswersArr);
+    // Render endscreen in endScreen.js, send over nbrOfStudents(nbrOfQuestions), right/wrong answersArr
+    renderEndScreen();
   }
 });
