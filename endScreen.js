@@ -1,75 +1,8 @@
 import { restartGame } from "./main.js";
-import {
-  getHighScoreList,
-  setHighScoreList,
-  getPlayerName,
-} from "./storage.js";
+import { getHighScoreList, setHighScoreList } from "./storage.js";
 import { ui, game } from "./constants.js";
 
-// let game.highScoreList = [
-//   {
-//     id: 1,
-//     score: 10,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 2,
-//     score: 9,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 3,
-//     score: 8,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 4,
-//     score: 7,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 5,
-//     score: 6,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 6,
-//     score: 5,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 7,
-//     score: 4,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 8,
-//     score: 3,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 9,
-//     score: 2,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-//   {
-//     id: 10,
-//     score: 0,
-//     nbrOfQuestions: 10,
-//     name: "J.O",
-//   },
-// ];
-
-function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
+function renderAnswerCards(nbrOfRightAnswersArr, nbrOfWrongAnswersArr) {
   function formatCards(arr, isAnswerCorrect) {
     return arr
       .map((student) => {
@@ -89,20 +22,20 @@ function renderAnswerCards(rightAnswersArr, wrongAnswersArr) {
 
   // Checks whether some right answers or none
   ui.rightAnswersHeadingEl.innerText =
-    game.nbrOfRightAnswers > 0
+    nbrOfRightAnswersArr.length > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
   // Render right answer cards
-  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+  ui.rightAnswerCardsEl.innerHTML = formatCards(nbrOfWrongAnswersArr, true);
 
   // Checks whether some wrong answers or none
   ui.wrongAnswersHeadingEl.innerHTML =
-    game.nbrOfWrongAnswers.length > 0
+    nbrOfWrongAnswersArr.length > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
+  ui.wrongAnswerCardsEl.innerHTML = formatCards(nbrOfWrongAnswersArr, false);
 }
 
 function renderHighScoreList() {
@@ -118,14 +51,6 @@ function renderHighScoreList() {
     ...game.highScoreList.map((player) => player.id)
   );
   game.player.id = latestPlayerId + 1;
-
-  // //Create player object
-  // let game.player = {
-  //   id: latestPlayerId + 1,
-  //   score: rightAnswersArr.length,
-  //   nbrOfQuestions: nbrOfQuestions,
-  //   name: getPlayerName() || "someNonameDude",
-  // };
 
   // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
