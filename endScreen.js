@@ -5,13 +5,7 @@ import {
 } from "./storage.js";
 import { ui, game } from "./constants.js";
 
-function renderAnswerCards(nbrOfRightAnswersArr, nbrOfWrongAnswersArr) {
-  /**
-   *
-   * @param {Array<{name: string, image: string}>} arr - Array of student objects
-   * @param {boolean} isAnswerCorrect
-   * @returns {string} Formatted cards, based on correct/incorrect answer
-   */
+function renderAnswerCards() {
   function formatCards(arr, isAnswerCorrect) {
     return arr
       .map((student) => {
@@ -47,6 +41,16 @@ function renderAnswerCards(nbrOfRightAnswersArr, nbrOfWrongAnswersArr) {
   ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
 }
 
+function getLowestHighScore() {
+  return Math.min(...game.highScoreList.map((highscore) => highscore.score));
+}
+
+function getLatestPlayerId() {
+  return Math.max(...game.highScoreList.map((player) => player.id));
+}
+
+function removeLowestHighScore() {}
+
 function renderHighScoreList() {
   let storedList = getHighScoreListFromLocalStorage();
   if (storedList) {
@@ -55,19 +59,14 @@ function renderHighScoreList() {
     setHighScoreListToLocalStorage(game.highScoreList);
   }
 
-  let latestPlayerId = Math.max(
-    0,
-    ...game.highScoreList.map((player) => player.id)
-  );
+  let latestPlayerId = getLatestPlayerId();
   game.player.id = latestPlayerId + 1;
 
   // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
   if (game.highScoreList.length >= 10) {
-    let lowestScore = Math.min(
-      ...game.highScoreList.map((player) => player.score)
-    );
+    let lowestScore = getLowestHighScore();
     if (game.player.score > lowestScore) {
       game.highScoreList.pop();
       game.highScoreList.push(game.player);
@@ -124,9 +123,8 @@ export function renderEndScreen() {
     },
     { once: true }
   );
-  // // Render HSL
-  renderHighScoreList();
 
+  renderHighScoreList();
   // Display correct and wrong answers with name and photo with BS-cards
-  renderAnswerCards(game.rightAnswersArr, game.wrongAnswersArr);
+  renderAnswerCards();
 }
