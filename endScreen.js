@@ -1,8 +1,17 @@
 import { restartGame } from "./main.js";
-import { getHighScoreList, setHighScoreList } from "./storage.js";
+import {
+  getHighScoreListFromLocalStorage,
+  setHighScoreListToLocalStorage,
+} from "./storage.js";
 import { ui, game } from "./constants.js";
 
 function renderAnswerCards(nbrOfRightAnswersArr, nbrOfWrongAnswersArr) {
+  /**
+   *
+   * @param {Array<{name: string, image: string}>} arr - Array of student objects
+   * @param {boolean} isAnswerCorrect
+   * @returns {string} Formatted cards, based on correct/incorrect answer
+   */
   function formatCards(arr, isAnswerCorrect) {
     return arr
       .map((student) => {
@@ -22,28 +31,28 @@ function renderAnswerCards(nbrOfRightAnswersArr, nbrOfWrongAnswersArr) {
 
   // Checks whether some right answers or none
   ui.rightAnswersHeadingEl.innerText =
-    nbrOfRightAnswersArr.length > 0
+    game.nbrOfRightAnswers > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
   // Render right answer cards
-  ui.rightAnswerCardsEl.innerHTML = formatCards(nbrOfWrongAnswersArr, true);
+  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
 
   // Checks whether some wrong answers or none
   ui.wrongAnswersHeadingEl.innerHTML =
-    nbrOfWrongAnswersArr.length > 0
+    game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 
   // Render wrong answer cards
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(nbrOfWrongAnswersArr, false);
+  ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
 }
 
 function renderHighScoreList() {
-  let storedList = getHighScoreList();
+  let storedList = getHighScoreListFromLocalStorage();
   if (storedList) {
     game.highScoreList = JSON.parse(storedList);
   } else {
-    setHighScoreList(game.highScoreList);
+    setHighScoreListToLocalStorage(game.highScoreList);
   }
 
   let latestPlayerId = Math.max(
@@ -84,7 +93,7 @@ function renderHighScoreList() {
         }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
     )
     .join("");
-  setHighScoreList(game.highScoreList);
+  setHighScoreListToLocalStorage(game.highScoreList);
 
   // Render score to DOM
   ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
@@ -116,7 +125,7 @@ export function renderEndScreen() {
     { once: true }
   );
   // // Render HSL
-  renderHighScoreList(game.nbrOfQuestions, game.rightAnswersArr);
+  renderHighScoreList();
 
   // Display correct and wrong answers with name and photo with BS-cards
   renderAnswerCards(game.rightAnswersArr, game.wrongAnswersArr);

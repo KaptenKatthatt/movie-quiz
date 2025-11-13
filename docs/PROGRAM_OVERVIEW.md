@@ -130,7 +130,7 @@
 
 ### 1. Extract localStorage logic into a utility module
 
-- Created `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreList()`, `setHighScoreList()`
+- Created `storage.js` with functions: `getPlayerName()`, `setPlayerName()`, `getHighScoreListFromLocalStorage()`, `setHighScoreListToLocalStorage()`
 - Replaced direct localStorage calls in `endScreen.js` and `main.js` with imports from `storage.js`
 - **Benefit**: Centralized storage access, easier testing, single point of change
 
