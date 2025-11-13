@@ -114,12 +114,7 @@ export const game = {
     },
   ],
   player: {
-    get id() {
-      return this._id;
-    },
-    set id(value) {
-      this._id = game.getLatestPlayerId() + 1;
-    },
+    id: 0,
     get score() {
       return game.nbrOfRightAnswers;
     },

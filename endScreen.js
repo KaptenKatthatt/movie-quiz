@@ -67,16 +67,17 @@ function renderHighScoreList() {
   // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
-  if (game.highScoreList.length >= 10) {
-    let lowestScore = game.getLowestHighScore();
-    if (game.player.score > lowestScore) {
-      game.removeLowestHighScore();
-    } else {
-      ui.showNoHighScoreEl.classList.remove("d-none");
-    }
-  } else {
+
+  if (game.player.score > game.getLowestHighScore()) {
+    game.removeLowestHighScore();
     game.highScoreList.push(game.player);
+  } else {
+    ui.showNoHighScoreEl.classList.remove("d-none");
   }
+
+  //How to get into game object?
+  // Create player id
+  game.player.id = game.getLatestPlayerId() + 1;
 
   //Checks if the current player is the latest player
   function isLastPlayer(player) {
