@@ -22,35 +22,31 @@ export const ui = {
   // Shared
   endScreenEl: document.querySelector(".endScreen"),
   nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
-  noHighScoreEl: document.querySelector(".noHighScore"),
+  showNoHighScoreEl: document.querySelector(".noHighScore"),
 };
 import { getPlayerName } from "./storage.js";
 
-//HishScoreList
-// Läggs i game obj för att kunna uppdateras lättare.
-
-//currentPlayer inside of gameObject
-
-//Create player object
-// export const game.player = {
-//   id: latestPlayerId + 1,
-//   score: rightAnswersArr.length,
-//   nbrOfQuestions: nbrOfQuestions,
-//   name: getPlayerName() || "someNonameDude",
-// };
-
-//Maybe make a single object to bind them all?
+//A single object to bind them all
 export const game = {
+  getLowestHighScore() {
+    return Math.min(...this.highScoreList.map((player) => player.score));
+  },
+  removeLowestHighScore() {
+    this.sortHighScoreList();
+    this.highScoreList.pop();
+  },
+  sortHighScoreList() {
+    this.highScoreList.sort((a, b) => b.score - a.score);
+  },
+  getLatestPlayerId() {
+    return Math.max(...this.highScoreList.map((player) => player.id));
+  },
   get nbrOfRightAnswers() {
     return this.rightAnswersArr.length;
   },
   get nbrOfWrongAnswers() {
     return this.wrongAnswersArr.length;
   },
-  // get latestPlayerId() {
-  //   return Math.max(0, ...this.highScoreList.map((player) => player.id));
-  // },
-
   rightAnswersArr: [],
   wrongAnswersArr: [],
   nbrOfQuestions: 0,
@@ -118,7 +114,12 @@ export const game = {
     },
   ],
   player: {
-    id: 0,
+    get id() {
+      return this._id;
+    },
+    set id(value) {
+      this._id = game.getLatestPlayerId() + 1;
+    },
     get score() {
       return game.nbrOfRightAnswers;
     },

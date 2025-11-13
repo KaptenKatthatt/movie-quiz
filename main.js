@@ -10,9 +10,10 @@ let questionButtonNames = []; //The four names on the question buttons
 let shuffledStudents = []; //All students shuffled
 let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesses
 
-//Result arrays
-// let rightAnswersArr = [];
-// let wrongAnswersArr = [];
+const addPhotoToPhotoContainer = () => {
+  // Add image to game.currentStudent from students array
+  ui.photoContainerEl.src = game.currentStudent.image;
+};
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 function cloneAndShuffleArray(array) {
@@ -50,7 +51,7 @@ export function restartGame() {
 
   game.restart();
 
-  ui.noHighScoreEl.classList.add("d-none");
+  ui.showNoHighScoreEl.classList.add("d-none");
   ui.endScreenEl.classList.add("d-none");
   ui.startScreenContainerEl.classList.remove("d-none");
 }
@@ -108,14 +109,16 @@ function renderNewQuestion() {
     )
     .join("");
 
-  // Add image to game.currentStudent from students array
-  ui.photoContainerEl.src = game.currentStudent.image;
+  addPhotoToPhotoContainer();
 
   //Inject buttons into html and join array
   ui.questionBtnContainerEl.innerHTML = fourQuestionButtons;
   ui.nextQuestionBtnEl.classList.add("d-none");
 }
-
+/**
+ * Fires score animation if user scored a point
+ * @param {boolean} shouldAnimate
+ */
 function updateScoreDisplay(shouldAnimate = false) {
   ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
 
@@ -155,6 +158,16 @@ ui.playerNameInputFormEl.addEventListener("input", (e) => {
   setPlayerName(e.target.value);
 });
 
+/**
+Disables all buttons from being clicked twice
+ * 
+ */
+const disableAllButtons = () => {
+  ui.questionBtnContainerEl
+    .querySelectorAll("button")
+    .forEach((button) => (button.disabled = true));
+};
+
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 ui.questionScreenContainerEl.addEventListener("click", (e) => {
   if (
@@ -173,10 +186,7 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
       game.isCurrentAnswerCorrect = false;
     }
 
-    //Disables all buttons from being clicked twice
-    ui.questionBtnContainerEl
-      .querySelectorAll("button")
-      .forEach((button) => (button.disabled = true));
+    disableAllButtons();
 
     ui.nextQuestionBtnEl.classList.remove("d-none");
 
@@ -202,7 +212,6 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
     ui.nextQuestionBtnEl.classList.add("d-none");
     ui.questionScreenContainerEl.classList.add("d-none");
 
-    // Render endscreen in endScreen.js, send over nbrOfStudents(nbrOfQuestions), right/wrong answersArr
     renderEndScreen();
   }
 });

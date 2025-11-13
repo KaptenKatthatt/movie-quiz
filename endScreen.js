@@ -5,53 +5,58 @@ import {
 } from "./storage.js";
 import { ui, game } from "./constants.js";
 
-function renderAnswerCards() {
-  function formatCards(arr, isAnswerCorrect) {
-    return arr
-      .map((student) => {
-        return `
-        <div class="card ${
-          isAnswerCorrect ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
-        }" style="width: 9rem;">
-         <img src="${student.image}" class="card-img-top" alt="${student.name}">
-          <div class="card-body">
-            <h5 class="card-title">${student.name}</h5>
-          </div>
-        </div>
-    `;
-      })
-      .join("");
-  }
+// ============ ANSWER CARDS SECTION ============
 
-  // Checks whether some right answers or none
+function formatCards(answerArr, isAnswerCorrect) {
+  return answerArr
+    .map(
+      (student) => `
+      <div class="card ${
+        isAnswerCorrect ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
+      }" style="width: 9rem;">
+        <img src="${student.image}" class="card-img-top" alt="${student.name}">
+        <div class="card-body">
+          <h5 class="card-title">${student.name}</h5>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+function renderRightAnswerHeading() {
   ui.rightAnswersHeadingEl.innerText =
     game.nbrOfRightAnswers > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
-  // Render right answer cards
-  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+}
 
-  // Checks whether some wrong answers or none
+function renderRightAnswerCards() {
+  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+}
+
+function renderWrongAnswerHeading() {
   ui.wrongAnswersHeadingEl.innerHTML =
     game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
+}
 
-  // Render wrong answer cards
+function renderWrongAnswerCards() {
   ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
 }
 
-function getLowestHighScore() {
-  return Math.min(...game.highScoreList.map((highscore) => highscore.score));
+function renderAnswerCards() {
+  renderRightAnswerHeading();
+  renderRightAnswerCards();
+  renderWrongAnswerHeading();
+  renderWrongAnswerCards();
 }
 
-function getLatestPlayerId() {
-  return Math.max(...game.highScoreList.map((player) => player.id));
-}
-
-function removeLowestHighScore() {}
+// ============ HIGH SCORE SECTION ============
 
 function renderHighScoreList() {
+  // Check if there is a HSL in local storage, if so, go get it and parse it to an array.
   let storedList = getHighScoreListFromLocalStorage();
   if (storedList) {
     game.highScoreList = JSON.parse(storedList);
@@ -59,19 +64,15 @@ function renderHighScoreList() {
     setHighScoreListToLocalStorage(game.highScoreList);
   }
 
-  let latestPlayerId = getLatestPlayerId();
-  game.player.id = latestPlayerId + 1;
-
   // Adds current player to HSL
   //Before adding player player to HSL, check if score higher than lowest score.
   // Yes? Remove lowest score before push. No? Don't add
   if (game.highScoreList.length >= 10) {
-    let lowestScore = getLowestHighScore();
+    let lowestScore = game.getLowestHighScore();
     if (game.player.score > lowestScore) {
-      game.highScoreList.pop();
-      game.highScoreList.push(game.player);
+      game.removeLowestHighScore();
     } else {
-      ui.noHighScoreEl.classList.remove("d-none");
+      ui.showNoHighScoreEl.classList.remove("d-none");
     }
   } else {
     game.highScoreList.push(game.player);
@@ -82,8 +83,8 @@ function renderHighScoreList() {
     return player.id === game.player.id;
   }
 
-  // Sorts HSL on score.
-  game.highScoreList.sort((a, b) => b.score - a.score);
+  // Sorts HSL on score before rendering
+  game.sortHighScoreList();
   ui.highScoreListEl.innerHTML = game.highScoreList
     .map(
       (player) =>
@@ -98,7 +99,8 @@ function renderHighScoreList() {
   ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
 }
 
-//Restart game
+// ============ EVENT LISTENERS ============
+
 ui.restartGameBtnEl.addEventListener("click", () => {
   ui.siteContainerEl.classList.add("flip");
   ui.siteContainerEl.addEventListener(
@@ -110,6 +112,8 @@ ui.restartGameBtnEl.addEventListener("click", () => {
     { once: true }
   );
 });
+
+// ============ EXPORTS ============
 
 export function renderEndScreen() {
   //Show endscreen
@@ -125,6 +129,6 @@ export function renderEndScreen() {
   );
 
   renderHighScoreList();
-  // Display correct and wrong answers with name and photo with BS-cards
+  // Render correct and wrong answers with name and photo with BS-cards
   renderAnswerCards();
 }
