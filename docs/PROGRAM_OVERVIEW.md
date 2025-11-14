@@ -44,7 +44,7 @@
 | ----------------------------- | ------- | ----------- | ------------------------------------- |
 | `ui`                          | Object  | 40+         | DOM element references                |
 | `game.isCurrentAnswerCorrect` | Boolean | 5           | Flag for correct/incorrect answer     |
-| `currentStudent`              | Object  | 6           | Current student to be guessed         |
+| `currentQuestion`             | Object  | 6           | Current student to be guessed         |
 | `filteredWrongStudents`       | Array   | 2           | Students excluding the correct answer |
 | `questionCount`               | Number  | 5           | Number of selected students           |
 | `questionButtonNames`         | Array   | 3           | Names for answer buttons              |

@@ -129,8 +129,7 @@ export const game = {
     get score() {
       return game.nbrOfRightAnswers;
     },
-    nbrOfQuestions: 0,
     name: getPlayerNameFromLocalStorage() || "someNonameDude",
   },
-  currentStudent: {}, //Current question/student
+  currentQuestion: {}, //Current question/student
 };

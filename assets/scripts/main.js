@@ -15,8 +15,8 @@ let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesse
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = () => {
-  // Add image to game.currentStudent from students array
-  ui.photoContainerEl.src = game.currentStudent.image;
+  // Add image to game.currentQuestion from students array
+  ui.photoContainerEl.src = game.currentQuestion.image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
@@ -45,7 +45,7 @@ const disableAllQuestionButtons = () => {
  * Creates four answers for answer buttons. 1 right and 3 wrong.
  */
 const getAnswerButtonNames = function () {
-  questionButtonNames = [game.currentStudent, ...getThreeRandomAnswers()];
+  questionButtonNames = [game.currentQuestion, ...getThreeRandomAnswers()];
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
@@ -53,7 +53,7 @@ const getAnswerButtonNames = function () {
 };
 
 /**
- *Take game.currentStudent and throw into an array with three randos
+ *Take game.currentQuestion and throw into an array with three randos
  * @returns Array with 3 wrong answers and 1 right.
  */
 const getThreeRandomAnswers = function () {
@@ -65,7 +65,7 @@ const getThreeRandomAnswers = function () {
  */
 const makeWrongAnswersArray = function () {
   filteredWrongStudents = shuffledStudents.filter(
-    (student) => student.id !== game.currentStudent.id
+    (student) => student.id !== game.currentQuestion.id
   );
 };
 
@@ -153,7 +153,7 @@ const startGame = function () {
  * Creates current right answer from first index of nbrOfSelectedStudents array.
  */
 const setCurrentStudent = function () {
-  game.currentStudent = nbrOfSelectedStudents[0];
+  game.currentQuestion = nbrOfSelectedStudents[0];
 };
 
 /**
@@ -188,15 +188,15 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
     e.target.tagName === "BUTTON" &&
     e.target.textContent !== "Next question"
   ) {
-    if (game.currentStudent.name === e.target.textContent) {
+    if (game.currentQuestion.name === e.target.textContent) {
       e.target.classList.add("btn-success");
       e.target.classList.remove("btn-warning");
-      game.rightAnswersArr.push(game.currentStudent);
+      game.rightAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = true;
-    } else if (game.currentStudent.name !== e.target.textContent) {
+    } else if (game.currentQuestion.name !== e.target.textContent) {
       e.target.classList.add("btn-danger");
       e.target.classList.remove("btn-warning");
-      game.wrongAnswersArr.push(game.currentStudent);
+      game.wrongAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = false;
     }
 
