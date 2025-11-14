@@ -12,7 +12,7 @@ import { ui, game } from "./constants.js";
 let questionButtonNames = []; //The four names on the question buttons
 
 /* **************** FUNCTIONS****************** */
-const addPhotoToPhotoContainer = () => {
+const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
   ui.photoContainerEl.src = game.currentQuestion.image;
 };
@@ -33,7 +33,7 @@ const cloneAndShuffleArray = function (array) {
 Disables question buttons from being clicked twice
  * 
  */
-const disableAllQuestionButtons = () => {
+const disableAllQuestionButtons = function () {
   ui.questionBtnContainerEl
     .querySelectorAll("button")
     .forEach((button) => (button.disabled = true));
