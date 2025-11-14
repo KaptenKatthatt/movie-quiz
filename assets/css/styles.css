@@ -59,6 +59,10 @@ body {
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
 }
 
+button:active {
+  transform: scale(0.95);
+}
+
 .btn-select5 {
   background-color: var(--red);
 }
