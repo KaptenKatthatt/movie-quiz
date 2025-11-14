@@ -5,9 +5,9 @@ export const setPlayerName = (playerName) => {
   localStorage.setItem("playerName", playerName.trim());
 };
 
-export function getHighScoreListFromLocalStorage() {
+export const getHighScoreListFromLocalStorage = function () {
   return localStorage.getItem("highScoreList");
-}
-export function setHighScoreListToLocalStorage(highScoreList) {
+};
+export const setHighScoreListToLocalStorage = function (highScoreList) {
   localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
-}
+};

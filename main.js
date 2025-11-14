@@ -16,7 +16,7 @@ const addPhotoToPhotoContainer = () => {
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-function cloneAndShuffleArray(array) {
+const cloneAndShuffleArray = function (array) {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -25,9 +25,19 @@ function cloneAndShuffleArray(array) {
     shuffledArrayClone[j] = temp;
   }
   return shuffledArrayClone;
-}
+};
 
-function renderStartScreen() {
+/**
+Disables all buttons from being clicked twice
+ * 
+ */
+const disableAllQuestionButtons = () => {
+  ui.questionBtnContainerEl
+    .querySelectorAll("button")
+    .forEach((button) => (button.disabled = true));
+};
+
+const renderStartScreen = function () {
   ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
 
   document.querySelector(".startPhotosContainer").innerHTML = students
@@ -42,9 +52,9 @@ function renderStartScreen() {
     `;
     })
     .join("");
-}
+};
 
-export function restartGame() {
+export const restartGame = function () {
   // rightAnswersArr = [];
   // wrongAnswersArr = [];
   // game.isCurrentAnswerCorrect = false;
@@ -54,9 +64,9 @@ export function restartGame() {
   ui.showNoHighScoreEl.classList.add("d-none");
   ui.endScreenEl.classList.add("d-none");
   ui.startScreenContainerEl.classList.remove("d-none");
-}
+};
 
-function startGame() {
+const startGame = function () {
   // Shuffles the student array to create random order on buttons
   shuffledStudents = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
@@ -83,9 +93,9 @@ function startGame() {
     // Render the questionPage content
     renderNewQuestion();
   }
-}
+};
 
-function renderNewQuestion() {
+const renderNewQuestion = function () {
   // Make first index game.currentStudent
   game.currentStudent = nbrOfSelectedStudents[0];
   // Make an array of wrong students to choose from, filters out correct answer
@@ -114,12 +124,12 @@ function renderNewQuestion() {
   //Inject buttons into html and join array
   ui.questionBtnContainerEl.innerHTML = fourQuestionButtons;
   ui.nextQuestionBtnEl.classList.add("d-none");
-}
+};
 /**
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-function updateScoreDisplay(shouldAnimate = false) {
+const updateScoreDisplay = function (shouldAnimate = false) {
   ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
@@ -132,7 +142,7 @@ function updateScoreDisplay(shouldAnimate = false) {
       { once: true }
     );
   }
-}
+};
 
 /* **************** GAME START****************** */
 
@@ -158,16 +168,6 @@ ui.playerNameInputFormEl.addEventListener("input", (e) => {
   setPlayerName(e.target.value);
 });
 
-/**
-Disables all buttons from being clicked twice
- * 
- */
-const disableAllButtons = () => {
-  ui.questionBtnContainerEl
-    .querySelectorAll("button")
-    .forEach((button) => (button.disabled = true));
-};
-
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 ui.questionScreenContainerEl.addEventListener("click", (e) => {
   if (
@@ -186,7 +186,7 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
       game.isCurrentAnswerCorrect = false;
     }
 
-    disableAllButtons();
+    disableAllQuestionButtons();
 
     ui.nextQuestionBtnEl.classList.remove("d-none");
 

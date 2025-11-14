@@ -8,7 +8,7 @@ import { ui, game } from "./constants.js";
 
 // ============ ANSWER CARDS SECTION ============
 
-function formatCards(answerArr, isAnswerCorrect) {
+const formatCards = function (answerArr, isAnswerCorrect) {
   return answerArr
     .map(
       (student) => `
@@ -23,40 +23,40 @@ function formatCards(answerArr, isAnswerCorrect) {
     `
     )
     .join("");
-}
+};
 
-function renderRightAnswerHeading() {
+const renderRightAnswerHeading = function () {
   ui.rightAnswersHeadingEl.innerText =
     game.nbrOfRightAnswers > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
-}
+};
 
-function renderRightAnswerCards() {
+const renderRightAnswerCards = function () {
   ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
-}
+};
 
-function renderWrongAnswerHeading() {
+const renderWrongAnswerHeading = function () {
   ui.wrongAnswersHeadingEl.innerHTML =
     game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
-}
+};
 
-function renderWrongAnswerCards() {
+const renderWrongAnswerCards = function () {
   ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
-}
+};
 
-function renderAnswerCards() {
+const renderAnswerCards = function () {
   renderRightAnswerHeading();
   renderRightAnswerCards();
   renderWrongAnswerHeading();
   renderWrongAnswerCards();
-}
+};
 
 // ============ HIGH SCORE SECTION ============
 
-function renderHighScoreList() {
+const renderHighScoreList = function () {
   // Check if there is a HSL in local storage, if so, go get it and parse it to an array.
   let storedList = getHighScoreListFromLocalStorage();
   if (storedList) {
@@ -82,9 +82,9 @@ function renderHighScoreList() {
   game.player.name = getPlayerNameFromLocalStorage();
 
   //Checks if the current player is the latest player
-  function isLastPlayer(player) {
+  const isLastPlayer = function (player) {
     return player.id === game.player.id;
-  }
+  };
 
   // Sorts HSL on score before rendering
   game.sortHighScoreList();
@@ -100,7 +100,7 @@ function renderHighScoreList() {
 
   // Render score to DOM
   ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
-}
+};
 
 // ============ EVENT LISTENERS ============
 
@@ -118,7 +118,7 @@ ui.restartGameBtnEl.addEventListener("click", () => {
 
 // ============ EXPORTS ============
 
-export function renderEndScreen() {
+export const renderEndScreen = function () {
   //Show endscreen
   ui.endScreenEl.classList.remove("d-none");
   // Controls animation of final score
@@ -134,4 +134,4 @@ export function renderEndScreen() {
   renderHighScoreList();
   // Render correct and wrong answers with name and photo with BS-cards
   renderAnswerCards();
-}
+};
