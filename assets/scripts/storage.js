@@ -1,7 +1,7 @@
 export const getPlayerNameFromLocalStorage = () =>
   localStorage.getItem("playerName");
 
-export const setPlayerName = (playerName) => {
+export const setPlayerNameToLocalStorage = (playerName) => {
   localStorage.setItem("playerName", playerName.trim());
 };
 

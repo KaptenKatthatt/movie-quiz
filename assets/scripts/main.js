@@ -1,7 +1,10 @@
 /* **************** IMPORTS ****************** */
 
 import { renderEndScreen } from "./endScreen.js";
-import { getPlayerNameFromLocalStorage, setPlayerName } from "./storage.js";
+import {
+  getPlayerNameFromLocalStorage,
+  setPlayerNameToLocalStorage,
+} from "./storage.js";
 import { ui, game } from "./constants.js";
 
 /* **************** VARIABLES****************** */
@@ -29,7 +32,7 @@ const cloneAndShuffleArray = function (array) {
 };
 
 /**
-Disables all buttons from being clicked twice
+Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = () => {
@@ -38,7 +41,57 @@ const disableAllQuestionButtons = () => {
     .forEach((button) => (button.disabled = true));
 };
 
+/**
+ * Creates four answers for answer buttons. 1 right and 3 wrong.
+ */
+const getAnswerButtonNames = function () {
+  questionButtonNames = [game.currentStudent, ...getThreeRandomAnswers()];
+  //Randomize button names
+  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
+
+  return questionButtonNames;
+};
+
+/**
+ *Take game.currentStudent and throw into an array with three randos
+ * @returns Array with 3 wrong answers and 1 right.
+ */
+const getThreeRandomAnswers = function () {
+  return cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
+};
+
+/**
+ * Make an array of wrong answers to choose from, filters out correct answer
+ */
+const makeWrongAnswersArray = function () {
+  filteredWrongStudents = shuffledStudents.filter(
+    (student) => student.id !== game.currentStudent.id
+  );
+};
+
+const renderNewQuestion = function () {
+  setCurrentStudent();
+  makeWrongAnswersArray();
+  addPhotoToPhotoContainer();
+
+  //Inject buttons into DOM
+  ui.questionBtnContainerEl.innerHTML = renderFourQuestionButtons();
+  //Hide next question button
+  ui.nextQuestionBtnEl.classList.add("d-none");
+};
+
+const renderFourQuestionButtons = function () {
+  // Generate four buttons with answer alternatives
+  return getAnswerButtonNames()
+    .map(
+      (student) =>
+        `<button class="btn btn-warning btn-lg">${student.name}</button>`
+    )
+    .join("");
+};
+
 const renderStartScreen = function () {
+  //Sets player name to stored player name
   ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
 
   document.querySelector(".startPhotosContainer").innerHTML = students
@@ -96,36 +149,13 @@ const startGame = function () {
   }
 };
 
-const renderNewQuestion = function () {
-  // Make first index game.currentStudent
+/**
+ * Creates current right answer from first index of nbrOfSelectedStudents array.
+ */
+const setCurrentStudent = function () {
   game.currentStudent = nbrOfSelectedStudents[0];
-  // Make an array of wrong students to choose from, filters out correct answer
-  filteredWrongStudents = shuffledStudents.filter(
-    (student) => student.id !== game.currentStudent.id
-  );
-  //Take game.currentStudent and throw into an array with three randos
-  let threeRandomStudents = cloneAndShuffleArray(filteredWrongStudents).slice(
-    0,
-    3
-  );
-  questionButtonNames = [game.currentStudent, ...threeRandomStudents];
-  //Randomize button names
-  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
-
-  // Generate one button for each student name alternative
-  let fourQuestionButtons = questionButtonNames
-    .map(
-      (student) =>
-        `<button class="btn btn-warning btn-lg">${student.name}</button>`
-    )
-    .join("");
-
-  addPhotoToPhotoContainer();
-
-  //Inject buttons into html and join array
-  ui.questionBtnContainerEl.innerHTML = fourQuestionButtons;
-  ui.nextQuestionBtnEl.classList.add("d-none");
 };
+
 /**
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
@@ -149,7 +179,7 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 
 ui.playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
-  setPlayerName(e.target.value);
+  setPlayerNameToLocalStorage(e.target.value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
@@ -172,6 +202,7 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
 
     disableAllQuestionButtons();
 
+    //Show nextQuestionBtn
     ui.nextQuestionBtnEl.classList.remove("d-none");
 
     updateScoreDisplay(

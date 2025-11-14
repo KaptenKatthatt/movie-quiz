@@ -1,3 +1,5 @@
+- Rename students to answers to make it easier to see which is a student and what is a question, and avoid mixing it all up with the current player obj.
+
 ## Refactoring
 
 Convert all function to expressions instead of declarations to help with scoping problems.

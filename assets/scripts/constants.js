@@ -132,5 +132,5 @@ export const game = {
     nbrOfQuestions: 0,
     name: getPlayerNameFromLocalStorage() || "someNonameDude",
   },
-  currentStudent: {}, //Current question
+  currentStudent: {}, //Current question/student
 };
