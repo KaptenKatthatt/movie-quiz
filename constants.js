@@ -24,7 +24,7 @@ export const ui = {
   nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
   showNoHighScoreEl: document.querySelector(".noHighScore"),
 };
-import { getPlayerName } from "./storage.js";
+import { getPlayerNameFromLocalStorage } from "./storage.js";
 
 //A single object to bind them all
 export const game = {
@@ -119,7 +119,7 @@ export const game = {
       return game.nbrOfRightAnswers;
     },
     nbrOfQuestions: 0,
-    name: getPlayerName() || "someNonameDude",
+    name: getPlayerNameFromLocalStorage() || "someNonameDude",
   },
   currentStudent: {}, //Current question
 

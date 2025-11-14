@@ -1,6 +1,7 @@
 import { restartGame } from "./main.js";
 import {
   getHighScoreListFromLocalStorage,
+  getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage.js";
 import { ui, game } from "./constants.js";
@@ -76,8 +77,9 @@ function renderHighScoreList() {
   }
 
   //How to get into game object?
-  // Create player id
+  // Create player id & name
   game.player.id = game.getLatestPlayerId() + 1;
+  game.player.name = getPlayerNameFromLocalStorage();
 
   //Checks if the current player is the latest player
   function isLastPlayer(player) {

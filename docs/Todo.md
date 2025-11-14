@@ -1,8 +1,10 @@
 ## Refactoring
 
-Move noHighScore p out o index.html and only inject it when used. Make an easier to understand class name.
-
 ## Bugs
+
+Set name is not working. Working but using external function, not game obj method.
+
+Names starting with symbols doesn't work
 
 ## Start
 
@@ -21,6 +23,8 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 # DONE
+
+Move noHighScore p out o index.html and only inject it when used. Make an easier to understand class name.
 
 Max nbr of names on high score to not break design when too long?
 

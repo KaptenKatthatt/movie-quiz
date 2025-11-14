@@ -1,5 +1,5 @@
 import { renderEndScreen } from "./endScreen.js";
-import { getPlayerName, setPlayerName } from "./storage.js";
+import { getPlayerNameFromLocalStorage, setPlayerName } from "./storage.js";
 import { ui, game } from "./constants.js";
 
 // let game.isCurrentAnswerCorrect = false; //Boolean for score animation update
@@ -28,7 +28,7 @@ function cloneAndShuffleArray(array) {
 }
 
 function renderStartScreen() {
-  ui.playerNameInputEl.value = getPlayerName();
+  ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
 
   document.querySelector(".startPhotosContainer").innerHTML = students
     .map((student) => {
