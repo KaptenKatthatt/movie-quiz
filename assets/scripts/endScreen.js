@@ -25,6 +25,21 @@ const formatCards = function (answerArr, isAnswerCorrect) {
     .join("");
 };
 
+/**
+ *Checks if the current player is the latest player
+ * @param {player object} player
+ * @returns
+ */
+const isLastPlayer = function (player) {
+  return player.id === game.player.id;
+};
+/**
+ * Renders score count banner
+ */
+const renderFinalScoreBanner = function () {
+  // Render final score element to DOM
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
+};
 const renderRightAnswerHeading = function () {
   ui.rightAnswersHeadingEl.innerText =
     game.nbrOfRightAnswers > 0
@@ -63,13 +78,11 @@ const renderAnswerCards = function () {
 
  */
 const renderHighScoreList = function () {
-  let storedList = getHighScoreListFromLocalStorage();
-  if (storedList) {
-    game.highScoreList = JSON.parse(storedList);
-  } else {
-    setHighScoreListToLocalStorage(game.highScoreList);
-  }
+  //Get highscorelist from local storage and parse it to array
+  game.highScoreList = JSON.parse(getHighScoreListFromLocalStorage());
 
+  //Check if player score is higher than lowest score
+  // checkIfHighScoreWorthy()
   if (game.player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(game.player);
@@ -77,17 +90,14 @@ const renderHighScoreList = function () {
     ui.showNoHighScoreEl.classList.remove("d-none");
   }
 
-  // Create player id & name
-  game.player.id = game.getLatestPlayerId() + 1;
-  game.player.name = getPlayerNameFromLocalStorage();
-
-  //Checks if the current player is the latest player
-  const isLastPlayer = function (player) {
-    return player.id === game.player.id;
-  };
+  // // Create player id & name
+  // game.player.id = game.getLatestPlayerId() + 1;
+  // game.player.name = getPlayerNameFromLocalStorage();
 
   // Sorts HSL on score before rendering
   game.sortHighScoreList();
+
+  //renderHighScore
   ui.highScoreListEl.innerHTML = game.highScoreList
     .map(
       (player) =>
@@ -96,11 +106,11 @@ const renderHighScoreList = function () {
         }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
     )
     .join("");
-  setHighScoreListToLocalStorage(game.highScoreList);
 
-  // Render score to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
+  setHighScoreListToLocalStorage(game.highScoreList);
 };
+
+renderFinalScoreBanner();
 /* **************** EXPORT ****************** */
 
 export const renderEndScreen = function () {

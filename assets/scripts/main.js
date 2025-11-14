@@ -245,5 +245,9 @@ ui.startBtnContainerEl.addEventListener("click", (e) => {
     startGame();
   }
 });
+// Create player id & name
+game.player.id = game.getLatestPlayerId() + 1;
+game.player.name = getPlayerNameFromLocalStorage();
+
 //Renders initial game screen
 renderStartScreen();
