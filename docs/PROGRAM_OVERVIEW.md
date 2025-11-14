@@ -48,7 +48,7 @@
 | `filteredWrongStudents`       | Array   | 2           | Students excluding the correct answer |
 | `questionCount`               | Number  | 5           | Number of selected students           |
 | `questionButtonNames`         | Array   | 3           | Names for answer buttons              |
-| `shuffledStudents`            | Array   | 4           | Shuffled array of all students        |
+| `shuffledQuestions`           | Array   | 4           | Shuffled array of all students        |
 | `selectedStudents`            | Array   | 4           | Students limited to selected number   |
 | `rightAnswersArr`             | Array   | 5           | Array of correct answers              |
 | `wrongAnswersArr`             | Array   | 4           | Array of incorrect answers            |
@@ -149,7 +149,7 @@
 ### 4. Improve variable naming
 
 - Renamed `game.nbrOfQuestions` → `questionCount` (shorter, clearer)
-- Renamed `nbrOfSelectedStudents` → `selectedStudents` (more concise)
+- Renamed `nbrOfSelectedQuestions` → `selectedStudents` (more concise)
 - **Benefit**: Better code readability
 
 ---

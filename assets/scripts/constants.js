@@ -59,6 +59,9 @@ export const game = {
 
   rightAnswersArr: [],
   wrongAnswersArr: [],
+  filteredWrongStudents: [], //Student array with correct answer filtered out
+  shuffledQuestions: [], //All students shuffled
+  nbrOfSelectedQuestions: [], //Student array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   isCurrentAnswerCorrect: false,
   highScoreList: [

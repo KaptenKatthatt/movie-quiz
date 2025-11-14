@@ -8,10 +8,8 @@ import {
 import { ui, game } from "./constants.js";
 
 /* **************** VARIABLES****************** */
-let filteredWrongStudents = []; //Student array with correct answer filtered out
+
 let questionButtonNames = []; //The four names on the question buttons
-let shuffledStudents = []; //All students shuffled
-let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesses
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = () => {
@@ -57,7 +55,7 @@ const getAnswerButtonNames = function () {
  * @returns Array with 3 wrong answers and 1 right.
  */
 const getThreeRandomAnswers = function () {
-  return cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
+  return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
 };
 
 const initGame = function () {
@@ -70,7 +68,7 @@ const initGame = function () {
  * Make an array of wrong answers to choose from, filters out correct answer
  */
 const makeWrongAnswersArray = function () {
-  filteredWrongStudents = shuffledStudents.filter(
+  game.filteredWrongStudents = game.shuffledQuestions.filter(
     (student) => student.id !== game.currentQuestion.id
   );
 };
@@ -124,9 +122,12 @@ export const restartGame = function () {
 
 const startGame = function () {
   // Shuffles the student array to create random order on buttons
-  shuffledStudents = cloneAndShuffleArray(students);
+  game.shuffledQuestions = cloneAndShuffleArray(students);
   //Create an array with selected nbr of students
-  nbrOfSelectedStudents = shuffledStudents.slice(0, game.nbrOfQuestions);
+  game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
+    0,
+    game.nbrOfQuestions
+  );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0);
 
@@ -152,10 +153,10 @@ const startGame = function () {
 };
 
 /**
- * Creates current right answer from first index of nbrOfSelectedStudents array.
+ * Creates current right answer from first index of nbrOfSelectedQuestions array.
  */
 const setCurrentStudent = function () {
-  game.currentQuestion = nbrOfSelectedStudents[0];
+  game.currentQuestion = game.nbrOfSelectedQuestions[0];
 };
 
 /**
@@ -214,10 +215,10 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
 });
 
 ui.nextQuestionBtnEl.addEventListener("click", () => {
-  nbrOfSelectedStudents.shift();
+  game.nbrOfSelectedQuestions.shift();
 
   // Checks if there is any students left to question about
-  if (nbrOfSelectedStudents.length > 0) {
+  if (game.nbrOfSelectedQuestions.length > 0) {
     document.startViewTransition //Checks if view transition is supported, if not skip it.
       ? document.startViewTransition(() => {
           renderNewQuestion();

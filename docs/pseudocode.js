@@ -1,12 +1,12 @@
 // Map the results to buttons
 // Make an array with 1 correct name and 3 random names.
 // Make each index into a button with the student.name
-//Make a function that slices out 3 random people from shuffledStudents
-//Make array with the current correct answer and 3 random people from shuffledStudents. Then shuffle that array and present it as buttons.
+//Make a function that slices out 3 random people from shuffledQuestions
+//Make array with the current correct answer and 3 random people from shuffledQuestions. Then shuffle that array and present it as buttons.
 
-// currentQuestionArray = nbrOfSelectedStudents[n] + 3 indexes from shuffledStudens
+// currentQuestionArray = nbrOfSelectedQuestions[n] + 3 indexes from shuffledStudens
 
-// nbrOfSelectedStudents.map((student) => {
+// nbrOfSelectedQuestions.map((student) => {
 //   `<button class="btn btn-light">${student.name}</button>`;
 // });
 
