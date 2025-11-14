@@ -60,6 +60,12 @@ const getThreeRandomAnswers = function () {
   return cloneAndShuffleArray(filteredWrongStudents).slice(0, 3);
 };
 
+const initGame = function () {
+  // Create player id & name
+  game.player.id = game.getLatestPlayerId() + 1;
+  game.player.name = getPlayerNameFromLocalStorage();
+};
+
 /**
  * Make an array of wrong answers to choose from, filters out correct answer
  */
@@ -90,7 +96,7 @@ const renderFourQuestionButtons = function () {
     .join("");
 };
 
-const renderStartScreen = function () {
+const renderQuestionScreen = function () {
   //Sets player name to stored player name
   ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
 
@@ -109,15 +115,11 @@ const renderStartScreen = function () {
 };
 
 export const restartGame = function () {
-  // rightAnswersArr = [];
-  // wrongAnswersArr = [];
-  // game.isCurrentAnswerCorrect = false;
-
   game.restart();
-
   ui.showNoHighScoreEl.classList.add("d-none");
   ui.endScreenEl.classList.add("d-none");
   ui.startScreenContainerEl.classList.remove("d-none");
+  initGame();
 };
 
 const startGame = function () {
@@ -249,5 +251,6 @@ ui.startBtnContainerEl.addEventListener("click", (e) => {
 game.player.id = game.getLatestPlayerId() + 1;
 game.player.name = getPlayerNameFromLocalStorage();
 
-//Renders initial game screen
-renderStartScreen();
+initGame();
+//Render initial game screen
+renderQuestionScreen();

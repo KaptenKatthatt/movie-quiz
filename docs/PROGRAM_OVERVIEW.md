@@ -58,7 +58,7 @@
 | Function                 | Usage Count  | Description                                  |
 | ------------------------ | ------------ | -------------------------------------------- |
 | `cloneAndShuffleArray()` | 4            | Fisher-Yates algorithm to shuffle an array   |
-| `renderStartScreen()`    | 1            | Renders the start screen with student cards  |
+| `renderQuestionScreen()` | 1            | Renders the start screen with student cards  |
 | `restartGame()`          | 1 (exported) | Resets the game to initial state             |
 | `startGame()`            | 1            | Initializes a new game                       |
 | `renderNewQuestion()`    | 2            | Renders next question with image and buttons |
@@ -198,7 +198,7 @@
 9. **Improve focus management**
 
    - After `renderNewQuestion()`, move focus to first answer button: `ui.questionBtnContainer.querySelector("button").focus()`
-   - After `renderStartScreen()`, move focus to first question count button
+   - After `renderQuestionScreen()`, move focus to first question count button
    - **Status**: NOT STARTED
    - **Benefit**: Better keyboard navigation, improved accessibility for keyboard users
 
@@ -218,7 +218,7 @@
 
 12. **Move inline styles to CSS**
     - In `renderAnswerCards()`: inline `style="width: 9rem;"` should be a CSS class
-    - In `renderStartScreen()`: inline `style="width: 6rem; height:10rem"` should be a CSS class
+    - In `renderQuestionScreen()`: inline `style="width: 6rem; height:10rem"` should be a CSS class
     - **Status**: NOT STARTED
     - **Benefit**: Better maintainability, easier to update styling, cleaner HTML templates
 
