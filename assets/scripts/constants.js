@@ -53,6 +53,7 @@ export const game = {
     this.rightAnswersArr = [];
     this.wrongAnswersArr = [];
     this.isCurrentAnswerCorrect = false;
+    ui.highScoreListEl.innerHTML = "";
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 

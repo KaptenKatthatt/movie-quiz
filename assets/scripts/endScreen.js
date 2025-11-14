@@ -1,7 +1,7 @@
 import { restartGame } from "./main.js";
 import {
   getHighScoreListFromLocalStorage,
-  // getPlayerNameFromLocalStorage,
+  getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage.js";
 import { ui, game } from "./constants.js";
@@ -62,16 +62,18 @@ const renderFinalScoreBanner = function () {
   */
 const renderHighScoreList = function () {
   //Get highscorelist from local storage and parse it to array
-  //create list on first play
+  //If first play, get premade highscore from game obj.
   const storedList = getHighScoreListFromLocalStorage();
   game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
+
+  game.player.name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
   // Sorts HSL on score before rendering
   game.sortHighScoreList();
 
-  //renderHighScore
+  //render HighScoreList
   ui.highScoreListEl.innerHTML = game.highScoreList
     .map(
       (player) =>
@@ -83,6 +85,14 @@ const renderHighScoreList = function () {
 
   setHighScoreListToLocalStorage(game.highScoreList);
 };
+
+const renderAnswerCards = function () {
+  renderRightAnswerHeading();
+  renderRightAnswerCards();
+  renderWrongAnswerHeading();
+  renderWrongAnswerCards();
+};
+
 const renderRightAnswerHeading = function () {
   ui.rightAnswersHeadingEl.innerText =
     game.nbrOfRightAnswers > 0
@@ -103,13 +113,6 @@ const renderWrongAnswerHeading = function () {
 
 const renderWrongAnswerCards = function () {
   ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
-};
-
-const renderAnswerCards = function () {
-  renderRightAnswerHeading();
-  renderRightAnswerCards();
-  renderWrongAnswerHeading();
-  renderWrongAnswerCards();
 };
 
 /* **************** EXPORT ****************** */
