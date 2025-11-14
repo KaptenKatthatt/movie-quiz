@@ -153,7 +153,7 @@ const startGame = function () {
 };
 
 /**
- * Creates current right answer from first index of nbrOfSelectedQuestions array.
+ * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
 const setCurrentStudent = function () {
   game.currentQuestion = game.nbrOfSelectedQuestions[0];
@@ -248,9 +248,6 @@ ui.startBtnContainerEl.addEventListener("click", (e) => {
     startGame();
   }
 });
-// Create player id & name
-game.player.id = game.getLatestPlayerId() + 1;
-game.player.name = getPlayerNameFromLocalStorage();
 
 initGame();
 //Render initial game screen

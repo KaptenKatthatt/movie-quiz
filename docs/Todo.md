@@ -1,14 +1,6 @@
-- Rename students to answers to make it easier to see which is a student and what is a question, and avoid mixing it all up with the current player obj.
-
 ## Refactoring
 
-Convert all function to expressions instead of declarations to help with scoping problems.
-
-Unique id can't be set in game obj yet.
-
 ## Bugs
-
-Set name is not working. Working but using external function, not game obj method.
 
 Names starting with symbols >& doesn't work. Creates null name on HSL.
 
@@ -31,6 +23,14 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 # DONE
+
+Set name is not working. Working but using external function, not game obj method.
+
+Convert all function to expressions instead of declarations to help with scoping problems.
+
+Unique id can't be set in game obj yet.
+
+- Rename students to answers to make it easier to see which is a student and what is a question, and avoid mixing it all up with the current player obj.
 
 Move noHighScore p out o index.html and only inject it when used. Make an easier to understand class name.
 
