@@ -29,6 +29,7 @@ export const ui = {
 
 //A single object to bind them all
 export const game = {
+  /* **************** FUNCTIONS****************** */
   getLowestHighScore() {
     return Math.min(...this.highScoreList.map((player) => player.score));
   },
@@ -48,6 +49,13 @@ export const game = {
   get nbrOfWrongAnswers() {
     return this.wrongAnswersArr.length;
   },
+  restart() {
+    this.rightAnswersArr = [];
+    this.wrongAnswersArr = [];
+    this.isCurrentAnswerCorrect = false;
+  },
+  /* **************** VARIABLES & ARRAYS ****************** */
+
   rightAnswersArr: [],
   wrongAnswersArr: [],
   nbrOfQuestions: 0,
@@ -114,6 +122,8 @@ export const game = {
       name: "J.O",
     },
   ],
+  /* **************** PLAYER OBJECT ****************** */
+
   player: {
     id: 0,
     get score() {
@@ -123,10 +133,4 @@ export const game = {
     name: getPlayerNameFromLocalStorage() || "someNonameDude",
   },
   currentStudent: {}, //Current question
-
-  restart() {
-    this.rightAnswersArr = [];
-    this.wrongAnswersArr = [];
-    this.isCurrentAnswerCorrect = false;
-  },
 };

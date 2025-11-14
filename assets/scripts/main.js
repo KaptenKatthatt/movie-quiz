@@ -1,15 +1,16 @@
+/* **************** IMPORTS ****************** */
+
 import { renderEndScreen } from "./endScreen.js";
 import { getPlayerNameFromLocalStorage, setPlayerName } from "./storage.js";
 import { ui, game } from "./constants.js";
 
-// let game.isCurrentAnswerCorrect = false; //Boolean for score animation update
-// let game.currentStudent = {};
+/* **************** VARIABLES****************** */
 let filteredWrongStudents = []; //Student array with correct answer filtered out
-// let game.nbrOfQuestions = 0;
 let questionButtonNames = []; //The four names on the question buttons
 let shuffledStudents = []; //All students shuffled
 let nbrOfSelectedStudents = []; //Student array sliced to nbr of selected guesses
 
+/* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = () => {
   // Add image to game.currentStudent from students array
   ui.photoContainerEl.src = game.currentStudent.image;
@@ -144,24 +145,7 @@ const updateScoreDisplay = function (shouldAnimate = false) {
   }
 };
 
-/* **************** GAME START****************** */
-
-//Renders initial game screen
-renderStartScreen();
-
-//Listen for nbr of questions selected and start game
-ui.startBtnContainerEl.addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON") {
-    if (e.target.textContent.includes("5")) {
-      game.nbrOfQuestions = 5;
-    } else if (e.target.textContent.includes("10")) {
-      game.nbrOfQuestions = 10;
-    } else if (e.target.textContent.includes("ALL")) {
-      game.nbrOfQuestions = students.length;
-    }
-    startGame();
-  }
-});
+/* **************** EVENT LISTENERS****************** */
 
 ui.playerNameInputFormEl.addEventListener("input", (e) => {
   e.stopPropagation();
@@ -215,3 +199,20 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
     renderEndScreen();
   }
 });
+
+/* **************** GAME START****************** */
+//Listen for nbr of questions selected and start game
+ui.startBtnContainerEl.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    if (e.target.textContent.includes("5")) {
+      game.nbrOfQuestions = 5;
+    } else if (e.target.textContent.includes("10")) {
+      game.nbrOfQuestions = 10;
+    } else if (e.target.textContent.includes("ALL")) {
+      game.nbrOfQuestions = students.length;
+    }
+    startGame();
+  }
+});
+//Renders initial game screen
+renderStartScreen();

@@ -54,20 +54,21 @@ const renderAnswerCards = function () {
   renderWrongAnswerCards();
 };
 
-// ============ HIGH SCORE SECTION ============
+/* **************** RENDER HIGH SCORE LIST****************** */
+/**
+ *Adds current player to HSL
 
+  Checks if score higher than lowest score.
+  Yes? Remove lowest score before push. No? Don't add
+
+ */
 const renderHighScoreList = function () {
-  // Check if there is a HSL in local storage, if so, go get it and parse it to an array.
   let storedList = getHighScoreListFromLocalStorage();
   if (storedList) {
     game.highScoreList = JSON.parse(storedList);
   } else {
     setHighScoreListToLocalStorage(game.highScoreList);
   }
-
-  // Adds current player to HSL
-  //Before adding player player to HSL, check if score higher than lowest score.
-  // Yes? Remove lowest score before push. No? Don't add
 
   if (game.player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
@@ -76,7 +77,6 @@ const renderHighScoreList = function () {
     ui.showNoHighScoreEl.classList.remove("d-none");
   }
 
-  //How to get into game object?
   // Create player id & name
   game.player.id = game.getLatestPlayerId() + 1;
   game.player.name = getPlayerNameFromLocalStorage();
@@ -101,22 +101,7 @@ const renderHighScoreList = function () {
   // Render score to DOM
   ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
 };
-
-// ============ EVENT LISTENERS ============
-
-ui.restartGameBtnEl.addEventListener("click", () => {
-  ui.siteContainerEl.classList.add("flip");
-  ui.siteContainerEl.addEventListener(
-    "animationend",
-    () => {
-      restartGame();
-      ui.siteContainerEl.classList.remove("flip");
-    },
-    { once: true }
-  );
-});
-
-// ============ EXPORTS ============
+/* **************** EXPORT ****************** */
 
 export const renderEndScreen = function () {
   //Show endscreen
@@ -135,3 +120,17 @@ export const renderEndScreen = function () {
   // Render correct and wrong answers with name and photo with BS-cards
   renderAnswerCards();
 };
+
+/* **************** EVENT LISTENERS****************** */
+
+ui.restartGameBtnEl.addEventListener("click", () => {
+  ui.siteContainerEl.classList.add("flip");
+  ui.siteContainerEl.addEventListener(
+    "animationend",
+    () => {
+      restartGame();
+      ui.siteContainerEl.classList.remove("flip");
+    },
+    { once: true }
+  );
+});
