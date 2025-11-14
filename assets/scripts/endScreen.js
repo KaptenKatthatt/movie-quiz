@@ -59,10 +59,12 @@ const renderFinalScoreBanner = function () {
   Checks if score higher than lowest score.
   Yes? Remove lowest score before push. No? Don't add
 
- */
+  */
 const renderHighScoreList = function () {
   //Get highscorelist from local storage and parse it to array
-  game.highScoreList = JSON.parse(getHighScoreListFromLocalStorage());
+  //create list on first play
+  const storedList = getHighScoreListFromLocalStorage();
+  game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
 
   checkIfHighScoreWorthy();
 
