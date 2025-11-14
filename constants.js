@@ -1,3 +1,5 @@
+import { getPlayerNameFromLocalStorage } from "./storage.js";
+
 export const ui = {
   // Main.js
   photoContainerEl: document.querySelector(".photoContainer"),
@@ -24,7 +26,6 @@ export const ui = {
   nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
   showNoHighScoreEl: document.querySelector(".noHighScore"),
 };
-import { getPlayerNameFromLocalStorage } from "./storage.js";
 
 //A single object to bind them all
 export const game = {

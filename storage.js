@@ -2,9 +2,7 @@ export const getPlayerNameFromLocalStorage = () =>
   localStorage.getItem("playerName");
 
 export const setPlayerName = (playerName) => {
-  cleanedPlayerName = playerName.trim();
-
-  localStorage.setItem("playerName", cleanedPlayerName);
+  localStorage.setItem("playerName", playerName.trim());
 };
 
 export function getHighScoreListFromLocalStorage() {

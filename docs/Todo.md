@@ -1,18 +1,24 @@
 ## Refactoring
 
+Convert all function to expressions instead of declarations to help with scoping problems.
+
+Unique id can't be set in game obj yet.
+
 ## Bugs
 
 Set name is not working. Working but using external function, not game obj method.
 
-Names starting with symbols doesn't work
-
-## Start
-
-When you entered your playername and press enter, inputfield should be replaced with "Welcome player ${playerName}"
+Names starting with symbols >& doesn't work. Creates null name on HSL.
 
 ## End screen
 
 ## App general
+
+## Nice to have
+
+- Start
+
+When you entered your playername and press enter, inputfield should be replaced with "Welcome player ${playerName}"
 
 ## Future madness
 
