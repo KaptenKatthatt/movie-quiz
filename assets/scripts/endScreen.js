@@ -1,12 +1,24 @@
 import { restartGame } from "./main.js";
 import {
   getHighScoreListFromLocalStorage,
-  getPlayerNameFromLocalStorage,
+  // getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage.js";
 import { ui, game } from "./constants.js";
 
-// ============ ANSWER CARDS SECTION ============
+/* **************** FUNCTIONS****************** */
+
+/**
+ * Check if player score is higher than lowest score
+ */
+const checkIfHighScoreWorthy = function () {
+  if (game.player.score > game.getLowestHighScore()) {
+    game.removeLowestHighScore();
+    game.highScoreList.push(game.player);
+  } else {
+    ui.showNoHighScoreEl.classList.remove("d-none");
+  }
+};
 
 const formatCards = function (answerArr, isAnswerCorrect) {
   return answerArr
@@ -40,6 +52,35 @@ const renderFinalScoreBanner = function () {
   // Render final score element to DOM
   ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
 };
+
+/**
+ *Adds current player to HSL
+
+  Checks if score higher than lowest score.
+  Yes? Remove lowest score before push. No? Don't add
+
+ */
+const renderHighScoreList = function () {
+  //Get highscorelist from local storage and parse it to array
+  game.highScoreList = JSON.parse(getHighScoreListFromLocalStorage());
+
+  checkIfHighScoreWorthy();
+
+  // Sorts HSL on score before rendering
+  game.sortHighScoreList();
+
+  //renderHighScore
+  ui.highScoreListEl.innerHTML = game.highScoreList
+    .map(
+      (player) =>
+        `<li class="list-group-item ${
+          isLastPlayer(player) ? "fw-bolder" : ""
+        }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
+    )
+    .join("");
+
+  setHighScoreListToLocalStorage(game.highScoreList);
+};
 const renderRightAnswerHeading = function () {
   ui.rightAnswersHeadingEl.innerText =
     game.nbrOfRightAnswers > 0
@@ -69,53 +110,14 @@ const renderAnswerCards = function () {
   renderWrongAnswerCards();
 };
 
-/* **************** RENDER HIGH SCORE LIST****************** */
-/**
- *Adds current player to HSL
-
-  Checks if score higher than lowest score.
-  Yes? Remove lowest score before push. No? Don't add
-
- */
-const renderHighScoreList = function () {
-  //Get highscorelist from local storage and parse it to array
-  game.highScoreList = JSON.parse(getHighScoreListFromLocalStorage());
-
-  //Check if player score is higher than lowest score
-  // checkIfHighScoreWorthy()
-  if (game.player.score > game.getLowestHighScore()) {
-    game.removeLowestHighScore();
-    game.highScoreList.push(game.player);
-  } else {
-    ui.showNoHighScoreEl.classList.remove("d-none");
-  }
-
-  // // Create player id & name
-  // game.player.id = game.getLatestPlayerId() + 1;
-  // game.player.name = getPlayerNameFromLocalStorage();
-
-  // Sorts HSL on score before rendering
-  game.sortHighScoreList();
-
-  //renderHighScore
-  ui.highScoreListEl.innerHTML = game.highScoreList
-    .map(
-      (player) =>
-        `<li class="list-group-item ${
-          isLastPlayer(player) ? "fw-bolder" : ""
-        }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
-    )
-    .join("");
-
-  setHighScoreListToLocalStorage(game.highScoreList);
-};
-
-renderFinalScoreBanner();
 /* **************** EXPORT ****************** */
 
 export const renderEndScreen = function () {
+  renderFinalScoreBanner();
+
   //Show endscreen
   ui.endScreenEl.classList.remove("d-none");
+
   // Controls animation of final score
   ui.finalScoreEl.classList.add("embiggenFinalScore");
   ui.finalScoreEl.addEventListener(
