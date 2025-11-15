@@ -1,5 +1,3 @@
-/* **************** IMPORTS ****************** */
-
 import { renderEndScreen } from "./endScreen.js";
 import {
   getPlayerNameFromLocalStorage,
@@ -181,7 +179,7 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 /* **************** EVENT LISTENERS****************** */
 
 ui.playerNameInputFormEl.addEventListener("input", (e) => {
-  e.stopPropagation();
+  // e.stopPropagation();
   setPlayerNameToLocalStorage(e.target.value);
 });
 

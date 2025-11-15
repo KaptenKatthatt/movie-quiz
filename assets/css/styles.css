@@ -60,7 +60,7 @@ body {
 }
 
 button:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
 .btn-select5 {
@@ -218,6 +218,9 @@ input {
   box-shadow: 0 0 20px var(--red);
   color: black;
 }
+.nextQuestionBtn:hover {
+  transition: color 0.3s ease-in-out;
+}
 
 .photoContainer {
   border: 2px double black;
@@ -226,7 +229,8 @@ input {
 }
 
 .questionBtnContainer .btn:hover {
-  box-shadow: 0 0 20px var(--red);
+  box-shadow: 0 0 25px var(--red);
+  transition: box-shadow 0.3s ease-in-out;
 }
 .rightAnswerCardShadow {
   box-shadow: 0 0 10px var(--green);

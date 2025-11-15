@@ -8,6 +8,10 @@ Names starting with symbols >& doesn't work. Creates null name on HSL.
 
 ## App general
 
+App doesn't fit on phones with DPR:2 Resolution
+
+Show nbr of questions
+
 ## Nice to have
 
 - Start
@@ -23,6 +27,11 @@ Connect to API at The MDB
 Save high score to Fire base DB
 
 # DONE
+
+## Animations
+
+Micro animations on hover on buttons
+Longer depress on buttons
 
 Set name is not working. Working but using external function, not game obj method.
 
