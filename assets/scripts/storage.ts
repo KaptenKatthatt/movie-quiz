@@ -1,10 +1,22 @@
-export const getPlayerNameFromLocalStorage = () =>
-  localStorage.getItem("playerName");
+export const getPlayerNameFromLocalStorage = () => {
+  if (
+    localStorage.getItem("playerName") === null ||
+    localStorage.getItem("playerName") === ""
+  ) {
+    localStorage.setItem("playerName", "someNoNameDude");
+    return "someNoNameDude";
+  } else {
+    return localStorage.getItem("playerName");
+  }
+};
 
 const sanitizePlayerName = (name) =>
   name.replace(/[^\p{L}\p{N}\s\-]/gu, "").trim();
 
 export const setPlayerNameToLocalStorage = (playerName) => {
+  if (localStorage.getItem("playerName") === null || playerName === null) {
+    playerName = "someNoNameDude";
+  }
   localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };
 

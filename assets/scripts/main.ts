@@ -56,10 +56,11 @@ const getThreeRandomAnswers = function () {
   return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
 };
 
-const initGame = function () {
+const initPlayer = function () {
   // Create player id & name
   game.player.id = game.getLatestPlayerId() + 1;
   game.player.name = getPlayerNameFromLocalStorage();
+  game.player.nbrOfQuestions = game.nbrOfQuestions;
 };
 
 /**
@@ -115,7 +116,7 @@ export const restartGame = function () {
   ui.showNoHighScoreEl.classList.add("d-none");
   ui.endScreenEl.classList.add("d-none");
   ui.startScreenContainerEl.classList.remove("d-none");
-  initGame();
+  initPlayer();
 };
 
 const startGame = function () {
@@ -162,6 +163,7 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
+  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
   ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
@@ -178,8 +180,7 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.playerNameInputFormEl.addEventListener("input", (e) => {
-  // e.stopPropagation();
+ui.playerNameInputEl.addEventListener("input", (e) => {
   setPlayerNameToLocalStorage(e.target.value);
 });
 
@@ -200,7 +201,6 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
       game.wrongAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = false;
     }
-
     disableAllQuestionButtons();
 
     //Show nextQuestionBtn
@@ -214,6 +214,9 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
 
 ui.nextQuestionBtnEl.addEventListener("click", () => {
   game.nbrOfSelectedQuestions.shift();
+
+  game.currentQuestionNbr++;
+  updateScoreDisplay();
 
   // Checks if there is any students left to question about
   if (game.nbrOfSelectedQuestions.length > 0) {
@@ -244,9 +247,9 @@ ui.startBtnContainerEl.addEventListener("click", (e) => {
       game.nbrOfQuestions = students.length;
     }
     startGame();
+    initPlayer();
   }
 });
 
-initGame();
 //Render initial game screen
 renderQuestionScreen();

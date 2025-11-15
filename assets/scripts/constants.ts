@@ -1,5 +1,50 @@
 import { getPlayerNameFromLocalStorage } from "./storage.js";
 
+interface Player{
+    id: number;
+    name: string;
+    score: number;
+    nbrOfQuestions: number;
+}
+
+interface Student{
+    id: number;
+    name: string;
+    image: string;
+
+}
+
+
+
+interface Gamestate {
+  // Methods
+  getLowestHighScore(): number;
+  removeLowestHighScore(): void;
+  sortHighScoreList(): void;
+  getLatestPlayerId(): number;
+  restart(): void;
+
+  // Getters
+  readonly nbrOfRightAnswers: number;
+  readonly nbrOfWrongAnswers: number;
+
+  // Arrays and variables
+  rightAnswersArr: Student[];
+  wrongAnswersArr: Student[];
+  filteredWrongStudents: Student[];
+  shuffledQuestions: Student[];
+  nbrOfSelectedQuestions: Student[];
+  nbrOfQuestions: number;
+  currentQuestionNbr: number;
+  isCurrentAnswerCorrect: boolean;
+  highScoreList: Player[];
+
+  // Player and current question
+  player: Player;
+  currentQuestion: Student;
+}
+
+
 export const ui = {
   // Main.js
   photoContainerEl: document.querySelector(".photoContainer"),
@@ -8,6 +53,7 @@ export const ui = {
   pointsEl: document.querySelector(".points"),
   questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
   questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
+  questionBoardEl: document.querySelector(".nbrOfQuestions"),
   siteContainerEl: document.querySelector(".siteContainer"),
   startBtnContainerEl: document.querySelector(".startBtnContainer"),
   startScreenContainerEl: document.querySelector(".startScreenContainer"),
@@ -28,7 +74,7 @@ export const ui = {
 };
 
 //A single object to bind them all
-export const game = {
+export const game:Gamestate = {
   /* **************** FUNCTIONS****************** */
   getLowestHighScore() {
     return Math.min(...this.highScoreList.map((player) => player.score));
@@ -53,16 +99,20 @@ export const game = {
     this.rightAnswersArr = [];
     this.wrongAnswersArr = [];
     this.isCurrentAnswerCorrect = false;
-    ui.highScoreListEl.innerHTML = "";
+    if (ui.highScoreListEl) {
+      ui.highScoreListEl.innerHTML = "";
+    }
+    this.currentQuestionNbr = 1;
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 
-  rightAnswersArr: [],
-  wrongAnswersArr: [],
-  filteredWrongStudents: [], //Student array with correct answer filtered out
-  shuffledQuestions: [], //All students shuffled
-  nbrOfSelectedQuestions: [], //Student array sliced to nbr of selected guesses
+  rightAnswersArr: [] ,
+  wrongAnswersArr: [] ,
+  filteredWrongStudents: [] , //Student array with correct answer filtered out
+  shuffledQuestions: [] , //All students shuffled
+  nbrOfSelectedQuestions: [] , //Student array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
+  currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
   highScoreList: [
     {
@@ -125,15 +175,16 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
     },
-  ],
+  ] ,
   /* **************** PLAYER OBJECT ****************** */
 
   player: {
     id: 0,
+    nbrOfQuestions: 0,
     get score() {
       return game.nbrOfRightAnswers;
     },
     name: getPlayerNameFromLocalStorage() || "someNonameDude",
-  },
-  currentQuestion: {}, //Current question/student
+  } as Player,
+  currentQuestion: { id: 0, name: "", image: "" }, //Current question/student
 };

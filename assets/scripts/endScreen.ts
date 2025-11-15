@@ -1,10 +1,10 @@
-import { restartGame } from "./main.js";
+import { restartGame } from "./main";
 import {
   getHighScoreListFromLocalStorage,
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
-} from "./storage.js";
-import { ui, game } from "./constants.js";
+} from "./storage";
+import { ui, game } from "./constants";
 
 /* **************** FUNCTIONS****************** */
 
@@ -50,7 +50,7 @@ const isLastPlayer = function (player) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.nbrOfQuestions}!!!</span>`;
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -79,7 +79,7 @@ const renderHighScoreList = function () {
       (player) =>
         `<li class="list-group-item ${
           isLastPlayer(player) ? "fw-bolder" : ""
-        }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
+        }">${player.name} ${player.score}/${player.nbrOfQuestions}</li>`
     )
     .join("");
 

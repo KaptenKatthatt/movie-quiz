@@ -1,4 +1,4 @@
-const students = [
+export const students = [
   { id: 2, name: "Ellen", image: "assets/images/students/ellen_andersson.jpg" },
   {
     id: 4,
