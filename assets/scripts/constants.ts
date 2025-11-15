@@ -1,13 +1,13 @@
 import { getPlayerNameFromLocalStorage } from "./storage.js";
 
-interface Player{
+export interface Player{
     id: number;
     name: string;
     score: number;
     nbrOfQuestions: number;
 }
 
-interface Student{
+export interface Student{
     id: number;
     name: string;
     image: string;

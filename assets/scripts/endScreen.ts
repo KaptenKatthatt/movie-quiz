@@ -4,7 +4,7 @@ import {
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { ui, game } from "./constants";
+import { ui, game, Student, Player } from "./constants";
 
 /* **************** FUNCTIONS****************** */
 
@@ -16,11 +16,11 @@ const checkIfHighScoreWorthy = function () {
     game.removeLowestHighScore();
     game.highScoreList.push(game.player);
   } else {
-    ui.showNoHighScoreEl.classList.remove("d-none");
+    ui.showNoHighScoreEl?.classList.remove("d-none");
   }
 };
 
-const formatCards = function (answerArr, isAnswerCorrect) {
+const formatCards = function (answerArr: Student[], isAnswerCorrect: boolean): string {
   return answerArr
     .map(
       (student) => `
@@ -39,18 +39,16 @@ const formatCards = function (answerArr, isAnswerCorrect) {
 
 /**
  *Checks if the current player is the latest player
- * @param {player object} player
- * @returns
  */
-const isLastPlayer = function (player) {
+const isLastPlayer = function (player:Player) {
   return player.id === game.player.id;
 };
 /**
  * Renders score count banner
  */
-const renderFinalScoreBanner = function () {
+const renderFinalScoreBanner = function (): void {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
+  ui.finalScoreEl?.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -60,7 +58,7 @@ const renderFinalScoreBanner = function () {
   Yes? Remove lowest score before push. No? Don't add
 
   */
-const renderHighScoreList = function () {
+const renderHighScoreList = function () :void {
   //Get highscorelist from local storage and parse it to array
   //If first play, get premade highscore from game obj.
   const storedList = getHighScoreListFromLocalStorage();
@@ -74,7 +72,7 @@ const renderHighScoreList = function () {
   game.sortHighScoreList();
 
   //render HighScoreList
-  ui.highScoreListEl.innerHTML = game.highScoreList
+  ui.highScoreListEl?.innerHTML = game.highScoreList
     .map(
       (player) =>
         `<li class="list-group-item ${
@@ -86,49 +84,49 @@ const renderHighScoreList = function () {
   setHighScoreListToLocalStorage(game.highScoreList);
 };
 
-const renderAnswerCards = function () {
+const renderAnswerCards = function () :void{
   renderRightAnswerHeading();
   renderRightAnswerCards();
   renderWrongAnswerHeading();
   renderWrongAnswerCards();
 };
 
-const renderRightAnswerHeading = function () {
-  ui.rightAnswersHeadingEl.innerText =
+const renderRightAnswerHeading = function () :void{
+  ui.rightAnswersHeadingEl?.innerText =
     game.nbrOfRightAnswers > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
-const renderRightAnswerCards = function () {
-  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+const renderRightAnswerCards = function () :void{
+  ui.rightAnswerCardsEl?.innerHTML = formatCards(game.rightAnswersArr, true);
 };
 
-const renderWrongAnswerHeading = function () {
-  ui.wrongAnswersHeadingEl.innerHTML =
+const renderWrongAnswerHeading = function ():void {
+  ui.wrongAnswersHeadingEl?.innerHTML =
     game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };
 
-const renderWrongAnswerCards = function () {
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
+const renderWrongAnswerCards = function () :void{
+  ui.wrongAnswerCardsEl?.innerHTML = formatCards(game.wrongAnswersArr, false);
 };
 
 /* **************** EXPORT ****************** */
 
-export const renderEndScreen = function () {
+export const renderEndScreen = function () :void{
   renderFinalScoreBanner();
 
   //Show endscreen
-  ui.endScreenEl.classList.remove("d-none");
+  ui.endScreenEl?.classList.remove("d-none");
 
   // Controls animation of final score
-  ui.finalScoreEl.classList.add("embiggenFinalScore");
-  ui.finalScoreEl.addEventListener(
+  ui.finalScoreEl?.classList.add("embiggenFinalScore");
+  ui.finalScoreEl?.addEventListener(
     "animationend",
     () => {
-      ui.finalScoreEl.classList.remove("embiggenFinalScore");
+      ui.finalScoreEl?.classList.remove("embiggenFinalScore");
     },
     { once: true }
   );
@@ -140,13 +138,13 @@ export const renderEndScreen = function () {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.restartGameBtnEl.addEventListener("click", () => {
-  ui.siteContainerEl.classList.add("flip");
-  ui.siteContainerEl.addEventListener(
+ui.restartGameBtnEl?.addEventListener("click", () => {
+  ui.siteContainerEl?.classList.add("flip");
+  ui.siteContainerEl?.addEventListener(
     "animationend",
     () => {
       restartGame();
-      ui.siteContainerEl.classList.remove("flip");
+      ui.siteContainerEl?.classList.remove("flip");
     },
     { once: true }
   );
