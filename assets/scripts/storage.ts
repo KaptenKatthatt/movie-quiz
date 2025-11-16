@@ -1,4 +1,4 @@
-import { Player } from "./constants";
+import { type Player } from "./constants";
 
 export const getPlayerNameFromLocalStorage = ():string  => {
   if (

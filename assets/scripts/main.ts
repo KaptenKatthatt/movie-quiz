@@ -4,7 +4,7 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { ui, game, Player, Student } from "./constants";
+import { ui, game, type Player, type Student } from "./constants";
 
 /* **************** VARIABLES****************** */
 
@@ -21,8 +21,8 @@ const cloneAndShuffleArray = function <T>(array: T[]): T[] {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = shuffledArrayClone[i];
-    shuffledArrayClone[i] = shuffledArrayClone[j];
+    const temp:T  = shuffledArrayClone[i]!;
+    shuffledArrayClone[i] = shuffledArrayClone[j]!;
     shuffledArrayClone[j] = temp;
   }
   return shuffledArrayClone;
@@ -43,7 +43,7 @@ const disableAllQuestionButtons = function () {
 const getAnswerButtonNames = function (): Student[] {
   questionButtonNames = [game.currentQuestion, ...getThreeRandomAnswers()];
   //Randomize button names
-  questionButtonNames = cloneAndShuffleArray(questionButtonNames);
+  questionButtonNames = cloneAndShuffleArray<Student>(questionButtonNames);
 
   return questionButtonNames;
 };
@@ -53,7 +53,7 @@ const getAnswerButtonNames = function (): Student[] {
  * @returns Array with 3 wrong answers and 1 right.
  */
 const getThreeRandomAnswers = function (): Student[] {
-  return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
+  return cloneAndShuffleArray<Student>(game.filteredWrongStudents).slice(0, 3);
 };
 
 const initPlayer = function () {
@@ -121,7 +121,7 @@ export const restartGame = function () {
 
 const startGame = function () {
   // Shuffles the student array to create random order on buttons
-  game.shuffledQuestions = cloneAndShuffleArray(students);
+  game.shuffledQuestions = cloneAndShuffleArray<Student>(students);
   //Create an array with selected nbr of students
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
@@ -155,7 +155,7 @@ const startGame = function () {
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
 const setCurrentStudent = function () {
-  game.currentQuestion = game.nbrOfSelectedQuestions[0];
+  game.currentQuestion = game.nbrOfSelectedQuestions[0]!;
 };
 
 /**

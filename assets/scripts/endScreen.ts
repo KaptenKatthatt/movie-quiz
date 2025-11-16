@@ -4,7 +4,7 @@ import {
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { ui, game, Student, Player } from "./constants";
+import { ui, game, type Student, type Player } from "./constants";
 
 /* **************** FUNCTIONS****************** */
 
