@@ -48,7 +48,7 @@ const isLastPlayer = function (player:Player): boolean {
  */
 const renderFinalScoreBanner = function (): void {
   // Render final score element to DOM
-  ui.finalScoreEl?.innerHTML = `<span class="finalScoreText">Your final score is -></span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
+  (ui.finalScoreEl as HTMLElement).innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -72,7 +72,7 @@ const renderHighScoreList = function () :void {
   game.sortHighScoreList();
 
   //render HighScoreList
-  ui.highScoreListEl?.innerHTML = game.highScoreList
+  (ui.highScoreListEl as HTMLElement).innerHTML = game.highScoreList
     .map(
       (player) =>
         `<li class="list-group-item ${
@@ -92,25 +92,31 @@ const renderAnswerCards = function () :void{
 };
 
 const renderRightAnswerHeading = function () :void{
-  ui.rightAnswersHeadingEl?.innerText =
+  (ui.rightAnswersHeadingEl as HTMLElement).innerText =
     game.nbrOfRightAnswers > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
 const renderRightAnswerCards = function () :void{
-  ui.rightAnswerCardsEl?.innerHTML = formatCards(game.rightAnswersArr, true);
+  if (ui.rightAnswerCardsEl) {
+    ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+  }
 };
 
 const renderWrongAnswerHeading = function ():void {
-  ui.wrongAnswersHeadingEl?.innerHTML =
-    game.nbrOfWrongAnswers > 0
-      ? "These were wrong..."
-      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
+  if (ui.wrongAnswersHeadingEl) {
+    ui.wrongAnswersHeadingEl.innerHTML =
+      game.nbrOfWrongAnswers > 0
+        ? "These were wrong..."
+        : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
+  }
 };
 
 const renderWrongAnswerCards = function () :void{
-  ui.wrongAnswerCardsEl?.innerHTML = formatCards(game.wrongAnswersArr, false);
+  if (ui.wrongAnswerCardsEl) {
+    ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
+  }
 };
 
 /* **************** EXPORT ****************** */

@@ -13,7 +13,7 @@ let questionButtonNames: Student[] = []; //The four names on the question button
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
-  (ui.photoContainerEl as HTMLImageElement)?.src = game.currentQuestion.image;
+  ui.photoContainerEl!.src = game.currentQuestion.image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
@@ -78,7 +78,7 @@ const renderNewQuestion = function () {
   addPhotoToPhotoContainer();
 
   //Inject buttons into DOM
-  ui.questionBtnContainerEl?.innerHTML = renderFourQuestionButtons();
+  ui.questionBtnContainerEl!.innerHTML = renderFourQuestionButtons();
   //Hide next question button
   ui.nextQuestionBtnEl?.classList.add("d-none");
 };
@@ -95,9 +95,9 @@ const renderFourQuestionButtons = function () {
 
 const renderQuestionScreen = function ():void {
   //Sets player name to stored player name
-  ui.playerNameInputEl?.value = getPlayerNameFromLocalStorage();
+  ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage();
 
-  document.querySelector(".startPhotosContainer")?.innerHTML = students
+  document.querySelector(".startPhotosContainer")!.innerHTML = students
     .map((student) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">

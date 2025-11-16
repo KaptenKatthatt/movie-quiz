@@ -44,33 +44,32 @@ export interface Gamestate {
   currentQuestion: Student;
 }
 
-
 export const ui = {
   // Main.js
-  photoContainerEl: document.querySelector(".photoContainer"),
-  playerNameInputEl: document.querySelector("#playerNameInput"),
-  playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
-  pointsEl: document.querySelector(".points"),
-  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
-  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
-  questionBoardEl: document.querySelector(".nbrOfQuestions"),
-  siteContainerEl: document.querySelector(".siteContainer"),
-  startBtnContainerEl: document.querySelector(".startBtnContainer"),
-  startScreenContainerEl: document.querySelector(".startScreenContainer"),
+  photoContainerEl: document.querySelector(".photoContainer") as HTMLImageElement | null,
+  playerNameInputEl: document.querySelector("#playerNameInput") as HTMLInputElement | null,
+  playerNameInputFormEl: document.querySelector(".playerNameInputForm") as HTMLFormElement | null,
+  pointsEl: document.querySelector(".points") as HTMLElement | null,
+  questionBtnContainerEl: document.querySelector(".questionBtnContainer") as HTMLElement | null,
+  questionScreenContainerEl: document.querySelector(".questionScreenContainer") as HTMLElement | null,
+  questionBoardEl: document.querySelector(".nbrOfQuestions") as HTMLElement | null,
+  siteContainerEl: document.querySelector(".siteContainer") as HTMLElement | null,
+  startBtnContainerEl: document.querySelector(".startBtnContainer") as HTMLElement | null,
+  startScreenContainerEl: document.querySelector(".startScreenContainer") as HTMLElement | null,
 
   // Endscreen.js
-  finalScoreEl: document.querySelector(".finalScore"),
-  highScoreListEl: document.querySelector(".highScoreList"),
-  restartGameBtnEl: document.querySelector(".restartGameBtn"),
-  rightAnswerCardsEl: document.querySelector(".rightAnswerCards"),
-  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading"),
-  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards"),
-  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading"),
+  finalScoreEl: document.querySelector(".finalScore") as HTMLElement | null,
+  highScoreListEl: document.querySelector(".highScoreList") as HTMLElement | null,
+  restartGameBtnEl: document.querySelector(".restartGameBtn") as HTMLButtonElement | null,
+  rightAnswerCardsEl: document.querySelector(".rightAnswerCards") as HTMLElement | null,
+  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading") as HTMLElement | null,
+  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards") as HTMLElement | null,
+  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading") as HTMLElement | null,
 
   // Shared
-  endScreenEl: document.querySelector(".endScreen"),
-  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
-  showNoHighScoreEl: document.querySelector(".noHighScore"),
+  endScreenEl: document.querySelector(".endScreen") as HTMLElement | null,
+  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn") as HTMLButtonElement | null,
+  showNoHighScoreEl: document.querySelector(".noHighScore") as HTMLElement | null,
 };
 
 //A single object to bind them all
