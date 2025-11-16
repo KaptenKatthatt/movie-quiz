@@ -4,7 +4,7 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { ui, game, type Player, type Student } from "./constants";
+import { ui, game, type Student } from "./constants";
 
 /* **************** VARIABLES****************** */
 

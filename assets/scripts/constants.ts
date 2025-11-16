@@ -1,4 +1,4 @@
-import { getPlayerNameFromLocalStorage } from "./storage.js";
+import { getPlayerNameFromLocalStorage, setPlayerNameToLocalStorage } from "./storage.js";
 
 export interface Player{
     id: number;
@@ -183,7 +183,12 @@ export const game:Gamestate = {
     get score() {
       return game.nbrOfRightAnswers;
     },
-    name: getPlayerNameFromLocalStorage() || "someNonameDude",
+    get name(){
+      return getPlayerNameFromLocalStorage() || "someNonameDude";
+    }, 
+    set name(name){
+      setPlayerNameToLocalStorage(name);
+    }
   } as Player,
   currentQuestion: { id: 0, name: "", image: "" }, //Current question/student
 };

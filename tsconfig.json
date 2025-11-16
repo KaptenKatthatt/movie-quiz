@@ -8,13 +8,25 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
-    "target": "ES2020",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+
     "types": ["vite/client"],
     "baseUrl": ".",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
 
     // Other Outputs
     "sourceMap": true,
