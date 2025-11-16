@@ -11,7 +11,7 @@ import { ui, game, Student, Player } from "./constants";
 /**
  * Check if player score is higher than lowest score
  */
-const checkIfHighScoreWorthy = function () {
+const checkIfHighScoreWorthy = function (): void {
   if (game.player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(game.player);
@@ -40,7 +40,7 @@ const formatCards = function (answerArr: Student[], isAnswerCorrect: boolean): s
 /**
  *Checks if the current player is the latest player
  */
-const isLastPlayer = function (player:Player) {
+const isLastPlayer = function (player:Player): boolean {
   return player.id === game.player.id;
 };
 /**

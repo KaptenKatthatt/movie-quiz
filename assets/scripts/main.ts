@@ -1,22 +1,23 @@
-import { renderEndScreen } from "./endScreen.js";
+import { renderEndScreen } from "./endScreen";
+import { students } from "./students";
 import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
-} from "./storage.js";
-import { ui, game } from "./constants.js";
+} from "./storage";
+import { ui, game, Player, Student } from "./constants";
 
 /* **************** VARIABLES****************** */
 
-let questionButtonNames = []; //The four names on the question buttons
+let questionButtonNames: Student[] = []; //The four names on the question buttons
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
-  ui.photoContainerEl.src = game.currentQuestion.image;
+  (ui.photoContainerEl as HTMLImageElement)?.src = game.currentQuestion.image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function (array) {
+const cloneAndShuffleArray = function <T>(array: T[]): T[] {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -32,15 +33,14 @@ Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = function () {
-  ui.questionBtnContainerEl
-    .querySelectorAll("button")
-    .forEach((button) => (button.disabled = true));
+  ui.questionBtnContainerEl?.querySelectorAll<HTMLButtonElement>("button")
+    .forEach((button:HTMLButtonElement) => (button.disabled = true));
 };
 
 /**
  * Creates four answers for answer buttons. 1 right and 3 wrong.
  */
-const getAnswerButtonNames = function () {
+const getAnswerButtonNames = function (): Student[] {
   questionButtonNames = [game.currentQuestion, ...getThreeRandomAnswers()];
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
@@ -52,7 +52,7 @@ const getAnswerButtonNames = function () {
  *Take game.currentQuestion and throw into an array with three randos
  * @returns Array with 3 wrong answers and 1 right.
  */
-const getThreeRandomAnswers = function () {
+const getThreeRandomAnswers = function (): Student[] {
   return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
 };
 
@@ -78,9 +78,9 @@ const renderNewQuestion = function () {
   addPhotoToPhotoContainer();
 
   //Inject buttons into DOM
-  ui.questionBtnContainerEl.innerHTML = renderFourQuestionButtons();
+  ui.questionBtnContainerEl?.innerHTML = renderFourQuestionButtons();
   //Hide next question button
-  ui.nextQuestionBtnEl.classList.add("d-none");
+  ui.nextQuestionBtnEl?.classList.add("d-none");
 };
 
 const renderFourQuestionButtons = function () {
@@ -93,11 +93,11 @@ const renderFourQuestionButtons = function () {
     .join("");
 };
 
-const renderQuestionScreen = function () {
+const renderQuestionScreen = function ():void {
   //Sets player name to stored player name
-  ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
+  ui.playerNameInputEl?.value = getPlayerNameFromLocalStorage();
 
-  document.querySelector(".startPhotosContainer").innerHTML = students
+  document.querySelector(".startPhotosContainer")?.innerHTML = students
     .map((student) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
@@ -113,9 +113,9 @@ const renderQuestionScreen = function () {
 
 export const restartGame = function () {
   game.restart();
-  ui.showNoHighScoreEl.classList.add("d-none");
-  ui.endScreenEl.classList.add("d-none");
-  ui.startScreenContainerEl.classList.remove("d-none");
+  ui.showNoHighScoreEl?.classList.add("d-none");
+  ui.endScreenEl?.classList.add("d-none");
+  ui.startScreenContainerEl?.classList.remove("d-none");
   initPlayer();
 };
 
@@ -134,18 +134,18 @@ const startGame = function () {
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // Hide startscreen
-      ui.startScreenContainerEl.classList.add("d-none");
+      ui.startScreenContainerEl?.classList.add("d-none");
 
       // Show questionScreen
-      ui.questionScreenContainerEl.classList.remove("d-none");
+      ui.questionScreenContainerEl?.classList.remove("d-none");
 
       // Render the questionPage content
       renderNewQuestion();
     });
   } else {
-    ui.startScreenContainerEl.classList.add("d-none");
+    ui.startScreenContainerEl?.classList.add("d-none");
     // Show questionScreen
-    ui.questionScreenContainerEl.classList.remove("d-none");
+    ui.questionScreenContainerEl?.classList.remove("d-none");
     // Render the questionPage content
     renderNewQuestion();
   }
@@ -163,15 +163,20 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
+  if (ui.questionBoardEl) {
+    ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
+  }
+  
+  if (ui.pointsEl) {
+    ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
+  }
 
-  if (shouldAnimate) {
+  if (shouldAnimate && ui.pointsEl) {
     ui.pointsEl.classList.add("addScoreAnimation");
     ui.pointsEl.addEventListener(
       "animationend",
       () => {
-        ui.pointsEl.classList.remove("addScoreAnimation");
+        ui.pointsEl?.classList.remove("addScoreAnimation");
       },
       { once: true }
     );
@@ -180,31 +185,32 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.playerNameInputEl.addEventListener("input", (e) => {
-  setPlayerNameToLocalStorage(e.target.value);
+ui.playerNameInputEl?.addEventListener("input", (e) => {
+  setPlayerNameToLocalStorage((e.target as HTMLInputElement)?.value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
-ui.questionScreenContainerEl.addEventListener("click", (e) => {
+ui.questionScreenContainerEl?.addEventListener("click", (e) => {
+  const button = e.target as HTMLButtonElement;
   if (
-    e.target.tagName === "BUTTON" &&
-    e.target.textContent !== "Next question"
+    button?.tagName === "BUTTON" &&
+    button?.textContent !== "Next question"
   ) {
-    if (game.currentQuestion.name === e.target.textContent) {
-      e.target.classList.add("btn-success");
-      e.target.classList.remove("btn-warning");
+    if (game.currentQuestion.name === button?.textContent) {
+      button?.classList.add("btn-success");
+      button?.classList.remove("btn-warning");
       game.rightAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = true;
-    } else if (game.currentQuestion.name !== e.target.textContent) {
-      e.target.classList.add("btn-danger");
-      e.target.classList.remove("btn-warning");
+    } else if (game.currentQuestion.name !== button.textContent) {
+      button?.classList.add("btn-danger");
+      button?.classList.remove("btn-warning");
       game.wrongAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = false;
     }
     disableAllQuestionButtons();
 
     //Show nextQuestionBtn
-    ui.nextQuestionBtnEl.classList.remove("d-none");
+    ui.nextQuestionBtnEl?.classList.remove("d-none");
 
     updateScoreDisplay(
       game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0
@@ -212,7 +218,7 @@ ui.questionScreenContainerEl.addEventListener("click", (e) => {
   }
 });
 
-ui.nextQuestionBtnEl.addEventListener("click", () => {
+ui.nextQuestionBtnEl?.addEventListener("click", () => {
   game.nbrOfSelectedQuestions.shift();
 
   game.currentQuestionNbr++;
@@ -228,8 +234,8 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
   } else {
     // Game is over, go to endScreen
     //Hide question screen
-    ui.nextQuestionBtnEl.classList.add("d-none");
-    ui.questionScreenContainerEl.classList.add("d-none");
+    ui.nextQuestionBtnEl?.classList.add("d-none");
+    ui.questionScreenContainerEl?.classList.add("d-none");
 
     renderEndScreen();
   }
@@ -237,13 +243,15 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 
 /* **************** GAME START****************** */
 //Listen for nbr of questions selected and start game
-ui.startBtnContainerEl.addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON") {
-    if (e.target.textContent.includes("5")) {
+ui.startBtnContainerEl?.addEventListener("click", (e) => {
+    const button = e.target as HTMLButtonElement;
+
+  if (button?.tagName === "BUTTON") {
+    if (button?.textContent.includes("5")) {
       game.nbrOfQuestions = 5;
-    } else if (e.target.textContent.includes("10")) {
+    } else if (button.textContent.includes("10")) {
       game.nbrOfQuestions = 10;
-    } else if (e.target.textContent.includes("ALL")) {
+    } else if (button.textContent.includes("ALL")) {
       game.nbrOfQuestions = students.length;
     }
     startGame();

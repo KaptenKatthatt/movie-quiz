@@ -16,7 +16,7 @@ export interface Student{
 
 
 
-interface Gamestate {
+export interface Gamestate {
   // Methods
   getLowestHighScore(): number;
   removeLowestHighScore(): void;
