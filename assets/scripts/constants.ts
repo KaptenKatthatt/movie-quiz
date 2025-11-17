@@ -50,6 +50,7 @@ export const ui = {
   playerNameInputEl: document.querySelector("#playerNameInput") as HTMLInputElement | null,
   playerNameInputFormEl: document.querySelector(".playerNameInputForm") as HTMLFormElement | null,
   pointsEl: document.querySelector(".points") as HTMLElement | null,
+  nbrQuestionsContainerEl: document.querySelector(".nbrQuestionsContainer") as HTMLElement, 
   questionBtnContainerEl: document.querySelector(".questionBtnContainer") as HTMLElement | null,
   questionScreenContainerEl: document.querySelector(".questionScreenContainer") as HTMLElement | null,
   questionBoardEl: document.querySelector(".nbrOfQuestions") as HTMLElement | null,

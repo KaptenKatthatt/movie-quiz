@@ -6,15 +6,15 @@ import {
 } from "./storage";
 import { ui, game, type Student } from "./constants";
 
-/* **************** VARIABLES****************** */
+/* **************** VARIABLES ****************** */
 
 let questionButtonNames: Student[] = []; //The four names on the question buttons
 
-/* **************** FUNCTIONS****************** */
+/* **************** FUNCTIONS (GAME LOGIC) ****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
-  ui.photoContainerEl!.src = game.currentQuestion.image;
-};
+  ui.photoContainerEl!.src = game.currentQuestion.image
+}
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 const cloneAndShuffleArray = function <T>(array: T[]): T[] {
@@ -25,8 +25,8 @@ const cloneAndShuffleArray = function <T>(array: T[]): T[] {
     shuffledArrayClone[i] = shuffledArrayClone[j]!;
     shuffledArrayClone[j] = temp;
   }
-  return shuffledArrayClone;
-};
+  return shuffledArrayClone
+}
 
 /**
 Disables question buttons from being clicked twice
@@ -34,8 +34,8 @@ Disables question buttons from being clicked twice
  */
 const disableAllQuestionButtons = function () {
   ui.questionBtnContainerEl?.querySelectorAll<HTMLButtonElement>("button")
-    .forEach((button:HTMLButtonElement) => (button.disabled = true));
-};
+    .forEach((button:HTMLButtonElement) => (button.disabled = true))
+}
 
 /**
  * Creates four answers for answer buttons. 1 right and 3 wrong.
@@ -162,7 +162,7 @@ const setCurrentStudent = function () {
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-const updateScoreDisplay = function (shouldAnimate = false) {
+const updateScoreDisplay = function (shouldAnimate: boolean = false) {
   if (ui.questionBoardEl) {
     ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
   }
@@ -183,81 +183,96 @@ const updateScoreDisplay = function (shouldAnimate = false) {
   }
 };
 
-/* **************** EVENT LISTENERS****************** */
-
-ui.playerNameInputEl?.addEventListener("input", (e) => {
-  setPlayerNameToLocalStorage((e.target as HTMLInputElement)?.value);
-});
-
-// Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
-ui.questionScreenContainerEl?.addEventListener("click", (e) => {
-  const button = e.target as HTMLButtonElement;
-  if (
-    button?.tagName === "BUTTON" &&
-    button?.textContent !== "Next question"
-  ) {
-    if (game.currentQuestion.name === button?.textContent) {
-      button?.classList.add("btn-success");
-      button?.classList.remove("btn-warning");
-      game.rightAnswersArr.push(game.currentQuestion);
-      game.isCurrentAnswerCorrect = true;
-    } else if (game.currentQuestion.name !== button.textContent) {
-      button?.classList.add("btn-danger");
-      button?.classList.remove("btn-warning");
-      game.wrongAnswersArr.push(game.currentQuestion);
-      game.isCurrentAnswerCorrect = false;
-    }
-    disableAllQuestionButtons();
-
-    //Show nextQuestionBtn
-    ui.nextQuestionBtnEl?.classList.remove("d-none");
-
-    updateScoreDisplay(
-      game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0
-    );
+const handleAnswer = function (button: HTMLButtonElement) {
+  if (game.currentQuestion.name === button.textContent) {
+    button.classList.add("btn-success");
+    button.classList.remove("btn-warning");
+    game.rightAnswersArr.push(game.currentQuestion);
+    game.isCurrentAnswerCorrect = true;
+  } else {
+    button.classList.add("btn-danger");
+    button.classList.remove("btn-warning");
+    game.wrongAnswersArr.push(game.currentQuestion);
+    game.isCurrentAnswerCorrect = false;
   }
-});
+  disableAllQuestionButtons();
+  ui.nextQuestionBtnEl?.classList.remove("d-none");
+  updateScoreDisplay(game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0);
+};
 
-ui.nextQuestionBtnEl?.addEventListener("click", () => {
+const handleNextQuestion = function () {
   game.nbrOfSelectedQuestions.shift();
-
   game.currentQuestionNbr++;
   updateScoreDisplay();
 
-  // Checks if there is any students left to question about
   if (game.nbrOfSelectedQuestions.length > 0) {
-    document.startViewTransition //Checks if view transition is supported, if not skip it.
-      ? document.startViewTransition(() => {
-          renderNewQuestion();
-        })
+    document.startViewTransition? document.startViewTransition(() => renderNewQuestion())
       : renderNewQuestion();
   } else {
-    // Game is over, go to endScreen
-    //Hide question screen
     ui.nextQuestionBtnEl?.classList.add("d-none");
     ui.questionScreenContainerEl?.classList.add("d-none");
-
     renderEndScreen();
   }
-});
+};
 
-/* **************** GAME START****************** */
-//Listen for nbr of questions selected and start game
-ui.startBtnContainerEl?.addEventListener("click", (e) => {
-    const button = e.target as HTMLButtonElement;
-
-  if (button?.tagName === "BUTTON") {
-    if (button?.textContent.includes("5")) {
+const handleStartGame = function (button: HTMLButtonElement) {
+    if (button.textContent?.includes("5")) {
       game.nbrOfQuestions = 5;
-    } else if (button.textContent.includes("10")) {
+    } else if (button.textContent?.includes("10")) {
       game.nbrOfQuestions = 10;
-    } else if (button.textContent.includes("ALL")) {
+    } else if (button.textContent?.includes("ALL")) {
       game.nbrOfQuestions = students.length;
     }
-    startGame();
     initPlayer();
-  }
+    startGame();
+};
+
+/* **************** EVENT HANDLERS  ****************** */
+
+// --- Hanterar alla klick på startskärmen ---
+ui.startScreenContainerEl?.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const button = target.closest('button');
+
+    if (!button) return; // Klickade inte på en knapp
+
+    // Kollar om knappen är en av startknapparna
+    if (button.parentElement === ui.nbrQuestionsContainerEl) {
+        handleStartGame(button);
+    }
 });
 
-//Render initial game screen
-renderQuestionScreen();
+// --- Hanterar alla klick på frågeskärmen ---
+ui.questionScreenContainerEl?.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const button = target.closest('button');
+
+    if (!button) return; // Klickade inte på en knapp
+
+    // Är det "Next Question"-knappen?
+    if (button.classList.contains("nextQuestionBtn")) {
+        handleNextQuestion();
+        return;
+    }
+
+    // Är det en svarsknapp? (Antar att bara svarsknappar och next-knappen finns)
+    if (!button.disabled) {
+        handleAnswer(button);
+    }
+});
+
+
+// --- Övriga lyssnare som inte är klick ---
+ui.playerNameInputEl?.addEventListener("input", (e) => {
+  setPlayerNameToLocalStorage((e.target as HTMLInputElement)!.value);
+});
+
+// --- Animation Listener (endast en, på rätt element) ---
+ui.pointsEl?.addEventListener("animationend", () => {
+    ui.pointsEl?.classList.remove("addScoreAnimation");
+});
+
+
+/* **************** INITIALIZATION ****************** */
+renderQuestionScreen(); // Renderar den initiala vyn
+
