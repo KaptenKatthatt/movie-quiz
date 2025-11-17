@@ -1,20 +1,20 @@
-import { getPlayerNameFromLocalStorage, setPlayerNameToLocalStorage } from "./storage.js";
+import {
+  getPlayerNameFromLocalStorage,
+  setPlayerNameToLocalStorage,
+} from "./storage.js";
 
-export interface Player{
-    id: number;
-    name: string;
-    score: number;
-    nbrOfQuestions: number;
+export interface Player {
+  id: number;
+  name: string;
+  score: number;
+  nbrOfQuestions: number;
 }
 
-export interface Student{
-    id: number;
-    name: string;
-    image: string;
-
+export interface Student {
+  id: number;
+  name: string;
+  image: string;
 }
-
-
 
 export interface Gamestate {
   // Methods
@@ -46,35 +46,71 @@ export interface Gamestate {
 
 export const ui = {
   // Main.js
-  photoContainerEl: document.querySelector(".photoContainer") as HTMLImageElement | null,
-  playerNameInputEl: document.querySelector("#playerNameInput") as HTMLInputElement | null,
-  playerNameInputFormEl: document.querySelector(".playerNameInputForm") as HTMLFormElement | null,
+  photoContainerEl: document.querySelector(
+    ".photoContainer"
+  ) as HTMLImageElement | null,
+  playerNameInputEl: document.querySelector(
+    "#playerNameInput"
+  ) as HTMLInputElement | null,
+  playerNameInputFormEl: document.querySelector(
+    ".playerNameInputForm"
+  ) as HTMLFormElement | null,
   pointsEl: document.querySelector(".points") as HTMLElement | null,
-  nbrQuestionsContainerEl: document.querySelector(".nbrQuestionsContainer") as HTMLElement, 
-  questionBtnContainerEl: document.querySelector(".questionBtnContainer") as HTMLElement | null,
-  questionScreenContainerEl: document.querySelector(".questionScreenContainer") as HTMLElement | null,
-  questionBoardEl: document.querySelector(".nbrOfQuestions") as HTMLElement | null,
-  siteContainerEl: document.querySelector(".siteContainer") as HTMLElement | null,
-  startBtnContainerEl: document.querySelector(".startBtnContainer") as HTMLElement | null,
-  startScreenContainerEl: document.querySelector(".startScreenContainer") as HTMLElement | null,
+  nbrQuestionsContainerEl: document.querySelector(
+    ".nbrQuestionsContainer"
+  ) as HTMLElement,
+  questionBtnContainerEl: document.querySelector(
+    ".questionBtnContainer"
+  ) as HTMLElement | null,
+  questionScreenContainerEl: document.querySelector(
+    ".questionScreenContainer"
+  ) as HTMLElement | null,
+  questionBoardEl: document.querySelector(
+    ".nbrOfQuestions"
+  ) as HTMLElement | null,
+  siteContainerEl: document.querySelector(
+    ".siteContainer"
+  ) as HTMLElement | null,
+  startBtnContainerEl: document.querySelector(
+    ".startBtnContainer"
+  ) as HTMLElement | null,
+  startScreenContainerEl: document.querySelector(
+    ".startScreenContainer"
+  ) as HTMLElement | null,
 
   // Endscreen.js
   finalScoreEl: document.querySelector(".finalScore") as HTMLElement | null,
-  highScoreListEl: document.querySelector(".highScoreList") as HTMLElement | null,
-  restartGameBtnEl: document.querySelector(".restartGameBtn") as HTMLButtonElement | null,
-  rightAnswerCardsEl: document.querySelector(".rightAnswerCards") as HTMLElement | null,
-  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading") as HTMLElement | null,
-  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards") as HTMLElement | null,
-  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading") as HTMLElement | null,
+  highScoreListEl: document.querySelector(
+    ".highScoreList"
+  ) as HTMLElement | null,
+  restartGameBtnEl: document.querySelector(
+    ".restartGameBtn"
+  ) as HTMLButtonElement | null,
+  rightAnswerCardsEl: document.querySelector(
+    ".rightAnswerCards"
+  ) as HTMLElement | null,
+  rightAnswersHeadingEl: document.querySelector(
+    ".rightAnswersHeading"
+  ) as HTMLElement | null,
+  wrongAnswerCardsEl: document.querySelector(
+    ".wrongAnswerCards"
+  ) as HTMLElement | null,
+  wrongAnswersHeadingEl: document.querySelector(
+    ".wrongAnswersHeading"
+  ) as HTMLElement | null,
 
   // Shared
   endScreenEl: document.querySelector(".endScreen") as HTMLElement | null,
-  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn") as HTMLButtonElement | null,
-  showNoHighScoreEl: document.querySelector(".noHighScore") as HTMLElement | null,
+  nextQuestionBtnEl: document.querySelector(
+    ".nextQuestionBtn"
+  ) as HTMLButtonElement | null,
+  showNoHighScoreEl: document.querySelector(
+    ".noHighScore"
+  ) as HTMLElement | null,
 };
 
 //A single object to bind them all
-export const game:Gamestate = {
+export const game: Gamestate = {
   /* **************** FUNCTIONS****************** */
   getLowestHighScore() {
     return Math.min(...this.highScoreList.map((player) => player.score));
@@ -106,11 +142,11 @@ export const game:Gamestate = {
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 
-  rightAnswersArr: [] ,
-  wrongAnswersArr: [] ,
-  filteredWrongStudents: [] , //Student array with correct answer filtered out
-  shuffledQuestions: [] , //All students shuffled
-  nbrOfSelectedQuestions: [] , //Student array sliced to nbr of selected guesses
+  // rightAnswersArr: [] ,
+  // wrongAnswersArr: [] ,
+  // filteredWrongStudents: [] , //Student array with correct answer filtered out
+  // shuffledQuestions: [] , //All students shuffled
+  nbrOfSelectedQuestions: [], //Student array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
@@ -175,7 +211,7 @@ export const game:Gamestate = {
       nbrOfQuestions: 10,
       name: "J.O",
     },
-  ] ,
+  ],
   /* **************** PLAYER OBJECT ****************** */
 
   player: {
@@ -184,12 +220,12 @@ export const game:Gamestate = {
     get score() {
       return game.nbrOfRightAnswers;
     },
-    get name(){
+    get name() {
       return getPlayerNameFromLocalStorage() || "someNonameDude";
-    }, 
-    set name(name){
+    },
+    set name(name) {
       setPlayerNameToLocalStorage(name);
-    }
+    },
   } as Player,
   currentQuestion: { id: 0, name: "", image: "" }, //Current question/student
 };

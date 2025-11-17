@@ -1,10 +1,11 @@
 import { renderEndScreen } from "./endScreen";
 import { students } from "./students";
-import {
-  getPlayerNameFromLocalStorage,
-  setPlayerNameToLocalStorage,
-} from "./storage";
+// import {
+//   getPlayerNameFromLocalStorage,
+//   setPlayerNameToLocalStorage,
+// } from "./storage";
 import { ui, game, type Student } from "./constants";
+import { Gamestate } from "./gamestate";
 
 /* **************** VARIABLES ****************** */
 
@@ -13,29 +14,30 @@ let questionButtonNames: Student[] = []; //The four names on the question button
 /* **************** FUNCTIONS (GAME LOGIC) ****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
-  ui.photoContainerEl!.src = game.currentQuestion.image
-}
+  ui.photoContainerEl!.src = game.currentQuestion.image;
+};
 
-// Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function <T>(array: T[]): T[] {
-  const shuffledArrayClone = [...array];
-  for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp:T  = shuffledArrayClone[i]!;
-    shuffledArrayClone[i] = shuffledArrayClone[j]!;
-    shuffledArrayClone[j] = temp;
-  }
-  return shuffledArrayClone
-}
+// // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
+// const cloneAndShuffleArray = function <T>(array: T[]): T[] {
+//   const shuffledArrayClone = [...array];
+//   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     const temp:T  = shuffledArrayClone[i]!;
+//     shuffledArrayClone[i] = shuffledArrayClone[j]!;
+//     shuffledArrayClone[j] = temp;
+//   }
+//   return shuffledArrayClone
+// }
 
 /**
 Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = function () {
-  ui.questionBtnContainerEl?.querySelectorAll<HTMLButtonElement>("button")
-    .forEach((button:HTMLButtonElement) => (button.disabled = true))
-}
+  ui.questionBtnContainerEl
+    ?.querySelectorAll<HTMLButtonElement>("button")
+    .forEach((button: HTMLButtonElement) => (button.disabled = true));
+};
 
 /**
  * Creates four answers for answer buttons. 1 right and 3 wrong.
@@ -43,7 +45,8 @@ const disableAllQuestionButtons = function () {
 const getAnswerButtonNames = function (): Student[] {
   questionButtonNames = [game.currentQuestion, ...getThreeRandomAnswers()];
   //Randomize button names
-  questionButtonNames = cloneAndShuffleArray<Student>(questionButtonNames);
+  questionButtonNames =
+    gamestate.cloneAndShuffleArray<Student>(questionButtonNames);
 
   return questionButtonNames;
 };
@@ -52,9 +55,11 @@ const getAnswerButtonNames = function (): Student[] {
  *Take game.currentQuestion and throw into an array with three randos
  * @returns Array with 3 wrong answers and 1 right.
  */
-const getThreeRandomAnswers = function (): Student[] {
-  return cloneAndShuffleArray<Student>(game.filteredWrongStudents).slice(0, 3);
-};
+
+//  gamestate.getThreeRandomAnswers
+// const getThreeRandomAnswers = function (): Student[] {
+//   return cloneAndShuffleArray<Student>(game.filteredWrongStudents).slice(0, 3);
+// };
 
 const initPlayer = function () {
   // Create player id & name
@@ -93,7 +98,7 @@ const renderFourQuestionButtons = function () {
     .join("");
 };
 
-const renderQuestionScreen = function ():void {
+const renderQuestionScreen = function (): void {
   //Sets player name to stored player name
   ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage();
 
@@ -120,6 +125,7 @@ export const restartGame = function () {
 };
 
 const startGame = function () {
+  const gamestate = new Gamestate();
   // Shuffles the student array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray<Student>(students);
   //Create an array with selected nbr of students
@@ -166,7 +172,7 @@ const updateScoreDisplay = function (shouldAnimate: boolean = false) {
   if (ui.questionBoardEl) {
     ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
   }
-  
+
   if (ui.pointsEl) {
     ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
   }
@@ -206,7 +212,8 @@ const handleNextQuestion = function () {
   updateScoreDisplay();
 
   if (game.nbrOfSelectedQuestions.length > 0) {
-    document.startViewTransition? document.startViewTransition(() => renderNewQuestion())
+    document.startViewTransition
+      ? document.startViewTransition(() => renderNewQuestion())
       : renderNewQuestion();
   } else {
     ui.nextQuestionBtnEl?.classList.add("d-none");
@@ -216,51 +223,50 @@ const handleNextQuestion = function () {
 };
 
 const handleStartGame = function (button: HTMLButtonElement) {
-    if (button.textContent?.includes("5")) {
-      game.nbrOfQuestions = 5;
-    } else if (button.textContent?.includes("10")) {
-      game.nbrOfQuestions = 10;
-    } else if (button.textContent?.includes("ALL")) {
-      game.nbrOfQuestions = students.length;
-    }
-    initPlayer();
-    startGame();
+  if (button.textContent?.includes("5")) {
+    game.nbrOfQuestions = 5;
+  } else if (button.textContent?.includes("10")) {
+    game.nbrOfQuestions = 10;
+  } else if (button.textContent?.includes("ALL")) {
+    game.nbrOfQuestions = students.length;
+  }
+  initPlayer();
+  startGame();
 };
 
 /* **************** EVENT HANDLERS  ****************** */
 
 // --- Hanterar alla klick på startskärmen ---
 ui.startScreenContainerEl?.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
-    const button = target.closest('button');
+  const target = e.target as HTMLElement;
+  const button = target.closest("button");
 
-    if (!button) return; // Klickade inte på en knapp
+  if (!button) return; // Klickade inte på en knapp
 
-    // Kollar om knappen är en av startknapparna
-    if (button.parentElement === ui.nbrQuestionsContainerEl) {
-        handleStartGame(button);
-    }
+  // Kollar om knappen är en av startknapparna
+  if (button.parentElement === ui.nbrQuestionsContainerEl) {
+    handleStartGame(button);
+  }
 });
 
 // --- Hanterar alla klick på frågeskärmen ---
 ui.questionScreenContainerEl?.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
-    const button = target.closest('button');
+  const target = e.target as HTMLElement;
+  const button = target.closest("button");
 
-    if (!button) return; // Klickade inte på en knapp
+  if (!button) return; // Klickade inte på en knapp
 
-    // Är det "Next Question"-knappen?
-    if (button.classList.contains("nextQuestionBtn")) {
-        handleNextQuestion();
-        return;
-    }
+  // Är det "Next Question"-knappen?
+  if (button.classList.contains("nextQuestionBtn")) {
+    handleNextQuestion();
+    return;
+  }
 
-    // Är det en svarsknapp? (Antar att bara svarsknappar och next-knappen finns)
-    if (!button.disabled) {
-        handleAnswer(button);
-    }
+  // Är det en svarsknapp? (Antar att bara svarsknappar och next-knappen finns)
+  if (!button.disabled) {
+    handleAnswer(button);
+  }
 });
-
 
 // --- Övriga lyssnare som inte är klick ---
 ui.playerNameInputEl?.addEventListener("input", (e) => {
@@ -269,10 +275,8 @@ ui.playerNameInputEl?.addEventListener("input", (e) => {
 
 // --- Animation Listener (endast en, på rätt element) ---
 ui.pointsEl?.addEventListener("animationend", () => {
-    ui.pointsEl?.classList.remove("addScoreAnimation");
+  ui.pointsEl?.classList.remove("addScoreAnimation");
 });
-
 
 /* **************** INITIALIZATION ****************** */
 renderQuestionScreen(); // Renderar den initiala vyn
-
