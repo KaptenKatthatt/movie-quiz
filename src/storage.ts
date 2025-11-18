@@ -1,3 +1,5 @@
+import { type HighScoreList } from "./constants";
+
 export const getPlayerNameFromLocalStorage = () => {
   if (
     localStorage.getItem("playerName") === null ||
@@ -23,6 +25,8 @@ export const setPlayerNameToLocalStorage = (playerName: string) => {
 export const getHighScoreListFromLocalStorage = function () {
   return localStorage.getItem("highScoreList");
 };
-export const setHighScoreListToLocalStorage = function (highScoreList) {
+export const setHighScoreListToLocalStorage = function (
+  highScoreList: HighScoreList
+) {
   localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 };
