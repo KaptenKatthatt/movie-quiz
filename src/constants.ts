@@ -55,14 +55,14 @@ export interface HighScoreList {
   name: string;
 }
 
-export interface Player {
-  id: number;
-  score: number;
-  name: string;
-  rightAnswers: number;
-  wrongAnswers: number;
-  nbrOfQuestions: number;
-}
+// export interface Player {
+//   id: number;
+//   score: number;
+//   name: string;
+//   rightAnswers: number;
+//   wrongAnswers: number;
+//   nbrOfQuestions: number;
+// }
 
 export const game = {
   /* **************** FUNCTIONS****************** */
@@ -172,6 +172,7 @@ export const game = {
     get score() {
       return game.nbrOfRightAnswers;
     },
+    score: 0,
     name: getPlayerNameFromLocalStorage(),
   },
   currentQuestion: {

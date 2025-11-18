@@ -1,10 +1,10 @@
-import { restartGame } from "./main.js";
+import { restartGame } from "./main";
 import {
   getHighScoreListFromLocalStorage,
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
-} from "./storage.js";
-import { ui, game } from "./constants.js";
+} from "./storage";
+import { ui, game } from "./constants";
 
 /* **************** FUNCTIONS****************** */
 
@@ -95,7 +95,7 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.rightAnswersHeadingEl.innerText =
-    game.nbrOfRightAnswers > 0
+    player.score > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };

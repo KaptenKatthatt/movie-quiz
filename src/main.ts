@@ -130,7 +130,7 @@ const startGame = function () {
     game.nbrOfQuestions
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0);
+  updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -166,7 +166,7 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
+  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl!.classList.add("addScoreAnimation");
@@ -206,9 +206,7 @@ ui.questionBtnContainerEl.addEventListener("click", (e) => {
     //Show nextQuestionBtn
     ui.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(
-      game.isCurrentAnswerCorrect && game.nbrOfRightAnswers > 0
-    );
+    updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
   }
 });
 
