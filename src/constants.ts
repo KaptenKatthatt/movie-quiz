@@ -94,9 +94,9 @@ export const game = {
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 
-  rightAnswersArr: [],
-  wrongAnswersArr: [],
-  filteredWrongStudents: [], //Student array with correct answer filtered out
+  rightAnswersArr: [] as Student[],
+  wrongAnswersArr: [] as Student[],
+  filteredWrongStudents: [] as Student[], //Student array with correct answer filtered out
   shuffledQuestions: [] as Student[], //All students shuffled
   nbrOfSelectedQuestions: [] as Student[], //Student array sliced to nbr of selected guesses
   nbrOfQuestions: 0,

@@ -183,23 +183,21 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 /* **************** EVENT LISTENERS****************** */
 
 ui.playerNameInputEl.addEventListener("input", (e) => {
-  setPlayerNameToLocalStorage(e.target.value);
+  setPlayerNameToLocalStorage((e.target as HTMLInputElement).value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
 ui.questionBtnContainerEl.addEventListener("click", (e) => {
-  if (
-    e.target.tagName === "BUTTON" &&
-    e.target.textContent !== "Next question"
-  ) {
-    if (game.currentQuestion.name === e.target.textContent) {
-      e.target.classList.add("btn-success");
-      e.target.classList.remove("btn-warning");
+  const button = e.target as HTMLButtonElement;
+  if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
+    if (game.currentQuestion.name === button.textContent) {
+      button.classList.add("btn-success");
+      button.classList.remove("btn-warning");
       game.rightAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = true;
-    } else if (game.currentQuestion.name !== e.target.textContent) {
-      e.target.classList.add("btn-danger");
-      e.target.classList.remove("btn-warning");
+    } else if (game.currentQuestion.name !== button.textContent) {
+      button.classList.add("btn-danger");
+      button.classList.remove("btn-warning");
       game.wrongAnswersArr.push(game.currentQuestion);
       game.isCurrentAnswerCorrect = false;
     }
@@ -240,12 +238,13 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 /* **************** GAME START****************** */
 //Listen for nbr of questions selected and start game
 ui.startBtnContainerEl.addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON") {
-    if (e.target.textContent.includes("5")) {
+  const button = e.target as HTMLButtonElement;
+  if (button.tagName === "BUTTON") {
+    if (button.textContent.includes("5")) {
       game.nbrOfQuestions = 5;
-    } else if (e.target.textContent.includes("10")) {
+    } else if (button.textContent.includes("10")) {
       game.nbrOfQuestions = 10;
-    } else if (e.target.textContent.includes("ALL")) {
+    } else if (button.textContent.includes("ALL")) {
       game.nbrOfQuestions = students.length;
     }
     startGame();
