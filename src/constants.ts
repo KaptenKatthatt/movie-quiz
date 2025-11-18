@@ -1,4 +1,3 @@
-import { getPlayerNameFromLocalStorage } from "./storage.js";
 import type { Student } from "./students";
 
 export const ui = {
