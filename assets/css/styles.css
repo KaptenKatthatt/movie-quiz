@@ -54,8 +54,6 @@ input {
 }
 body {
   background-color: var(--red);
-  /* background-color: #1d7874; */
-  /* background-color: #9ab87a; */
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
 }
 
@@ -270,10 +268,6 @@ input {
 ::view-transition-old(startScreen) {
   animation: slideUpOut 0.7s forwards;
 }
-/* Removed because start page should only be removed, the new one that replaces it comes from the photoContainer */
-/* ::view-transition-new(startScreen) {
-  animation: slideUpIn 0.7s forwards;
-} */
 
 .welcomeHeader,
 .questionScreenContainer h2 {
