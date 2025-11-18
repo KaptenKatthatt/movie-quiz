@@ -8,7 +8,7 @@ export const getPlayerNameFromLocalStorage = () => {
     localStorage.setItem("playerName", "someNoNameDude");
     return "someNoNameDude";
   } else {
-    return localStorage.getItem("playerName");
+    return localStorage.getItem("playerName")!;
   }
 };
 

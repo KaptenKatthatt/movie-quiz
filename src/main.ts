@@ -191,6 +191,7 @@ ui.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
+      player.score++;
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
       player.rightAnswersArr.push(game.currentQuestion[0]);
