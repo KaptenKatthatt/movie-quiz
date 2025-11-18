@@ -1,34 +1,69 @@
 import { getPlayerNameFromLocalStorage } from "./storage.js";
+import type { Student } from "./students";
 
 export const ui = {
-  // Main.js
-  photoContainerEl: document.querySelector(".photoContainer"),
-  playerNameInputEl: document.querySelector("#playerNameInput"),
-  // playerNameInputFormEl: document.querySelector(".playerNameInputForm"),
+  endScreenEl: document.querySelector(".endScreen") as HTMLDivElement,
+  finalScoreEl: document.querySelector(".finalScore") as HTMLDivElement,
+  highScoreListEl: document.querySelector(".highScoreList") as HTMLUListElement,
+  nextQuestionBtnEl: document.querySelector(
+    ".nextQuestionBtn"
+  ) as HTMLButtonElement,
+  photoContainerEl: document.querySelector(
+    ".photoContainer"
+  ) as HTMLImageElement,
+  playerNameInputEl: document.querySelector(
+    "#playerNameInput"
+  ) as HTMLInputElement,
   pointsEl: document.querySelector(".points"),
-  questionBtnContainerEl: document.querySelector(".questionBtnContainer"),
-  questionScreenContainerEl: document.querySelector(".questionScreenContainer"),
-  questionBoardEl: document.querySelector(".nbrOfQuestions"),
-  siteContainerEl: document.querySelector(".siteContainer"),
-  startBtnContainerEl: document.querySelector(".startBtnContainer"),
-  startScreenContainerEl: document.querySelector(".startScreenContainer"),
-
-  // Endscreen.js
-  finalScoreEl: document.querySelector(".finalScore"),
-  highScoreListEl: document.querySelector(".highScoreList"),
-  restartGameBtnEl: document.querySelector(".restartGameBtn"),
-  rightAnswerCardsEl: document.querySelector(".rightAnswerCards"),
-  rightAnswersHeadingEl: document.querySelector(".rightAnswersHeading"),
-  wrongAnswerCardsEl: document.querySelector(".wrongAnswerCards"),
-  wrongAnswersHeadingEl: document.querySelector(".wrongAnswersHeading"),
-
-  // Shared
-  endScreenEl: document.querySelector(".endScreen"),
-  nextQuestionBtnEl: document.querySelector(".nextQuestionBtn"),
-  showNoHighScoreEl: document.querySelector(".noHighScore"),
+  questionBoardEl: document.querySelector(".nbrOfQuestions") as HTMLDivElement,
+  questionBtnContainerEl: document.querySelector(
+    ".questionBtnContainer"
+  ) as HTMLDivElement,
+  questionScreenContainerEl: document.querySelector(
+    ".questionScreenContainer"
+  ) as HTMLDivElement,
+  restartGameBtnEl: document.querySelector(
+    ".restartGameBtn"
+  ) as HTMLButtonElement,
+  rightAnswerCardsEl: document.querySelector(
+    ".rightAnswerCards"
+  ) as HTMLDivElement,
+  rightAnswersHeadingEl: document.querySelector(
+    ".rightAnswersHeading"
+  ) as HTMLDivElement,
+  showNoHighScoreEl: document.querySelector(".noHighScore") as HTMLDivElement,
+  siteContainerEl: document.querySelector(".siteContainer") as HTMLDivElement,
+  startBtnContainerEl: document.querySelector(
+    ".startBtnContainer"
+  ) as HTMLDivElement,
+  startScreenContainerEl: document.querySelector(
+    ".startScreenContainer"
+  ) as HTMLDivElement,
+  wrongAnswerCardsEl: document.querySelector(
+    ".wrongAnswerCards"
+  ) as HTMLDivElement,
+  wrongAnswersHeadingEl: document.querySelector(
+    ".wrongAnswersHeading"
+  ) as HTMLDivElement,
 };
 
 //A single object to bind them all
+export interface HighScoreList {
+  id: number;
+  score: number;
+  nbrOfQuestions: number;
+  name: string;
+}
+
+export interface Player {
+  id: number;
+  score: number;
+  name: string;
+  rightAnswers: number;
+  wrongAnswers: number;
+  nbrOfQuestions: number;
+}
+
 export const game = {
   /* **************** FUNCTIONS****************** */
   getLowestHighScore() {
@@ -62,8 +97,8 @@ export const game = {
   rightAnswersArr: [],
   wrongAnswersArr: [],
   filteredWrongStudents: [], //Student array with correct answer filtered out
-  shuffledQuestions: [], //All students shuffled
-  nbrOfSelectedQuestions: [], //Student array sliced to nbr of selected guesses
+  shuffledQuestions: [] as Student[], //All students shuffled
+  nbrOfSelectedQuestions: [] as Student[], //Student array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
@@ -139,5 +174,9 @@ export const game = {
     },
     name: getPlayerNameFromLocalStorage(),
   },
-  currentQuestion: {}, //Current question/student
+  currentQuestion: {
+    id: 0,
+    name: "",
+    image: "",
+  }, //Current question/student
 };

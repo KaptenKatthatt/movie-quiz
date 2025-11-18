@@ -1,4 +1,10 @@
-export const students = [
+export interface Student {
+  id: number;
+  name: string;
+  image: string;
+}
+
+export const students: Student[] = [
   { id: 2, name: "Ellen", image: "assets/images/students/ellen_andersson.jpg" },
   {
     id: 4,
@@ -47,16 +53,4 @@ export const students = [
     name: "Sixten",
     image: "assets/images/students/sixten_hagenblad.jpg",
   },
-];
-
-const missing_students = [
-  {
-    id: 1,
-    name: "Adrian",
-    image: "assets/images/students/adrian_kleinschmidt.jpg",
-  },
-  { id: 3, name: "Emil", image: "assets/images/students/emil_stromdahl.jpg" },
-  { id: 5, name: "Hiuna", image: "assets/images/students/hiuna_al-msafir.jpg" },
-  { id: 7, name: "Jakob", image: "assets/images/students/jakob_willfors.jpg" },
-  { id: 14, name: "Nora", image: "assets/images/students/nora_chekhaidem.jpg" },
 ];

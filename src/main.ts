@@ -1,9 +1,11 @@
-import { renderEndScreen } from "./endScreen.js";
+import { renderEndScreen } from "./endScreen";
 import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
-} from "./storage.js";
-import { ui, game } from "./constants.js";
+} from "./storage";
+import { ui, game } from "./constants";
+import { students } from "./students";
+import type { Student } from "./students";
 
 /* **************** VARIABLES****************** */
 
@@ -16,7 +18,7 @@ const addPhotoToPhotoContainer = function () {
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function (array) {
+const cloneAndShuffleArray = function (array: Student[]) {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -32,9 +34,9 @@ Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = function () {
-  ui.questionBtnContainerEl
-    .querySelectorAll("button")
-    .forEach((button) => (button.disabled = true));
+  ui.questionBtnContainerEl!.querySelectorAll("button").forEach(
+    (button) => (button.disabled = true)
+  );
 };
 
 /**
@@ -68,7 +70,7 @@ const initPlayer = function () {
  */
 const makeWrongAnswersArray = function () {
   game.filteredWrongStudents = game.shuffledQuestions.filter(
-    (student) => student.id !== game.currentQuestion.id
+    (student: Student) => student.id !== game.currentQuestion.id
   );
 };
 
@@ -78,9 +80,9 @@ const renderNewQuestion = function () {
   addPhotoToPhotoContainer();
 
   //Inject buttons into DOM
-  ui.questionBtnContainerEl.innerHTML = renderFourQuestionButtons();
+  ui.questionBtnContainerEl!.innerHTML = renderFourQuestionButtons();
   //Hide next question button
-  ui.nextQuestionBtnEl.classList.add("d-none");
+  ui.nextQuestionBtnEl!.classList.add("d-none");
 };
 
 const renderFourQuestionButtons = function () {
@@ -95,9 +97,9 @@ const renderFourQuestionButtons = function () {
 
 const renderQuestionScreen = function () {
   //Sets player name to stored player name
-  ui.playerNameInputEl.value = getPlayerNameFromLocalStorage();
+  ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".startPhotosContainer").innerHTML = students
+  document.querySelector(".startPhotosContainer")!.innerHTML = students
     .map((student) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
@@ -113,9 +115,9 @@ const renderQuestionScreen = function () {
 
 export const restartGame = function () {
   game.restart();
-  ui.showNoHighScoreEl.classList.add("d-none");
-  ui.endScreenEl.classList.add("d-none");
-  ui.startScreenContainerEl.classList.remove("d-none");
+  ui.showNoHighScoreEl!.classList.add("d-none");
+  ui.endScreenEl!.classList.add("d-none");
+  ui.startScreenContainerEl!.classList.remove("d-none");
   initPlayer();
 };
 
@@ -164,14 +166,14 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
+  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${game.nbrOfRightAnswers}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
-    ui.pointsEl.classList.add("addScoreAnimation");
-    ui.pointsEl.addEventListener(
+    ui.pointsEl!.classList.add("addScoreAnimation");
+    ui.pointsEl!.addEventListener(
       "animationend",
       () => {
-        ui.pointsEl.classList.remove("addScoreAnimation");
+        ui.pointsEl!.classList.remove("addScoreAnimation");
       },
       { once: true }
     );
