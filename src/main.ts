@@ -3,7 +3,7 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { ui, game } from "./constants";
+import { ui, game, player } from "./constants";
 import { students } from "./students";
 import type { Student } from "./students";
 
@@ -14,7 +14,7 @@ let questionButtonNames = []; //The four names on the question buttons
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from students array
-  ui.photoContainerEl.src = game.currentQuestion.image;
+  ui.photoContainerEl.src = game.currentQuestion[0].image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
@@ -43,7 +43,7 @@ const disableAllQuestionButtons = function () {
  * Creates four answers for answer buttons. 1 right and 3 wrong.
  */
 const getAnswerButtonNames = function () {
-  questionButtonNames = [game.currentQuestion, ...getThreeRandomAnswers()];
+  questionButtonNames = [game.currentQuestion[0], ...getThreeRandomAnswers()];
   //Randomize button names
   questionButtonNames = cloneAndShuffleArray(questionButtonNames);
 
@@ -60,9 +60,9 @@ const getThreeRandomAnswers = function () {
 
 const initPlayer = function () {
   // Create player id & name
-  game.player.id = game.getLatestPlayerId() + 1;
-  game.player.name = getPlayerNameFromLocalStorage();
-  game.player.nbrOfQuestions = game.nbrOfQuestions;
+  player.id = game.getLatestPlayerId() + 1;
+  player.name = getPlayerNameFromLocalStorage();
+  player.nbrOfQuestions = game.nbrOfQuestions;
 };
 
 /**
@@ -70,7 +70,7 @@ const initPlayer = function () {
  */
 const makeWrongAnswersArray = function () {
   game.filteredWrongStudents = game.shuffledQuestions.filter(
-    (student: Student) => student.id !== game.currentQuestion.id
+    (student: Student) => student.id !== game.currentQuestion[0].id
   );
 };
 
@@ -157,7 +157,7 @@ const startGame = function () {
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
 const setCurrentStudent = function () {
-  game.currentQuestion = game.nbrOfSelectedQuestions[0];
+  game.currentQuestion[0] = game.nbrOfSelectedQuestions[0];
 };
 
 /**
@@ -166,7 +166,7 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${game.nbrOfQuestions}</span>`;
+  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl!.classList.add("addScoreAnimation");
@@ -190,15 +190,15 @@ ui.playerNameInputEl.addEventListener("input", (e) => {
 ui.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
-    if (game.currentQuestion.name === button.textContent) {
+    if (game.currentQuestion[0].name === button.textContent) {
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
-      game.rightAnswersArr.push(game.currentQuestion);
+      player.rightAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = true;
-    } else if (game.currentQuestion.name !== button.textContent) {
+    } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
-      game.wrongAnswersArr.push(game.currentQuestion);
+      player.wrongAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = false;
     }
     disableAllQuestionButtons();

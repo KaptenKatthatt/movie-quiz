@@ -48,24 +48,20 @@ export const ui = {
 };
 
 //A single object to bind them all
-export interface HighScoreList {
+export type HighScoreList = Player[];
+
+export interface Player {
   id: number;
   score: number;
-  nbrOfQuestions: number;
   name: string;
+  wrongAnswers: number;
+  nbrOfQuestions: number;
+  rightAnswersArr: Student[];
+  wrongAnswersArr: Student[];
 }
 
-// export interface Player {
-//   id: number;
-//   score: number;
-//   name: string;
-//   rightAnswers: number;
-//   wrongAnswers: number;
-//   nbrOfQuestions: number;
-// }
-
 export const game = {
-  /* **************** FUNCTIONS****************** */
+  /* **************** METHODS****************** */
   getLowestHighScore() {
     return Math.min(...this.highScoreList.map((player) => player.score));
   },
@@ -80,22 +76,22 @@ export const game = {
     return Math.max(...this.highScoreList.map((player) => player.id));
   },
   get nbrOfRightAnswers() {
-    return this.rightAnswersArr.length;
+    return player.rightAnswersArr.length;
   },
   get nbrOfWrongAnswers() {
-    return this.wrongAnswersArr.length;
+    return player.wrongAnswersArr.length;
   },
   restart() {
-    this.rightAnswersArr = [];
-    this.wrongAnswersArr = [];
+    player.rightAnswersArr = [];
+    player.wrongAnswersArr = [];
     this.isCurrentAnswerCorrect = false;
     ui.highScoreListEl!.innerHTML = "";
     this.currentQuestionNbr = 1;
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 
-  rightAnswersArr: [] as Student[],
-  wrongAnswersArr: [] as Student[],
+  // rightAnswersArr: [] as Student[],
+  // wrongAnswersArr: [] as Student[],
   filteredWrongStudents: [] as Student[], //Student array with correct answer filtered out
   shuffledQuestions: [] as Student[], //All students shuffled
   nbrOfSelectedQuestions: [] as Student[], //Student array sliced to nbr of selected guesses
@@ -108,76 +104,102 @@ export const game = {
       score: 10,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 2,
       score: 9,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 3,
       score: 8,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 4,
       score: 7,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 5,
       score: 6,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 6,
       score: 5,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 7,
       score: 4,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 8,
       score: 3,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 9,
       score: 2,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
     {
       id: 10,
       score: 0,
       nbrOfQuestions: 10,
       name: "J.O",
+      wrongAnswers: 0,
+      rightAnswersArr: [] as Student[],
+      wrongAnswersArr: [] as Student[],
     },
   ],
-  /* **************** PLAYER OBJECT ****************** */
+  currentQuestion: [] as Student[], //Current question/student
+};
 
-  player: {
-    id: 0,
-    nbrOfQuestions: 0,
-    get score() {
-      return game.nbrOfRightAnswers;
-    },
-    score: 0,
-    name: getPlayerNameFromLocalStorage(),
-  },
-  currentQuestion: {
-    id: 0,
-    name: "",
-    image: "",
-  }, //Current question/student
+/* **************** PLAYER OBJECT ****************** */
+export const player: Player = {
+  id: 0,
+  score: 0,
+  name: "",
+  wrongAnswers: 0,
+  nbrOfQuestions: 0,
+  rightAnswersArr: [] as Student[],
+  wrongAnswersArr: [] as Student[],
 };

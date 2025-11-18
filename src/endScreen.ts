@@ -4,23 +4,24 @@ import {
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { ui, game } from "./constants";
-
+import { ui, game, player } from "./constants";
+import type { Player } from "./constants";
+import type { Student } from "./students";
 /* **************** FUNCTIONS****************** */
 
 /**
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (game.player.score > game.getLowestHighScore()) {
+  if (player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
-    game.highScoreList.push(game.player);
+    game.highScoreList.push(player);
   } else {
     ui.showNoHighScoreEl.classList.remove("d-none");
   }
 };
 
-const formatCards = function (answerArr, isAnswerCorrect) {
+const formatCards = function (answerArr: Student[], isAnswerCorrect: boolean) {
   return answerArr
     .map(
       (student) => `
@@ -42,15 +43,15 @@ const formatCards = function (answerArr, isAnswerCorrect) {
  * @param {player object} player
  * @returns
  */
-const isLastPlayer = function (player) {
-  return player.id === game.player.id;
+const isLastPlayer = function (player: Player) {
+  return player.id === game.getLatestPlayerId();
 };
 /**
  * Renders score count banner
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${game.player.score}/${game.player.nbrOfQuestions}!!!</span>`;
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -66,7 +67,7 @@ const renderHighScoreList = function () {
   const storedList = getHighScoreListFromLocalStorage();
   game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
 
-  game.player.name = getPlayerNameFromLocalStorage();
+  player.name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
@@ -101,7 +102,7 @@ const renderRightAnswerHeading = function () {
 };
 
 const renderRightAnswerCards = function () {
-  ui.rightAnswerCardsEl.innerHTML = formatCards(game.rightAnswersArr, true);
+  ui.rightAnswerCardsEl.innerHTML = formatCards(player.rightAnswersArr, true);
 };
 
 const renderWrongAnswerHeading = function () {
@@ -112,7 +113,7 @@ const renderWrongAnswerHeading = function () {
 };
 
 const renderWrongAnswerCards = function () {
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(game.wrongAnswersArr, false);
+  ui.wrongAnswerCardsEl.innerHTML = formatCards(player.wrongAnswersArr, false);
 };
 
 /* **************** EXPORT ****************** */
