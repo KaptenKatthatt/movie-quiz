@@ -1,4 +1,4 @@
-import type { Student } from "./students";
+import type { Movie } from "./movies";
 
 export const ui = {
   endScreenEl: document.querySelector(".endScreen") as HTMLDivElement,
@@ -55,8 +55,8 @@ export interface Player {
   name: string;
   wrongAnswers: number;
   nbrOfQuestions: number;
-  rightAnswersArr: Student[];
-  wrongAnswersArr: Student[];
+  rightAnswersArr: Movie[];
+  wrongAnswersArr: Movie[];
 }
 
 export const game = {
@@ -89,9 +89,9 @@ export const game = {
   },
   /* **************** VARIABLES & ARRAYS ****************** */
 
-  filteredWrongStudents: [] as Student[], //Student array with correct answer filtered out
-  shuffledQuestions: [] as Student[], //All students shuffled
-  nbrOfSelectedQuestions: [] as Student[], //Student array sliced to nbr of selected guesses
+  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  shuffledQuestions: [] as Movie[], //All movies shuffled
+  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
@@ -102,8 +102,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 2,
@@ -111,8 +111,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 3,
@@ -120,8 +120,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 4,
@@ -129,8 +129,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 5,
@@ -138,8 +138,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 6,
@@ -147,8 +147,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 7,
@@ -156,8 +156,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 8,
@@ -165,8 +165,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 9,
@@ -174,8 +174,8 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
     {
       id: 10,
@@ -183,11 +183,11 @@ export const game = {
       nbrOfQuestions: 10,
       name: "J.O",
       wrongAnswers: 0,
-      rightAnswersArr: [] as Student[],
-      wrongAnswersArr: [] as Student[],
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
     },
   ],
-  currentQuestion: [] as Student[], //Current question/student
+  currentQuestion: [] as Movie[], //Current question/student
 };
 
 /* **************** PLAYER OBJECT ****************** */
@@ -197,6 +197,6 @@ export const player: Player = {
   name: "",
   wrongAnswers: 0,
   nbrOfQuestions: 0,
-  rightAnswersArr: [] as Student[],
-  wrongAnswersArr: [] as Student[],
+  rightAnswersArr: [] as Movie[],
+  wrongAnswersArr: [] as Movie[],
 };

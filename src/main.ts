@@ -4,8 +4,8 @@ import {
   setPlayerNameToLocalStorage,
 } from "./storage";
 import { ui, game, player } from "./constants";
-import { students } from "./students";
-import type { Student } from "./students";
+import { movies } from "./movies";
+import type { Movie } from "./movies";
 
 /* **************** VARIABLES****************** */
 
@@ -13,12 +13,12 @@ let questionButtonNames = []; //The four names on the question buttons
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
-  // Add image to game.currentQuestion from students array
+  // Add image to game.currentQuestion from movies array
   ui.photoContainerEl.src = game.currentQuestion[0].image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function (array: Student[]) {
+const cloneAndShuffleArray = function (array: Movie[]) {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -70,7 +70,7 @@ const initPlayer = function () {
  */
 const makeWrongAnswersArray = function () {
   game.filteredWrongStudents = game.shuffledQuestions.filter(
-    (student: Student) => student.id !== game.currentQuestion[0].id
+    (student: Movie) => student.id !== game.currentQuestion[0].id
   );
 };
 
@@ -99,11 +99,11 @@ const renderQuestionScreen = function () {
   //Sets player name to stored player name
   ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".startPhotosContainer")!.innerHTML = students
+  document.querySelector(".startPhotosContainer")!.innerHTML = movies
     .map((student) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
-  <img src="${student.image}" class="card-img-top" alt="Images of students to guess the names of.">
+  <img src="${student.image}" class="card-img-top" alt="Images of movies to guess the names of.">
   <div class="card-body">
     <h2 class="card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
   </div>
@@ -123,8 +123,8 @@ export const restartGame = function () {
 
 const startGame = function () {
   // Shuffles the student array to create random order on buttons
-  game.shuffledQuestions = cloneAndShuffleArray(students);
-  //Create an array with selected nbr of students
+  game.shuffledQuestions = cloneAndShuffleArray(movies);
+  //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
     game.nbrOfQuestions
@@ -217,7 +217,7 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
   game.currentQuestionNbr++;
   updateScoreDisplay();
 
-  // Checks if there is any students left to question about
+  // Checks if there is any movies left to question about
   if (game.nbrOfSelectedQuestions.length > 0) {
     document.startViewTransition //Checks if view transition is supported, if not skip it.
       ? document.startViewTransition(() => {
@@ -244,7 +244,7 @@ ui.startBtnContainerEl.addEventListener("click", (e) => {
     } else if (button.textContent.includes("10")) {
       game.nbrOfQuestions = 10;
     } else if (button.textContent.includes("ALL")) {
-      game.nbrOfQuestions = students.length;
+      game.nbrOfQuestions = movies.length;
     }
     startGame();
     initPlayer();

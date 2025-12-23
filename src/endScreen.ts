@@ -6,7 +6,7 @@ import {
 } from "./storage";
 import { ui, game, player } from "./constants";
 import type { Player } from "./constants";
-import type { Student } from "./students";
+import type { Movie } from "./movies";
 /* **************** FUNCTIONS****************** */
 
 /**
@@ -21,7 +21,7 @@ const checkIfHighScoreWorthy = function () {
   }
 };
 
-const formatCards = function (answerArr: Student[], isAnswerCorrect: boolean) {
+const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
   return answerArr
     .map(
       (student) => `
