@@ -12,7 +12,7 @@ export const movies: Movie[] = [
     name: "The Good The Bad and The Ugly",
     image: "img/clint-eastwood.webp",
   },
-  { id: 3, name: "Nile City", image: "img/nike-city.webp" },
+  { id: 3, name: "Nile City", image: "img/nile-city.webp" },
   { id: 4, name: "Idiocracy", image: "img/idiocracy.webp" },
   { id: 5, name: "Jackie Brown", image: "img/jackieBrown.webp" },
   { id: 6, name: "Jönssonligan", image: "img/jonssonligan.webp" },
