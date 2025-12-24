@@ -51,7 +51,7 @@ const isLastPlayer = function (player: Player) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${game.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -80,7 +80,7 @@ const renderHighScoreList = function () {
       (player) =>
         `<li class="list-group-item ${
           isLastPlayer(player) ? "fw-bolder" : ""
-        }">${player.name} ${player.score}/${player.nbrOfQuestions}</li>`
+        }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
     )
     .join("");
 
