@@ -15,10 +15,8 @@ const checkIfHighScoreWorthy = function () {
   if (player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(player);
-    console.log(`${player.name} true`);
   } else {
     ui.showNoHighScoreEl.classList.remove("d-none");
-    console.log(`${player.name} false`);
   }
 };
 

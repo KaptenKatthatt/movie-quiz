@@ -202,7 +202,6 @@ ui.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.remove("btn-warning");
       player.wrongAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = false;
-      // player.wrongAnswers++;
     }
     disableAllQuestionButtons();
 
