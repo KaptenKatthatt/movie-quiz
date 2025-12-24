@@ -83,6 +83,9 @@ export const game = {
   restart() {
     player.rightAnswersArr = [];
     player.wrongAnswersArr = [];
+    player.score = 0;
+    player.wrongAnswers = 0;
+    player.nbrOfQuestions = 0;
     this.isCurrentAnswerCorrect = false;
     ui.highScoreListEl!.innerHTML = "";
     this.currentQuestionNbr = 1;
