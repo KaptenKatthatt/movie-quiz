@@ -5,7 +5,6 @@ import {
   setHighScoreListToLocalStorage,
 } from "./storage";
 import { ui, game, player } from "./constants";
-import type { Player } from "./constants";
 import type { Movie } from "./movies";
 /* **************** FUNCTIONS****************** */
 
@@ -16,21 +15,23 @@ const checkIfHighScoreWorthy = function () {
   if (player.score > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(player);
+    console.log(`${player.name} true`);
   } else {
     ui.showNoHighScoreEl.classList.remove("d-none");
+    console.log(`${player.name} false`);
   }
 };
 
 const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
   return answerArr
     .map(
-      (student) => `
+      (movie) => `
       <div class="card ${
         isAnswerCorrect ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
       }" style="width: 9rem;">
-        <img src="${student.image}" class="card-img-top" alt="${student.name}">
+        <img src="${movie.image}" class="card-img-top" alt="${movie.name}">
         <div class="card-body">
-          <h5 class="card-title">${student.name}</h5>
+          <h5 class="card-title">${movie.name}</h5>
         </div>
       </div>
     `
@@ -38,14 +39,6 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
     .join("");
 };
 
-/**
- *Checks if the current player is the latest player
- * @param {player object} player
- * @returns
- */
-const isLastPlayer = function (player: Player) {
-  return player.id === game.getLatestPlayerId();
-};
 /**
  * Renders score count banner
  */
@@ -77,10 +70,12 @@ const renderHighScoreList = function () {
   //render HighScoreList
   ui.highScoreListEl.innerHTML = game.highScoreList
     .map(
-      (player) =>
+      (highScorePlayer) =>
         `<li class="list-group-item ${
-          isLastPlayer(player) ? "fw-bolder" : ""
-        }">${player.name} ${player.score}/${game.nbrOfQuestions}</li>`
+          highScorePlayer.id === player.id ? "fw-bolder" : ""
+        }">${highScorePlayer.name} ${highScorePlayer.score}/${
+          game.nbrOfQuestions
+        }</li>`
     )
     .join("");
 
