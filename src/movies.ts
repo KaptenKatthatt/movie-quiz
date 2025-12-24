@@ -24,7 +24,7 @@ export const movies: Movie[] = [
   { id: 12, name: "Det Sjunde Inseglet", image: "img/sjunde-inseglet.webp" },
   { id: 13, name: "Sällskapsresan", image: "img/sallskapsresan.webp" },
   { id: 14, name: "Terminator 2", image: "img/terminator2.webp" },
-  { id: 15, name: "Big Lebowski", image: "img/big-lebowski.webp" },
+  { id: 15, name: "The Big Lebowski", image: "img/big-lebowski.webp" },
   { id: 16, name: "Talladega Nights", image: "img/talladega-nights.webp" },
   { id: 17, name: "Top Gun", image: "img/top-gun.webp" },
   { id: 18, name: "Tonari no Totoro", image: "img/totoro.webp" },
