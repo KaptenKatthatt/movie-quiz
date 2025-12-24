@@ -42,7 +42,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${game.nbrOfQuestions}!!!</span>`;
+  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -72,7 +72,7 @@ const renderHighScoreList = function () {
         `<li class="list-group-item ${
           highScorePlayer.id === player.id ? "fw-bolder" : ""
         }">${highScorePlayer.name} ${highScorePlayer.score}/${
-          game.nbrOfQuestions
+          highScorePlayer.nbrOfQuestions
         }</li>`
     )
     .join("");
