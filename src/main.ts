@@ -100,11 +100,11 @@ const renderQuestionScreen = function () {
   ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
   document.querySelector(".startPhotosContainer")!.innerHTML = movies
-    .map((student) => {
+    .map((movie) => {
       return `
-        <div class="card shadow-sm border-dark border-2" style="width: 6rem; height:10rem">
-  <img src="${student.image}" class="card-img-top" alt="Images of movies to guess the names of.">
-  <div class="card-body">
+        <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">
+  <img src="${movie.image}" class="card-img-top" alt="Images of movies to guess the names of.">
+  <div class="card-body p-0">
     <h2 class="card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
   </div>
 </div>
@@ -166,7 +166,7 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${game.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl!.classList.add("addScoreAnimation");

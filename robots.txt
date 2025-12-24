@@ -1,0 +1,7 @@
+# robots.txt for Movie Quiz
+User-agent: *
+Disallow: /private/
+Allow: /public/
+
+# Sitemap
+Sitemap: https: //example.com/sitemap.xml
