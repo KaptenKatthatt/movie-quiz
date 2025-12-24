@@ -115,6 +115,7 @@ const renderQuestionScreen = function () {
 
 export const restartGame = function () {
   game.restart();
+
   ui.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreenEl!.classList.add("d-none");
   ui.startScreenContainerEl!.classList.remove("d-none");

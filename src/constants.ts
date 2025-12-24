@@ -53,7 +53,6 @@ export interface Player {
   id: number;
   score: number;
   name: string;
-  wrongAnswers: number;
   nbrOfQuestions: number;
   rightAnswersArr: Movie[];
   wrongAnswersArr: Movie[];
@@ -84,7 +83,6 @@ export const game = {
     player.rightAnswersArr = [];
     player.wrongAnswersArr = [];
     player.score = 0;
-    player.wrongAnswers = 0;
     player.nbrOfQuestions = 0;
     this.isCurrentAnswerCorrect = false;
     ui.highScoreListEl!.innerHTML = "";
@@ -104,7 +102,6 @@ export const game = {
       score: 10,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -113,7 +110,6 @@ export const game = {
       score: 9,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -122,7 +118,6 @@ export const game = {
       score: 8,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -131,7 +126,6 @@ export const game = {
       score: 7,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -140,7 +134,6 @@ export const game = {
       score: 6,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -149,7 +142,6 @@ export const game = {
       score: 5,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -158,7 +150,6 @@ export const game = {
       score: 4,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -167,7 +158,6 @@ export const game = {
       score: 3,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -176,7 +166,6 @@ export const game = {
       score: 2,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -185,7 +174,6 @@ export const game = {
       score: 0,
       nbrOfQuestions: 10,
       name: "J.O",
-      wrongAnswers: 0,
       rightAnswersArr: [] as Movie[],
       wrongAnswersArr: [] as Movie[],
     },
@@ -198,7 +186,6 @@ export const player: Player = {
   id: 0,
   score: 0,
   name: "",
-  wrongAnswers: 0,
   nbrOfQuestions: 0,
   rightAnswersArr: [] as Movie[],
   wrongAnswersArr: [] as Movie[],
