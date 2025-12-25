@@ -13,7 +13,7 @@ export const getPlayerNameFromLocalStorage = () => {
 };
 
 const sanitizePlayerName = (name: string) =>
-  name.replace(/[^\p{L}\p{N}\s\-]/gu, "").trim();
+  name.replace(/[^\p{L}\p{N}\s-]/gu, "").trim();
 
 export const setPlayerNameToLocalStorage = (playerName: string) => {
   if (localStorage.getItem("playerName") === null || playerName === null) {

@@ -220,11 +220,14 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 
   // Checks if there is any movies left to question about
   if (game.nbrOfSelectedQuestions.length > 0) {
-    document.startViewTransition //Checks if view transition is supported, if not skip it.
-      ? document.startViewTransition(() => {
-          renderNewQuestion();
-        })
-      : renderNewQuestion();
+    if (document.startViewTransition) {
+      // Checks if view transition is supported, if not skip it.
+      document.startViewTransition(() => {
+        renderNewQuestion();
+      });
+    } else {
+      renderNewQuestion();
+    }
   } else {
     // Game is over, go to endScreen
     //Hide question screen
