@@ -17,8 +17,8 @@
 }
 
 @font-face {
-  font-family: "Londrina Shadow";
-  src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
+  font-family: "Londrina Shadow", sans-serif;
+  src: url("/src/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
 .addScoreAnimation {
@@ -110,7 +110,7 @@ h2,
 .startPhotosContainer .card-title,
 label[for="playerNameInput"],
 .noHighScore {
-  font-family: "Londrina Shadow";
+  font-family: "Londrina Shadow", sans-serif;
 }
 
 .highScoreListcontainer {
