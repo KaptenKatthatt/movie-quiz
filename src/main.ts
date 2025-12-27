@@ -242,11 +242,19 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 //Listen for nbr of questions selected and start game
 ui.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
-  player.nbrOfQuestions = Number(button.dataset.questions);
+
+  // if (player.nbrOfQuestions === 999) {
+  //   player.nbrOfQuestions = movies.length;
+  // } else {
+  //   player.nbrOfQuestions = Number(button.dataset.questions);
+  // }
+
   if (button.tagName === "BUTTON") {
-    if (player.nbrOfQuestions === 999) {
-      player.nbrOfQuestions = movies.length;
-    }
+    player.nbrOfQuestions =
+      Number(button.dataset.questions) === movies.length
+        ? movies.length
+        : Number(button.dataset.questions);
+
     startGame(player.nbrOfQuestions);
     initPlayer();
   }
