@@ -62,7 +62,6 @@ const initPlayer = function () {
   // Create player id & name
   player.id = game.getLatestPlayerId() + 1;
   player.name = getPlayerNameFromLocalStorage();
-  // player.nbrOfQuestions = game.nbrOfQuestions;
 };
 
 /**
@@ -243,15 +242,9 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 ui.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
 
-  // if (player.nbrOfQuestions === 999) {
-  //   player.nbrOfQuestions = movies.length;
-  // } else {
-  //   player.nbrOfQuestions = Number(button.dataset.questions);
-  // }
-
   if (button.tagName === "BUTTON") {
     player.nbrOfQuestions =
-      Number(button.dataset.questions) === movies.length
+      button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
 
