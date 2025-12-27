@@ -62,7 +62,7 @@ const initPlayer = function () {
   // Create player id & name
   player.id = game.getLatestPlayerId() + 1;
   player.name = getPlayerNameFromLocalStorage();
-  player.nbrOfQuestions = game.nbrOfQuestions;
+  // player.nbrOfQuestions = game.nbrOfQuestions;
 };
 
 /**
@@ -122,13 +122,13 @@ export const restartGame = function () {
   initPlayer();
 };
 
-const startGame = function () {
+const startGame = (nbrOfSelectedQuestions: number) => {
   // Shuffles the student array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
-    game.nbrOfQuestions
+    nbrOfSelectedQuestions
   );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
@@ -166,8 +166,8 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${game.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${game.nbrOfQuestions}</span>`;
+  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
+  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.pointsEl!.classList.add("addScoreAnimation");
@@ -242,15 +242,12 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 //Listen for nbr of questions selected and start game
 ui.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
+  player.nbrOfQuestions = Number(button.dataset.questions);
   if (button.tagName === "BUTTON") {
-    if (button.textContent.includes("5")) {
-      game.nbrOfQuestions = 5;
-    } else if (button.textContent.includes("10")) {
-      game.nbrOfQuestions = 10;
-    } else if (button.textContent.includes("ALL")) {
-      game.nbrOfQuestions = movies.length;
+    if (player.nbrOfQuestions === 999) {
+      player.nbrOfQuestions = movies.length;
     }
-    startGame();
+    startGame(player.nbrOfQuestions);
     initPlayer();
   }
 });
