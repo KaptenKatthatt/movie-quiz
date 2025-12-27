@@ -32,6 +32,7 @@
   top: -16px;
   left: -14px;
 }
+
 .answerCardsContainer .card::after {
   content: "📌";
   position: absolute;
@@ -42,6 +43,7 @@
 .answerCardsContainer .card {
   border: 1px solid gray;
 }
+
 .answerCardsContainer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -52,6 +54,7 @@ body,
 input {
   font-family: "Courier New", Courier, monospace;
 }
+
 body {
   background-color: var(--red);
   overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
