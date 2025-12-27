@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: "Londrina Shadow";
-  src: url("/assets/fonts/LondrinaShadow-Regular.ttf");
+  src: url("/src/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
 .addScoreAnimation {
