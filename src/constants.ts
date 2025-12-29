@@ -1,4 +1,5 @@
 import type { Movie } from "./data/movies";
+import { setNumberOfQuestions, setPlayerScore } from "./player";
 import { ui } from "./ui";
 
 //A single object to bind them all
@@ -37,8 +38,8 @@ export const game = {
   restart() {
     player.rightAnswersArr = [];
     player.wrongAnswersArr = [];
-    player.score = 0;
-    player.nbrOfQuestions = 0;
+    setPlayerScore(0);
+    setNumberOfQuestions(0);
     this.isCurrentAnswerCorrect = false;
     ui.endScreen.highScoreListEl!.innerHTML = "";
     this.currentQuestionNbr = 1;
