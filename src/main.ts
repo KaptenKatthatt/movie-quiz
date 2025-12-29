@@ -3,7 +3,7 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { game, player } from "./constants";
+import { type Player } from "./types";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
@@ -11,6 +11,7 @@ import {
   getNumberOfQuestions,
   getPlayerScore,
   incrementScoreByOne,
+  resetPlayerScore,
   setNumberOfQuestions,
 } from "./player";
 
@@ -138,7 +139,7 @@ const startGame = () => {
     getNumberOfQuestions()
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
+  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -174,7 +175,9 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions()}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
+    player
+  )}/${getNumberOfQuestions()}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("addScoreAnimation");
@@ -199,7 +202,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      incrementScoreByOne();
+      player = incrementScoreByOne(player);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
       player.rightAnswersArr.push(game.currentQuestion[0]);
@@ -215,7 +218,9 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     //Show nextQuestionBtn
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
+    updateScoreDisplay(
+      game.isCurrentAnswerCorrect && getPlayerScore(player) > 0
+    );
   }
 });
 
@@ -263,4 +268,138 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
 });
 
 //Render initial game screen
-renderQuestionScreen();
+renderQuestionScreen(); /* **************** PLAYER OBJECT ****************** */
+
+export let player: Player = {
+  id: 0,
+  score: 0,
+  name: "",
+  nbrOfQuestions: 0,
+  rightAnswersArr: [] as Movie[],
+  wrongAnswersArr: [] as Movie[],
+};
+export const game = {
+  /* **************** METHODS****************** */
+  getLowestHighScore() {
+    return Math.min(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
+    );
+  },
+  removeLowestHighScore() {
+    this.sortHighScoreList();
+    this.highScoreList.pop();
+  },
+  sortHighScoreList() {
+    this.highScoreList.sort((a, b) => b.score - a.score);
+  },
+  getLatestPlayerId() {
+    return Math.max(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
+    );
+  },
+  get nbrOfRightAnswers() {
+    return player.rightAnswersArr.length;
+  },
+  get nbrOfWrongAnswers() {
+    return player.wrongAnswersArr.length;
+  },
+  restart() {
+    player.rightAnswersArr = [];
+    player.wrongAnswersArr = [];
+    player = resetPlayerScore(player);
+    setNumberOfQuestions(0);
+    this.isCurrentAnswerCorrect = false;
+    ui.endScreen.highScoreListEl!.innerHTML = "";
+    this.currentQuestionNbr = 1;
+  },
+  /* **************** VARIABLES & ARRAYS ****************** */
+  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  shuffledQuestions: [] as Movie[], //All movies shuffled
+  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
+  nbrOfQuestions: 0,
+  currentQuestionNbr: 1,
+  isCurrentAnswerCorrect: false,
+  highScoreList: [
+    {
+      id: 1,
+      score: 10,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 2,
+      score: 9,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 3,
+      score: 8,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 4,
+      score: 7,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 5,
+      score: 6,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 6,
+      score: 5,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 7,
+      score: 4,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 8,
+      score: 3,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 9,
+      score: 2,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 10,
+      score: 0,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+  ],
+  currentQuestion: [] as Movie[], //Current question/student
+};
