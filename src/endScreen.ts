@@ -4,7 +4,8 @@ import {
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { game, player } from "./constants";
+import { game } from "./main";
+import { player } from "./main";
 import { ui } from "./ui";
 import type { Movie } from "./data/movies";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
@@ -14,7 +15,7 @@ import { getNumberOfQuestions, getPlayerScore } from "./player";
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (getPlayerScore() > game.getLowestHighScore()) {
+  if (getPlayerScore(player) > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(player);
   } else {
@@ -44,7 +45,9 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${getPlayerScore(
+    player
+  )}/${getNumberOfQuestions()}!!!</span>`;
 };
 
 /**
@@ -91,7 +94,7 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.endScreen.rightAnswersHeadingEl.innerText =
-    getPlayerScore() > 0
+    getPlayerScore(player) > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
