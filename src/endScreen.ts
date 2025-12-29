@@ -4,8 +4,9 @@ import {
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { ui, game, player } from "./constants";
-import type { Movie } from "./movies";
+import { game, player } from "./constants";
+import { ui } from "./ui";
+import type { Movie } from "./data/movies";
 /* **************** FUNCTIONS****************** */
 
 /**
@@ -16,7 +17,7 @@ const checkIfHighScoreWorthy = function () {
     game.removeLowestHighScore();
     game.highScoreList.push(player);
   } else {
-    ui.showNoHighScoreEl.classList.remove("d-none");
+    ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
   }
 };
 
@@ -42,7 +43,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
 };
 
 /**
@@ -66,7 +67,7 @@ const renderHighScoreList = function () {
   game.sortHighScoreList();
 
   //render HighScoreList
-  ui.highScoreListEl.innerHTML = game.highScoreList
+  ui.endScreen.highScoreListEl.innerHTML = game.highScoreList
     .map(
       (highScorePlayer) =>
         `<li class="list-group-item ${
@@ -88,25 +89,31 @@ const renderAnswerCards = function () {
 };
 
 const renderRightAnswerHeading = function () {
-  ui.rightAnswersHeadingEl.innerText =
+  ui.endScreen.rightAnswersHeadingEl.innerText =
     player.score > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
 const renderRightAnswerCards = function () {
-  ui.rightAnswerCardsEl.innerHTML = formatCards(player.rightAnswersArr, true);
+  ui.endScreen.rightAnswerCardsEl.innerHTML = formatCards(
+    player.rightAnswersArr,
+    true
+  );
 };
 
 const renderWrongAnswerHeading = function () {
-  ui.wrongAnswersHeadingEl.innerHTML =
+  ui.endScreen.wrongAnswersHeadingEl.innerHTML =
     game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };
 
 const renderWrongAnswerCards = function () {
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(player.wrongAnswersArr, false);
+  ui.endScreen.wrongAnswerCardsEl.innerHTML = formatCards(
+    player.wrongAnswersArr,
+    false
+  );
 };
 
 /* **************** EXPORT ****************** */
@@ -115,14 +122,14 @@ export const renderEndScreen = function () {
   renderFinalScoreBanner();
 
   //Show endscreen
-  ui.endScreenEl.classList.remove("d-none");
+  ui.endScreen.endScreenEl.classList.remove("d-none");
 
   // Controls animation of final score
-  ui.finalScoreEl.classList.add("embiggenFinalScore");
-  ui.finalScoreEl.addEventListener(
+  ui.endScreen.finalScoreEl.classList.add("embiggenFinalScore");
+  ui.endScreen.finalScoreEl.addEventListener(
     "animationend",
     () => {
-      ui.finalScoreEl.classList.remove("embiggenFinalScore");
+      ui.endScreen.finalScoreEl.classList.remove("embiggenFinalScore");
     },
     { once: true }
   );
@@ -134,7 +141,7 @@ export const renderEndScreen = function () {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.restartGameBtnEl.addEventListener("click", () => {
+ui.endScreen.restartGameBtnEl.addEventListener("click", () => {
   ui.siteContainerEl.classList.add("flip");
   ui.siteContainerEl.addEventListener(
     "animationend",

@@ -1,50 +1,5 @@
-import type { Movie } from "./movies";
-
-export const ui = {
-  endScreenEl: document.querySelector(".endScreen") as HTMLDivElement,
-  finalScoreEl: document.querySelector(".finalScore") as HTMLDivElement,
-  highScoreListEl: document.querySelector(".highScoreList") as HTMLUListElement,
-  nextQuestionBtnEl: document.querySelector(
-    ".nextQuestionBtn"
-  ) as HTMLButtonElement,
-  photoContainerEl: document.querySelector(
-    ".photoContainer"
-  ) as HTMLImageElement,
-  playerNameInputEl: document.querySelector(
-    "#playerNameInput"
-  ) as HTMLInputElement,
-  pointsEl: document.querySelector(".points"),
-  questionBoardEl: document.querySelector(".nbrOfQuestions") as HTMLDivElement,
-  questionBtnContainerEl: document.querySelector(
-    ".questionBtnContainer"
-  ) as HTMLDivElement,
-  questionScreenContainerEl: document.querySelector(
-    ".questionScreenContainer"
-  ) as HTMLDivElement,
-  restartGameBtnEl: document.querySelector(
-    ".restartGameBtn"
-  ) as HTMLButtonElement,
-  rightAnswerCardsEl: document.querySelector(
-    ".rightAnswerCards"
-  ) as HTMLDivElement,
-  rightAnswersHeadingEl: document.querySelector(
-    ".rightAnswersHeading"
-  ) as HTMLDivElement,
-  showNoHighScoreEl: document.querySelector(".noHighScore") as HTMLDivElement,
-  siteContainerEl: document.querySelector(".siteContainer") as HTMLDivElement,
-  startBtnContainerEl: document.querySelector(
-    ".startBtnContainer"
-  ) as HTMLDivElement,
-  startScreenContainerEl: document.querySelector(
-    ".startScreenContainer"
-  ) as HTMLDivElement,
-  wrongAnswerCardsEl: document.querySelector(
-    ".wrongAnswerCards"
-  ) as HTMLDivElement,
-  wrongAnswersHeadingEl: document.querySelector(
-    ".wrongAnswersHeading"
-  ) as HTMLDivElement,
-};
+import type { Movie } from "./data/movies";
+import { ui } from "./ui";
 
 //A single object to bind them all
 export type HighScoreList = Player[];
@@ -85,7 +40,7 @@ export const game = {
     player.score = 0;
     player.nbrOfQuestions = 0;
     this.isCurrentAnswerCorrect = false;
-    ui.highScoreListEl!.innerHTML = "";
+    ui.endScreen.highScoreListEl!.innerHTML = "";
     this.currentQuestionNbr = 1;
   },
   /* **************** VARIABLES & ARRAYS ****************** */

@@ -3,9 +3,10 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { ui, game, player } from "./constants";
-import { movies } from "./movies";
-import type { Movie } from "./movies";
+import { game, player } from "./constants";
+import { ui } from "./ui";
+import { movies } from "./data/movies";
+import type { Movie } from "./data/movies";
 
 /* **************** VARIABLES****************** */
 
@@ -14,7 +15,7 @@ let questionButtonNames = []; //The four names on the question buttons
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from movies array
-  ui.photoContainerEl.src = game.currentQuestion[0].image;
+  ui.questionScreen.photoContainerEl.src = game.currentQuestion[0].image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
@@ -34,9 +35,9 @@ Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = function () {
-  ui.questionBtnContainerEl!.querySelectorAll("button").forEach(
-    (button) => (button.disabled = true)
-  );
+  ui.questionScreen
+    .questionBtnContainerEl!.querySelectorAll("button")
+    .forEach((button) => (button.disabled = true));
 };
 
 /**
@@ -79,9 +80,10 @@ const renderNewQuestion = function () {
   addPhotoToPhotoContainer();
 
   //Inject buttons into DOM
-  ui.questionBtnContainerEl!.innerHTML = renderFourQuestionButtons();
+  ui.questionScreen.questionBtnContainerEl!.innerHTML =
+    renderFourQuestionButtons();
   //Hide next question button
-  ui.nextQuestionBtnEl!.classList.add("d-none");
+  ui.startScreen.nextQuestionBtnEl!.classList.add("d-none");
 };
 
 const renderFourQuestionButtons = function () {
@@ -96,7 +98,7 @@ const renderFourQuestionButtons = function () {
 
 const renderQuestionScreen = function () {
   //Sets player name to stored player name
-  ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
+  ui.startScreen.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
   document.querySelector(".startPhotosContainer")!.innerHTML = movies
     .map((movie) => {
@@ -115,9 +117,9 @@ const renderQuestionScreen = function () {
 export const restartGame = function () {
   game.restart();
 
-  ui.showNoHighScoreEl!.classList.add("d-none");
-  ui.endScreenEl!.classList.add("d-none");
-  ui.startScreenContainerEl!.classList.remove("d-none");
+  ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
+  ui.endScreen.endScreenEl!.classList.add("d-none");
+  ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
   initPlayer();
 };
 
@@ -136,18 +138,18 @@ const startGame = (nbrOfSelectedQuestions: number) => {
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // Hide startscreen
-      ui.startScreenContainerEl.classList.add("d-none");
+      ui.startScreen.startScreenContainerEl.classList.add("d-none");
 
       // Show questionScreen
-      ui.questionScreenContainerEl.classList.remove("d-none");
+      ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
 
       // Render the questionPage content
       renderNewQuestion();
     });
   } else {
-    ui.startScreenContainerEl.classList.add("d-none");
+    ui.startScreen.startScreenContainerEl.classList.add("d-none");
     // Show questionScreen
-    ui.questionScreenContainerEl.classList.remove("d-none");
+    ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
     // Render the questionPage content
     renderNewQuestion();
   }
@@ -165,15 +167,15 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
-    ui.pointsEl!.classList.add("addScoreAnimation");
-    ui.pointsEl!.addEventListener(
+    ui.questionScreen.pointsEl!.classList.add("addScoreAnimation");
+    ui.questionScreen.pointsEl!.addEventListener(
       "animationend",
       () => {
-        ui.pointsEl!.classList.remove("addScoreAnimation");
+        ui.questionScreen.pointsEl!.classList.remove("addScoreAnimation");
       },
       { once: true }
     );
@@ -182,12 +184,12 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.playerNameInputEl.addEventListener("input", (e) => {
+ui.startScreen.playerNameInputEl.addEventListener("input", (e) => {
   setPlayerNameToLocalStorage((e.target as HTMLInputElement).value);
 });
 
 // Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
-ui.questionBtnContainerEl.addEventListener("click", (e) => {
+ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
@@ -205,13 +207,13 @@ ui.questionBtnContainerEl.addEventListener("click", (e) => {
     disableAllQuestionButtons();
 
     //Show nextQuestionBtn
-    ui.nextQuestionBtnEl.classList.remove("d-none");
+    ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
     updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
   }
 });
 
-ui.nextQuestionBtnEl.addEventListener("click", () => {
+ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
   game.nbrOfSelectedQuestions.shift();
 
   game.currentQuestionNbr++;
@@ -230,8 +232,8 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
   } else {
     // Game is over, go to endScreen
     //Hide question screen
-    ui.nextQuestionBtnEl.classList.add("d-none");
-    ui.questionScreenContainerEl.classList.add("d-none");
+    ui.startScreen.nextQuestionBtnEl.classList.add("d-none");
+    ui.questionScreen.questionScreenContainerEl.classList.add("d-none");
 
     renderEndScreen();
   }
@@ -239,7 +241,7 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 
 /* **************** GAME START****************** */
 //Listen for nbr of questions selected and start game
-ui.startBtnContainerEl.addEventListener("click", (e) => {
+ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
 
   if (button.tagName === "BUTTON") {
