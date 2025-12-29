@@ -5,15 +5,16 @@
   lg: ≥992px (large devices, desktops)
   xl: ≥1200px (extra large devices, large desktops)
   xxl: ≥1400px (extra extra large devices, larger desktops)
+  
+  --dBlue: rgb(7 59 76); 
 */
 
-/* Color palette: Watermelon Sorbet*/
+/* Color palette: Watermelon Sorbet */
 :root {
-  --red: rgb(239, 71, 111);
-  --yellow: rgb(255, 209, 102);
-  --green: rgb(6, 214, 160);
-  --blue: rgb(17, 138, 178);
-  --dBlue: rgb(7, 59, 76);
+  --red: rgb(239 71 111);
+  --yellow: rgb(255 209 102);
+  --green: rgb(6 214 160);
+  --blue: rgb(17 138 178);
 }
 
 @font-face {
