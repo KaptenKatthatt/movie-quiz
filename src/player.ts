@@ -10,13 +10,16 @@ export const resetPlayerScore = (player: Player): Player => {
 };
 
 export const incrementScoreByOne = (player: Player) => {
-  // player.score++;
   return { ...player, score: player.score + 1 };
 };
 
 export const getNumberOfQuestions = () => {
   return player.nbrOfQuestions;
 };
-export const setNumberOfQuestions = (numberOfQuestions: number) => {
-  player.nbrOfQuestions = numberOfQuestions;
+export const setNumberOfQuestions = (
+  player: Player,
+  numberOfQuestions: number
+) => {
+  // player.nbrOfQuestions = numberOfQuestions;
+  return { ...player, nbrOfQuestions: numberOfQuestions };
 };

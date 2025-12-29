@@ -174,7 +174,9 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
+    game.currentQuestionNbr
+  }/${getNumberOfQuestions()}</span>`;
   ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
     player
   )}/${getNumberOfQuestions()}</span>`;
@@ -261,7 +263,7 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
         ? movies.length
         : Number(button.dataset.questions);
 
-    setNumberOfQuestions(nbrOfSelectedQuestions);
+    player = setNumberOfQuestions(player, nbrOfSelectedQuestions);
     startGame();
     initPlayer();
   }
@@ -278,6 +280,7 @@ export let player: Player = {
   rightAnswersArr: [] as Movie[],
   wrongAnswersArr: [] as Movie[],
 };
+
 export const game = {
   /* **************** METHODS****************** */
   getLowestHighScore() {
@@ -307,7 +310,7 @@ export const game = {
     player.rightAnswersArr = [];
     player.wrongAnswersArr = [];
     player = resetPlayerScore(player);
-    setNumberOfQuestions(0);
+    player = setNumberOfQuestions(player, 0);
     this.isCurrentAnswerCorrect = false;
     ui.endScreen.highScoreListEl!.innerHTML = "";
     this.currentQuestionNbr = 1;

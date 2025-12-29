@@ -68,12 +68,15 @@ button:active {
 .btn-select5 {
   background-color: var(--red);
 }
+
 .btn-select10 {
   background-color: var(--yellow);
 }
+
 .btn-select10:hover {
   background-color: #dcb14e;
 }
+
 .btn-selectAll {
   background-color: var(--green);
 }
@@ -81,6 +84,7 @@ button:active {
 .card:nth-child(odd) {
   transform: rotate(3deg);
 }
+
 .card:nth-child(even) {
   transform: rotate(-3deg);
 }
