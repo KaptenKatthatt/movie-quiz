@@ -7,6 +7,12 @@ import { game, player } from "./constants";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
+import {
+  getNumberOfQuestions,
+  getPlayerScore,
+  incrementScoreByOne,
+  setNumberOfQuestions,
+} from "./player";
 
 /* **************** VARIABLES****************** */
 
@@ -123,16 +129,16 @@ export const restartGame = function () {
   initPlayer();
 };
 
-const startGame = (nbrOfSelectedQuestions: number) => {
+const startGame = () => {
   // Shuffles the student array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
-    nbrOfSelectedQuestions
+    getNumberOfQuestions()
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
+  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -168,7 +174,7 @@ const setCurrentStudent = function () {
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions()}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("addScoreAnimation");
@@ -193,7 +199,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      player.score++;
+      incrementScoreByOne();
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
       player.rightAnswersArr.push(game.currentQuestion[0]);
@@ -209,7 +215,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     //Show nextQuestionBtn
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
+    updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
   }
 });
 
@@ -245,12 +251,13 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
 
   if (button.tagName === "BUTTON") {
-    player.nbrOfQuestions =
+    const nbrOfSelectedQuestions =
       button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
 
-    startGame(player.nbrOfQuestions);
+    setNumberOfQuestions(nbrOfSelectedQuestions);
+    startGame();
     initPlayer();
   }
 });

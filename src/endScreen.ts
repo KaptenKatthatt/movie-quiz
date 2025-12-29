@@ -7,13 +7,14 @@ import {
 import { game, player } from "./constants";
 import { ui } from "./ui";
 import type { Movie } from "./data/movies";
+import { getNumberOfQuestions, getPlayerScore } from "./player";
 /* **************** FUNCTIONS****************** */
 
 /**
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (player.score > game.getLowestHighScore()) {
+  if (getPlayerScore() > game.getLowestHighScore()) {
     game.removeLowestHighScore();
     game.highScoreList.push(player);
   } else {
@@ -43,7 +44,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
 };
 
 /**
@@ -90,7 +91,7 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.endScreen.rightAnswersHeadingEl.innerText =
-    player.score > 0
+    getPlayerScore() > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
