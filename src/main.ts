@@ -8,7 +8,6 @@ import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
 import {
-  getNumberOfQuestions,
   getPlayerScore,
   incrementScoreByOne,
   resetPlayerScore,
@@ -130,21 +129,13 @@ export const restartGame = function () {
   initPlayer();
 };
 
-<<<<<<< HEAD
-const startGame = () => {
-=======
 const startGame = (nbrOfSelectedQuestions: number) => {
->>>>>>> origin/dev
   // Shuffles the student array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
-<<<<<<< HEAD
-    getNumberOfQuestions(player)
-=======
     nbrOfSelectedQuestions
->>>>>>> origin/dev
   );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
@@ -182,17 +173,8 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-<<<<<<< HEAD
-  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
-    game.currentQuestionNbr
-  }/${getNumberOfQuestions(player)}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
-    player
-  )}/${getNumberOfQuestions(player)}</span>`;
-=======
-  ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
->>>>>>> origin/dev
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -271,21 +253,12 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
 
   if (button.tagName === "BUTTON") {
-<<<<<<< HEAD
-    const nbrOfSelectedQuestions =
-=======
     player.nbrOfQuestions =
->>>>>>> origin/dev
       button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
 
-<<<<<<< HEAD
-    player = setNumberOfQuestions(player, nbrOfSelectedQuestions);
-    startGame();
-=======
     startGame(player.nbrOfQuestions);
->>>>>>> origin/dev
     initPlayer();
   }
 });
