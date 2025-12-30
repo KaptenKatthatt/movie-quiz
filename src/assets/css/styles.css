@@ -34,7 +34,7 @@
   left: -14px;
 }
 
-.answerCardsContainer .card::after {
+.answer-cards-container .card::after {
   content: "📌";
   position: absolute;
   top: -10px;
@@ -45,7 +45,7 @@
   border: 1px solid gray;
 }
 
-.answerCardsContainer {
+.answer-cards-container {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -115,9 +115,9 @@ button:active {
 
 h1,
 h2,
-.startPhotosContainer .card-title,
+.start-photos-container .card-title,
 label[for="playerNameInput"],
-.noHighScore {
+.no-high-score-header {
   font-family: "Londrina Shadow", sans-serif;
 }
 
@@ -255,7 +255,7 @@ input {
 }
 
 .start-btn-container {
-  view-transition-name: startScreen;
+  view-transition-name: startscreen;
 }
 
 .site-container,
@@ -286,7 +286,7 @@ input {
   animation: slide-in 0.8s ease-in-out;
 }
 
-::view-transition-old(startScreen) {
+::view-transition-old(startscreen) {
   animation: slide-up-out 0.7s forwards;
 }
 
