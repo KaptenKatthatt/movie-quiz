@@ -30,7 +30,11 @@ export const getHighScoreList = function () {
   }
   try {
     return JSON.parse(storedList);
-  } catch {
+  } catch (error) {
+    console.error(
+      "Failed to parse 'highScoreList' from localStorage, using default list instead.",
+      error
+    );
     return getDefaultHighScoreList();
   }
 };
