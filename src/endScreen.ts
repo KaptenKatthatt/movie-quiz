@@ -28,7 +28,9 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
     .map(
       (movie) => `
       <div class="card ${
-        isAnswerCorrect ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
+        isAnswerCorrect
+          ? "right-answer-card-shadow"
+          : "wrong-answer-card-shadow"
       }" style="width: 9rem;">
         <img src="${movie.image}" class="card-img-top" alt="${movie.name}">
         <div class="card-body">
@@ -45,7 +47,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${getPlayerScore(
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore(
     player
   )}/${getNumberOfQuestions()}!!!</span>`;
 };
@@ -129,11 +131,11 @@ export const renderEndScreen = function () {
   ui.endScreen.endScreenEl.classList.remove("d-none");
 
   // Controls animation of final score
-  ui.endScreen.finalScoreEl.classList.add("embiggenFinalScore");
+  ui.endScreen.finalScoreEl.classList.add("embiggen-final-score");
   ui.endScreen.finalScoreEl.addEventListener(
     "animationend",
     () => {
-      ui.endScreen.finalScoreEl.classList.remove("embiggenFinalScore");
+      ui.endScreen.finalScoreEl.classList.remove("embiggen-final-score");
     },
     { once: true }
   );
