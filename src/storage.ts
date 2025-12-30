@@ -1,4 +1,5 @@
 import { type HighScoreList } from "./constants";
+import { getNewHighScoreList } from "./highscorelist";
 
 export const getPlayerNameFromLocalStorage = () => {
   if (
@@ -23,8 +24,14 @@ export const setPlayerNameToLocalStorage = (playerName: string) => {
 };
 
 export const getHighScoreListFromLocalStorage = function () {
-  return localStorage.getItem("highScoreList");
+  const storedList = localStorage.getItem("highScoreList");
+  if (storedList === null) {
+    return getNewHighScoreList();
+  } else {
+    return JSON.parse(storedList);
+  }
 };
+
 export const setHighScoreListToLocalStorage = function (
   highScoreList: HighScoreList
 ) {

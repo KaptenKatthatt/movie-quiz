@@ -13,6 +13,7 @@ import {
   resetPlayerScore,
   setNumberOfQuestions,
 } from "./player";
+import { getLatestPlayerId, highScoreList } from "./highscorelist";
 
 /* **************** VARIABLES****************** */
 
@@ -109,7 +110,7 @@ const getThreeRandomAnswers = function () {
 
 const initPlayer = function () {
   // Create player id & name
-  player.id = game.getLatestPlayerId() + 1;
+  player.id = getLatestPlayerId(highScoreList) + 1;
   player.name = getPlayerNameFromLocalStorage();
 };
 

@@ -8,15 +8,21 @@ import { game } from "./main";
 import { ui } from "./ui";
 import type { Movie } from "./data/movies";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
+import {
+  getLowestHighScore,
+  highScoreList,
+  removeLowestHighScore,
+  sortHighScoreList,
+} from "./highscorelist";
 /* **************** FUNCTIONS****************** */
 
 /**
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (getPlayerScore(getPlayer()) > game.getLowestHighScore()) {
-    game.removeLowestHighScore();
-    game.highScoreList.push(getPlayer());
+  if (getPlayerScore(getPlayer()) > getLowestHighScore(highScoreList)) {
+    removeLowestHighScore(highScoreList);
+    highScoreList.push(getPlayer());
   } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
   }
@@ -62,14 +68,16 @@ const renderHighScoreList = function () {
   //Get highscorelist from local storage and parse it to array
   //If first play, get premade highscore from game obj.
   const storedList = getHighScoreListFromLocalStorage();
-  game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
+  setHighScoreListToLocalStorage(
+    storedList ? JSON.parse(storedList) : highScoreList
+  );
 
   getPlayer().name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
   // Sorts HSL on score before rendering
-  game.sortHighScoreList();
+  sortHighScoreList(getHighScoreListFromLocalStorage());
 
   //render HighScoreList
   ui.endScreen.highScoreListEl.innerHTML = game.highScoreList

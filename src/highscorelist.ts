@@ -22,6 +22,10 @@ export const getLatestPlayerId = (highScoreList: Player[]) => {
   );
 };
 
+export const getNewHighScoreList = () => {
+  return highScoreList;
+};
+
 export const highScoreList = [
   {
     id: 1,
