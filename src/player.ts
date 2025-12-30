@@ -1,0 +1,24 @@
+import { type Player } from "./types";
+
+export const getPlayerScore = (currentPlayer: Player) => {
+  return currentPlayer.score;
+};
+
+export const resetPlayerScore = (currentPlayer: Player): Player => {
+  return { ...currentPlayer, score: 0 };
+};
+
+export const incrementScoreByOne = (currentPlayer: Player) => {
+  return { ...currentPlayer, score: currentPlayer.score + 1 };
+};
+
+export const getNumberOfQuestions = (currentPlayer: Player) => {
+  return currentPlayer.nbrOfQuestions;
+};
+
+export const setNumberOfQuestions = (
+  currentPlayer: Player,
+  numberOfQuestions: number
+) => {
+  return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
+};

@@ -1,22 +1,24 @@
-import { restartGame } from "./main";
+import { getPlayer, restartGame } from "./main";
 import {
   getHighScoreListFromLocalStorage,
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
-import { ui, game, player } from "./constants";
-import type { Movie } from "./movies";
+import { game } from "./main";
+import { ui } from "./ui";
+import type { Movie } from "./data/movies";
+import { getNumberOfQuestions, getPlayerScore } from "./player";
 /* **************** FUNCTIONS****************** */
 
 /**
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (player.score > game.getLowestHighScore()) {
+  if (getPlayerScore(getPlayer()) > game.getLowestHighScore()) {
     game.removeLowestHighScore();
-    game.highScoreList.push(player);
+    game.highScoreList.push(getPlayer());
   } else {
-    ui.showNoHighScoreEl.classList.remove("d-none");
+    ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
   }
 };
 
@@ -25,7 +27,9 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
     .map(
       (movie) => `
       <div class="card ${
-        isAnswerCorrect ? "rightAnswerCardShadow" : "wrongAnswerCardShadow"
+        isAnswerCorrect
+          ? "right-answer-card-shadow"
+          : "wrong-answer-card-shadow"
       }" style="width: 9rem;">
         <img src="${movie.image}" class="card-img-top" alt="${movie.name}">
         <div class="card-body">
@@ -42,7 +46,9 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.finalScoreEl.innerHTML = `<span class="finalScoreText">Your final score is -> </span><span class="finalScore">${player.score}/${player.nbrOfQuestions}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore(
+    getPlayer()
+  )}/${getNumberOfQuestions(getPlayer())}!!!</span>`;
 };
 
 /**
@@ -58,7 +64,7 @@ const renderHighScoreList = function () {
   const storedList = getHighScoreListFromLocalStorage();
   game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
 
-  player.name = getPlayerNameFromLocalStorage();
+  getPlayer().name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
@@ -66,11 +72,11 @@ const renderHighScoreList = function () {
   game.sortHighScoreList();
 
   //render HighScoreList
-  ui.highScoreListEl.innerHTML = game.highScoreList
+  ui.endScreen.highScoreListEl.innerHTML = game.highScoreList
     .map(
       (highScorePlayer) =>
         `<li class="list-group-item ${
-          highScorePlayer.id === player.id ? "fw-bolder" : ""
+          highScorePlayer.id === getPlayer().id ? "fw-bolder" : ""
         }">${highScorePlayer.name} ${highScorePlayer.score}/${
           highScorePlayer.nbrOfQuestions
         }</li>`
@@ -88,25 +94,31 @@ const renderAnswerCards = function () {
 };
 
 const renderRightAnswerHeading = function () {
-  ui.rightAnswersHeadingEl.innerText =
-    player.score > 0
+  ui.endScreen.rightAnswersHeadingEl.innerText =
+    getPlayerScore(getPlayer()) > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
 const renderRightAnswerCards = function () {
-  ui.rightAnswerCardsEl.innerHTML = formatCards(player.rightAnswersArr, true);
+  ui.endScreen.rightAnswerCardsEl.innerHTML = formatCards(
+    getPlayer().rightAnswersArr,
+    true
+  );
 };
 
 const renderWrongAnswerHeading = function () {
-  ui.wrongAnswersHeadingEl.innerHTML =
+  ui.endScreen.wrongAnswersHeadingEl.innerHTML =
     game.nbrOfWrongAnswers > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };
 
 const renderWrongAnswerCards = function () {
-  ui.wrongAnswerCardsEl.innerHTML = formatCards(player.wrongAnswersArr, false);
+  ui.endScreen.wrongAnswerCardsEl.innerHTML = formatCards(
+    getPlayer().wrongAnswersArr,
+    false
+  );
 };
 
 /* **************** EXPORT ****************** */
@@ -115,14 +127,14 @@ export const renderEndScreen = function () {
   renderFinalScoreBanner();
 
   //Show endscreen
-  ui.endScreenEl.classList.remove("d-none");
+  ui.endScreen.endScreenEl.classList.remove("d-none");
 
   // Controls animation of final score
-  ui.finalScoreEl.classList.add("embiggenFinalScore");
-  ui.finalScoreEl.addEventListener(
+  ui.endScreen.finalScoreEl.classList.add("embiggen-final-score");
+  ui.endScreen.finalScoreEl.addEventListener(
     "animationend",
     () => {
-      ui.finalScoreEl.classList.remove("embiggenFinalScore");
+      ui.endScreen.finalScoreEl.classList.remove("embiggen-final-score");
     },
     { once: true }
   );
@@ -134,7 +146,7 @@ export const renderEndScreen = function () {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.restartGameBtnEl.addEventListener("click", () => {
+ui.endScreen.restartGameBtnEl.addEventListener("click", () => {
   ui.siteContainerEl.classList.add("flip");
   ui.siteContainerEl.addEventListener(
     "animationend",
