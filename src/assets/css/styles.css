@@ -34,7 +34,11 @@
   left: -14px;
 }
 
+<<<<<<< HEAD
 .answer-cards-container .card::after {
+=======
+.answerCardsContainer .card::after {
+>>>>>>> origin/dev
   content: "📌";
   position: absolute;
   top: -10px;
@@ -45,8 +49,13 @@
   border: 1px solid gray;
 }
 
+<<<<<<< HEAD
 .answer-cards-container {
   box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+=======
+.answerCardsContainer {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+>>>>>>> origin/dev
 }
 
 body,
@@ -115,9 +124,15 @@ button:active {
 
 h1,
 h2,
+<<<<<<< HEAD
 .start-photos-container .card-title,
 label[for="player-name-input-field"],
 .no-high-score-header {
+=======
+.startPhotosContainer .card-title,
+label[for="playerNameInput"],
+.noHighScore {
+>>>>>>> origin/dev
   font-family: "Londrina Shadow", sans-serif;
 }
 
