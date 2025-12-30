@@ -1,31 +1,35 @@
 import { getPlayer, restartGame } from "./main";
 import {
   getHighScoreList,
-  getPlayerNameFromLocalStorage,
+  // getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
 import { game } from "./main";
 import { ui } from "./ui";
-import type { Movie } from "./data/movies";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
 import {
+  addPlayerToHighScoreList,
   getLowestHighScore,
-  highScoreList,
   removeLowestHighScore,
   sortHighScoreList,
 } from "./highscorelist";
+import type { Movie } from "./data/movies";
 import type { Player } from "./types";
 /* **************** FUNCTIONS****************** */
 
 /**
- * Check if player score is higher than lowest score
+ * Check if player score is higher than lowest score.
+ * Add player to updated HSL if so, else return old HSL.
  */
-const checkIfHighScoreWorthy = function () {
-  if (getPlayerScore(getPlayer()) > getLowestHighScore(highScoreList)) {
-    removeLowestHighScore(highScoreList);
-    highScoreList.push(getPlayer());
+const isHighScoreWorthy = function (
+  currentPlayer: Player,
+  currentHighScoreList: Player[]
+) {
+  if (currentPlayer.score > getLowestHighScore(currentHighScoreList)) {
+    const updatedList = removeLowestHighScore(currentHighScoreList);
+    return addPlayerToHighScoreList(currentPlayer, updatedList);
   } else {
-    ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
+    return currentHighScoreList;
   }
 };
 
@@ -64,24 +68,21 @@ const renderFinalScoreBanner = function () {
   Checks if score higher than lowest score.
   Yes? Remove lowest score before push. No? Don't add
 
+  Get highscorelist from local storage and parse it to array
+  //If first play, get premade high score list.
   */
 const renderHighScoreList = function () {
-  //Get highscorelist from local storage and parse it to array
-  //If first play, get premade highscore from game obj.
-  // const storedList = getHighScoreList();
-  // setHighScoreListToLocalStorage(
-  //   storedList ? JSON.parse(storedList) : highScoreList
-  // );
+  const highScoreList = getHighScoreList();
+  const finalHighScoreList = isHighScoreWorthy(getPlayer(), highScoreList);
 
-  getPlayer().name = getPlayerNameFromLocalStorage();
+  if (finalHighScoreList === highScoreList) {
+    ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
+  }
 
-  checkIfHighScoreWorthy();
-
-  // Sorts HSL on score before rendering
-  sortHighScoreList(getHighScoreList());
+  const sortedFinalHighScoreList = sortHighScoreList(finalHighScoreList);
 
   //render HighScoreList
-  ui.endScreen.highScoreListEl.innerHTML = getHighScoreList()
+  ui.endScreen.highScoreListEl.innerHTML = sortedFinalHighScoreList
     .map(
       (highScorePlayer: Player) =>
         `<li class="list-group-item ${
@@ -92,7 +93,7 @@ const renderHighScoreList = function () {
     )
     .join("");
 
-  setHighScoreListToLocalStorage(getHighScoreList());
+  setHighScoreListToLocalStorage(sortedFinalHighScoreList);
 };
 
 const renderAnswerCards = function () {

@@ -1,6 +1,13 @@
 import type { Movie } from "./data/movies";
 import type { Player } from "./types";
 
+export const addPlayerToHighScoreList = (
+  currentPlayer: Player,
+  currentHighScoreList: Player[]
+) => {
+  return [...currentHighScoreList, currentPlayer];
+};
+
 export const getLowestHighScore = (highScoreList: Player[]) => {
   return Math.min(
     ...highScoreList.map((highScorePlayer: Player) => highScorePlayer.score)
