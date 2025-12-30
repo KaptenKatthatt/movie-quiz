@@ -136,7 +136,7 @@ const startGame = () => {
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
-    getNumberOfQuestions()
+    getNumberOfQuestions(player)
   );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
@@ -176,10 +176,10 @@ const setCurrentStudent = function () {
 const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
-  }/${getNumberOfQuestions()}</span>`;
+  }/${getNumberOfQuestions(player)}</span>`;
   ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
     player
-  )}/${getNumberOfQuestions()}</span>`;
+  )}/${getNumberOfQuestions(player)}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -268,11 +268,11 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
     initPlayer();
   }
 });
-
 //Render initial game screen
-renderQuestionScreen(); /* **************** PLAYER OBJECT ****************** */
+renderQuestionScreen();
 
-export let player: Player = {
+/* **************** PLAYER OBJECT ****************** */
+let player: Player = {
   id: 0,
   score: 0,
   name: "",
@@ -281,6 +281,9 @@ export let player: Player = {
   wrongAnswersArr: [] as Movie[],
 };
 
+export const getPlayer = () => player;
+
+//GAME OBJECT
 export const game = {
   /* **************** METHODS****************** */
   getLowestHighScore() {

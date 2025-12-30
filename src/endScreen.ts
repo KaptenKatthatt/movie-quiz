@@ -1,11 +1,10 @@
-import { restartGame } from "./main";
+import { getPlayer, restartGame } from "./main";
 import {
   getHighScoreListFromLocalStorage,
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
 import { game } from "./main";
-import { player } from "./main";
 import { ui } from "./ui";
 import type { Movie } from "./data/movies";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
@@ -15,9 +14,9 @@ import { getNumberOfQuestions, getPlayerScore } from "./player";
  * Check if player score is higher than lowest score
  */
 const checkIfHighScoreWorthy = function () {
-  if (getPlayerScore(player) > game.getLowestHighScore()) {
+  if (getPlayerScore(getPlayer()) > game.getLowestHighScore()) {
     game.removeLowestHighScore();
-    game.highScoreList.push(player);
+    game.highScoreList.push(getPlayer());
   } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
   }
@@ -48,8 +47,8 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
   ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore(
-    player
-  )}/${getNumberOfQuestions()}!!!</span>`;
+    getPlayer()
+  )}/${getNumberOfQuestions(getPlayer())}!!!</span>`;
 };
 
 /**
@@ -65,7 +64,7 @@ const renderHighScoreList = function () {
   const storedList = getHighScoreListFromLocalStorage();
   game.highScoreList = storedList ? JSON.parse(storedList) : game.highScoreList;
 
-  player.name = getPlayerNameFromLocalStorage();
+  getPlayer().name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
@@ -77,7 +76,7 @@ const renderHighScoreList = function () {
     .map(
       (highScorePlayer) =>
         `<li class="list-group-item ${
-          highScorePlayer.id === player.id ? "fw-bolder" : ""
+          highScorePlayer.id === getPlayer().id ? "fw-bolder" : ""
         }">${highScorePlayer.name} ${highScorePlayer.score}/${
           highScorePlayer.nbrOfQuestions
         }</li>`
@@ -96,14 +95,14 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.endScreen.rightAnswersHeadingEl.innerText =
-    getPlayerScore(player) > 0
+    getPlayerScore(getPlayer()) > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
 const renderRightAnswerCards = function () {
   ui.endScreen.rightAnswerCardsEl.innerHTML = formatCards(
-    player.rightAnswersArr,
+    getPlayer().rightAnswersArr,
     true
   );
 };
@@ -117,7 +116,7 @@ const renderWrongAnswerHeading = function () {
 
 const renderWrongAnswerCards = function () {
   ui.endScreen.wrongAnswerCardsEl.innerHTML = formatCards(
-    player.wrongAnswersArr,
+    getPlayer().wrongAnswersArr,
     false
   );
 };

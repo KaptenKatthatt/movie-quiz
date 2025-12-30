@@ -13,7 +13,7 @@ export const incrementScoreByOne = (player: Player) => {
   return { ...player, score: player.score + 1 };
 };
 
-export const getNumberOfQuestions = () => {
+export const getNumberOfQuestions = (player: Player) => {
   return player.nbrOfQuestions;
 };
 export const setNumberOfQuestions = (
