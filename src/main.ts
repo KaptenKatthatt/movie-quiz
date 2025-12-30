@@ -18,6 +18,145 @@ import {
 
 let questionButtonNames = []; //The four names on the question buttons
 
+/* **************** PLAYER OBJECT ****************** */
+let player: Player = {
+  id: 0,
+  score: 0,
+  name: "",
+  nbrOfQuestions: 0,
+  rightAnswersArr: [] as Movie[],
+  wrongAnswersArr: [] as Movie[],
+};
+
+export const getPlayer = () => player;
+
+//GAME OBJECT
+export const game = {
+  /* **************** METHODS****************** */
+  getLowestHighScore() {
+    return Math.min(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
+    );
+  },
+  removeLowestHighScore() {
+    this.sortHighScoreList();
+    this.highScoreList.pop();
+  },
+  sortHighScoreList() {
+    this.highScoreList.sort((a, b) => b.score - a.score);
+  },
+  getLatestPlayerId() {
+    return Math.max(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
+    );
+  },
+  get nbrOfRightAnswers() {
+    return player.rightAnswersArr.length;
+  },
+  get nbrOfWrongAnswers() {
+    return player.wrongAnswersArr.length;
+  },
+  restart() {
+    player.rightAnswersArr = [];
+    player.wrongAnswersArr = [];
+    player = resetPlayerScore(player);
+    player = setNumberOfQuestions(player, 0);
+    this.isCurrentAnswerCorrect = false;
+    ui.endScreen.highScoreListEl!.innerHTML = "";
+    this.currentQuestionNbr = 1;
+  },
+  /* **************** VARIABLES & ARRAYS ****************** */
+  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  shuffledQuestions: [] as Movie[], //All movies shuffled
+  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
+  nbrOfQuestions: 0,
+  currentQuestionNbr: 1,
+  isCurrentAnswerCorrect: false,
+  highScoreList: [
+    {
+      id: 1,
+      score: 10,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 2,
+      score: 9,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 3,
+      score: 8,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 4,
+      score: 7,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 5,
+      score: 6,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 6,
+      score: 5,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 7,
+      score: 4,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 8,
+      score: 3,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 9,
+      score: 2,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 10,
+      score: 0,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+  ],
+  currentQuestion: [] as Movie[], //Current question/student
+};
+
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from movies array
@@ -263,142 +402,3 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
 });
 //Render initial game screen
 renderQuestionScreen();
-
-/* **************** PLAYER OBJECT ****************** */
-let player: Player = {
-  id: 0,
-  score: 0,
-  name: "",
-  nbrOfQuestions: 0,
-  rightAnswersArr: [] as Movie[],
-  wrongAnswersArr: [] as Movie[],
-};
-
-export const getPlayer = () => player;
-
-//GAME OBJECT
-export const game = {
-  /* **************** METHODS****************** */
-  getLowestHighScore() {
-    return Math.min(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
-    );
-  },
-  removeLowestHighScore() {
-    this.sortHighScoreList();
-    this.highScoreList.pop();
-  },
-  sortHighScoreList() {
-    this.highScoreList.sort((a, b) => b.score - a.score);
-  },
-  getLatestPlayerId() {
-    return Math.max(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
-    );
-  },
-  get nbrOfRightAnswers() {
-    return player.rightAnswersArr.length;
-  },
-  get nbrOfWrongAnswers() {
-    return player.wrongAnswersArr.length;
-  },
-  restart() {
-    player.rightAnswersArr = [];
-    player.wrongAnswersArr = [];
-    player = resetPlayerScore(player);
-    player = setNumberOfQuestions(player, 0);
-    this.isCurrentAnswerCorrect = false;
-    ui.endScreen.highScoreListEl!.innerHTML = "";
-    this.currentQuestionNbr = 1;
-  },
-  /* **************** VARIABLES & ARRAYS ****************** */
-  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
-  shuffledQuestions: [] as Movie[], //All movies shuffled
-  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
-  nbrOfQuestions: 0,
-  currentQuestionNbr: 1,
-  isCurrentAnswerCorrect: false,
-  highScoreList: [
-    {
-      id: 1,
-      score: 10,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 2,
-      score: 9,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 3,
-      score: 8,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 4,
-      score: 7,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 5,
-      score: 6,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 6,
-      score: 5,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 7,
-      score: 4,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 8,
-      score: 3,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 9,
-      score: 2,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 10,
-      score: 0,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-  ],
-  currentQuestion: [] as Movie[], //Current question/student
-};

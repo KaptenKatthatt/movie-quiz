@@ -20,6 +20,5 @@ export const setNumberOfQuestions = (
   currentPlayer: Player,
   numberOfQuestions: number
 ) => {
-  // currentPlayer.nbrOfQuestions = numberOfQuestions;
   return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
 };
