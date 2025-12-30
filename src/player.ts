@@ -1,25 +1,25 @@
 import { type Player } from "./types";
-import { player } from "./main";
 
-export const getPlayerScore = (player: Player) => {
-  return player.score;
+export const getPlayerScore = (currentPlayer: Player) => {
+  return currentPlayer.score;
 };
 
-export const resetPlayerScore = (player: Player): Player => {
-  return { ...player, score: 0 };
+export const resetPlayerScore = (currentPlayer: Player): Player => {
+  return { ...currentPlayer, score: 0 };
 };
 
-export const incrementScoreByOne = (player: Player) => {
-  return { ...player, score: player.score + 1 };
+export const incrementScoreByOne = (currentPlayer: Player) => {
+  return { ...currentPlayer, score: currentPlayer.score + 1 };
 };
 
-export const getNumberOfQuestions = (player: Player) => {
-  return player.nbrOfQuestions;
+export const getNumberOfQuestions = (currentPlayer: Player) => {
+  return currentPlayer.nbrOfQuestions;
 };
+
 export const setNumberOfQuestions = (
-  player: Player,
+  currentPlayer: Player,
   numberOfQuestions: number
 ) => {
-  // player.nbrOfQuestions = numberOfQuestions;
-  return { ...player, nbrOfQuestions: numberOfQuestions };
+  // currentPlayer.nbrOfQuestions = numberOfQuestions;
+  return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
 };
