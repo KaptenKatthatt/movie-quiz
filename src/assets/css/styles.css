@@ -46,7 +46,7 @@
 }
 
 .answer-cards-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
 }
 
 body,
@@ -241,8 +241,18 @@ input {
 
 .photo-container {
   border: 2px double black;
-  box-shadow: 0 0px 20px var(--yellow);
+  box-shadow: 0 0 20px var(--yellow);
   view-transition-name: photo-container;
+}
+
+.site-container,
+.question-btn-container .btn {
+  box-shadow: 0 0 40px var(--yellow);
+}
+
+.start-screen-container .btn {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+  border: 2px solid black;
 }
 
 .question-btn-container .btn:hover {
@@ -256,16 +266,6 @@ input {
 
 .start-btn-container {
   view-transition-name: startscreen;
-}
-
-.site-container,
-.question-btn-container .btn {
-  box-shadow: 0 0 40px var(--yellow);
-}
-
-.start-screen-container .btn {
-  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
-  border: 2px solid black;
 }
 
 .start-photos-container {
