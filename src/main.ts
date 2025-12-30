@@ -107,7 +107,7 @@ const renderQuestionScreen = function () {
   //Sets player name to stored player name
   ui.startScreen.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".startPhotosContainer")!.innerHTML = movies
+  document.querySelector(".start-photos-container")!.innerHTML = movies
     .map((movie) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">
@@ -182,11 +182,11 @@ const updateScoreDisplay = function (shouldAnimate = false) {
   )}/${getNumberOfQuestions()}</span>`;
 
   if (shouldAnimate) {
-    ui.questionScreen.pointsEl!.classList.add("addScoreAnimation");
+    ui.questionScreen.pointsEl!.classList.add("add-score-animation");
     ui.questionScreen.pointsEl!.addEventListener(
       "animationend",
       () => {
-        ui.questionScreen.pointsEl!.classList.remove("addScoreAnimation");
+        ui.questionScreen.pointsEl!.classList.remove("add-score-animation");
       },
       { once: true }
     );
@@ -199,7 +199,7 @@ ui.startScreen.playerNameInputEl.addEventListener("input", (e) => {
   setPlayerNameToLocalStorage((e.target as HTMLInputElement).value);
 });
 
-// Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
+// Check if answer is correct, then set button to green, else red. Show next-question-btn when clicked.
 ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
@@ -217,7 +217,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     }
     disableAllQuestionButtons();
 
-    //Show nextQuestionBtn
+    //Show next-question-btn
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
     updateScoreDisplay(

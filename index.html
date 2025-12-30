@@ -24,97 +24,100 @@
 
 <body>
   <!-- Site container -->
-  <div class="container siteContainer border border-dark border-3 p-4 rounded-4 bg-light-subtle my-2 my-lg-4">
+  <div class="container site-container border border-dark border-3 p-4 rounded-4 bg-light-subtle my-2 my-lg-4">
     <!-- Startscreen container -->
-    <div class="startScreenContainer">
+    <div class="start-screen-container">
       <!-- Main header -->
-      <h1 class="display-3 text-center welcomeHeader">Welcome to Guess the Movie!
+      <h1 class="display-3 text-center welcome-header">Welcome to Guess the Movie!
       </h1>
       <!-- Question container -->
-      <div class="startPhotosContainer container d-flex flex-wrap justify-content-center gap-1 mb-3 ">
+      <div class="start-photos-container container d-flex flex-wrap justify-content-center gap-1 mb-3 ">
       </div>
       <!-- Select nbr of questions to start game buttons -->
-      <div class="startBtnContainer">
+      <div class="start-btn-container">
         <!-- Player name input field -->
         <div class="mx-auto mb-3 d-flex justify-content-center align-items-center flex-column text-center">
-          <form class="playerNameInputForm">
-            <label for="playerNameInput" class="form-label fw-bold d-inline fs-4 me-1">Input Player Name:</label>
+          <form class="player-name-input-form">
+            <label for="player-name-input-field" class="form-label fw-bold d-inline fs-4 me-1">Input Player
+              Name:</label>
             <input type="text" class="form-control d-inline w-auto border border-dark-subtle border-2 fw-bolder"
-              id="playerNameInput" name="playerName" aria-describedby="inputDescription" autofocus maxlength="20"
-              minlength="3">
-            <p id="inputDescription" class="visually-hidden">Enter the player's name and start the game</p>
+              id="player-name-input-field" name="playerName" aria-describedby="input-description" autofocus
+              maxlength="20" minlength="3">
+            <p id="input-description" class="visually-hidden">Enter the player's name and start the game</p>
           </form>
         </div>
 
         <h2 class="display-6 text-center fw-bold">How many movies to guess?</h2>
         <p class="output"></p>
-        <div class="nbrQuestionsContainer container d-flex justify-content-center flex-wrap gap-3">
-          <button class="btn btn-danger p-3 fs-3 rounded-top-5 btn-select5" data-questions="5">5?</button>
-          <button class="btn fs-3 rounded-top-5 p-3 btn-select10" data-questions="10">10?</button>
-          <button class="btn btn-success p-3 p-lg-3 fs-3 rounded-top-5 btn-selectAll"
+        <div class="selectNbrOfQuestionBtnContainer container d-flex justify-content-center flex-wrap gap-3">
+          <button class="btn btn-danger p-3 fs-3 rounded-top-5 btn-select-5" data-questions="5">5?</button>
+          <button class="btn fs-3 rounded-top-5 p-3 btn-select-10" data-questions="10">10?</button>
+          <button class="btn btn-success p-3 p-lg-3 fs-3 rounded-top-5 btn-select-all"
             data-questions="all">ALL!!!</button>
         </div>
       </div>
 
     </div>
     <!-- Question screen container -->
-    <div class="questionScreenContainer container d-flex flex-column align-items-center justify-content-center d-none ">
+    <div
+      class="question-screen-container container d-flex flex-column align-items-center justify-content-center d-none ">
       <h2 class="display-4 text-center questionHeader">Guess the movie!</h2>
-      <div class="nbrOfQuestionsContainer">
-
-      </div>
-      <div class="scoreContainer container-fluid d-flex justify-content-center gap-3">
-
-        <h2 class="questionBoard display-5">Question: <span class="nbrOfQuestions d-inline-block">0/0</span>
+      <!-- <div class="nbrOfQuestionsContainer">
+      </div> -->
+      <div class="score-container container-fluid d-flex justify-content-center gap-3">
+        <h2 class="nbr-questions-display display-5">Question:
+          <span class="nbrOfQuestions d-inline-block">0/0</span>
         </h2>
-
-        <h2 class="scoreBoard display-5">Score: <span class="points d-inline-block fw-bold">0/0</span></h2>
+        <h2 class="score-display display-5">Score:
+          <span class="points d-inline-block fw-bold">0/0</span>
+        </h2>
       </div>
       <!-- Image container for questions -->
-      <img class="photoContainer img-fluid rounded-5 " src="https://placehold.co/" alt="Photo of the person to guess">
+      <img class="photo-container img-fluid rounded-5 " src="https://placehold.co/" alt="Photo of the person to guess">
 
       <!-- Question buttons container -->
-      <div class="questionBtnContainer d-flex flex-wrap justify-content-center gap-3 my-3 my-lg-5">
+      <div class="question-btn-container d-flex flex-wrap justify-content-center gap-3 my-3 my-lg-5">
       </div>
-      <button class=" d-none nextQuestionBtn button btn btn-outline-danger btn-lg text-center">Next question</button>
+      <button class=" d-none next-question-btn button btn btn-outline-danger btn-lg text-center">Next question</button>
     </div>
 
     <!-- End screen container with high score and right/wrong cards -->
-    <div class=" endScreen text-center d-none">
-      <div class="row endRow">
-        <h2 class="display-4 fw-bold finishedHeader">Game Finished!</h2>
-        <h2 class="display-5 finalScore p-2">Final score</h2>
+    <div class=" end-screen text-center d-none">
+      <div class="row end-screen-header-container">
+        <h2 class="display-4 fw-bold end-screen-header">Game Finished!</h2>
+        <h2 class="display-5 final-score p-2">Final score</h2>
       </div>
       <div class="row">
         <div class="col-lg-9">
           <!-- Right/Wrong cards container -->
-          <div class="answerCardsContainer container border border-dark rounded-3">
-            <h2 class="display-5 text-success rightAnswersHeading mt-3">Right Answers</h2>
-            <div class="rightAnswerCards container d-flex flex-wrap justify-content-center gap-3">
+          <div class="answer-cards-container container border border-dark rounded-3">
+            <h2 class="display-5 text-success right-answers-heading mt-3">Right Answers</h2>
+            <div class="right-answer-cards container d-flex flex-wrap justify-content-center gap-3">
             </div>
-            <h2 class="display-5 text-danger wrongAnswersHeading mt-3">Wrong Answers</h2>
-            <div class="wrongAnswerCards container d-flex flex-wrap justify-content-center gap-3 mb-3">
+            <h2 class="display-5 text-danger wrong-answers-heading mt-3">Wrong Answers</h2>
+            <div class="wrong-answer-cards container d-flex flex-wrap justify-content-center gap-3 mb-3">
             </div>
           </div>
         </div>
         <!-- Highscore list container -->
         <div class="mt-3 mt-lg-0 col-lg-3  ">
-          <div class="highScoreListcontainer container border border-warning rounded-3 pb-3">
-            <h2 class="display-6 highScoreListHeader">High Score!</h2>
-            <p class="noHighScore d-none text-danger fs-4 fw-bold ">Too Low Score! No Highscore for you!</p>
-            <ol class="highScoreList list-group list-group-numbered">
-            </ol>
+          <div class="high-score-list-container container border border-warning rounded-3 pb-3">
+            <h2 class="display-6 high-score-list-header">High Score!</h2>
+            <h5 class="no-high-score-header d-none text-danger fs-4 fw-bold ">Too Low Score! No Highscore for you!</>
+              <ol class="high-score-list list-group list-group-numbered">
+              </ol>
           </div>
         </div>
         <!-- Restart game button row -->
         <div class="row mx-auto mt-2">
-          <button class="btn btn-success btn-lg restartGameBtn">Restart Game</button>
+          <button class="btn btn-success btn-lg restart-game-btn">Restart Game</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- JavaScripts -->
-
+  <footer class="text-center mt-5">
+    <p>Created by <a href="https://www.jonasolson.se" aria-label="Visit Jonas Olson's website">Jonas Olson</a></p>
+  </footer>
   <script type="module" src="src/main.ts"></script>
 </body>
 
