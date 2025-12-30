@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+<<<<<<< HEAD
+    "lint:css": "npx stylelint '**/*.css'",
+    "lint": "npx eslint"
+=======
     "lint:css": "npx stylelint '**/*.css'"
+>>>>>>> origin/dev
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",

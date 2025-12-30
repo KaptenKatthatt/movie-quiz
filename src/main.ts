@@ -3,9 +3,17 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { ui, game, player } from "./constants";
-import { movies } from "./movies";
-import type { Movie } from "./movies";
+import { type Player } from "./types";
+import { ui } from "./ui";
+import { movies } from "./data/movies";
+import type { Movie } from "./data/movies";
+import {
+  getNumberOfQuestions,
+  getPlayerScore,
+  incrementScoreByOne,
+  resetPlayerScore,
+  setNumberOfQuestions,
+} from "./player";
 
 /* **************** VARIABLES****************** */
 
@@ -14,7 +22,7 @@ let questionButtonNames = []; //The four names on the question buttons
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
   // Add image to game.currentQuestion from movies array
-  ui.photoContainerEl.src = game.currentQuestion[0].image;
+  ui.questionScreen.photoContainerEl.src = game.currentQuestion[0].image;
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
@@ -34,9 +42,9 @@ Disables question buttons from being clicked twice
  * 
  */
 const disableAllQuestionButtons = function () {
-  ui.questionBtnContainerEl!.querySelectorAll("button").forEach(
-    (button) => (button.disabled = true)
-  );
+  ui.questionScreen
+    .questionBtnContainerEl!.querySelectorAll("button")
+    .forEach((button) => (button.disabled = true));
 };
 
 /**
@@ -79,9 +87,10 @@ const renderNewQuestion = function () {
   addPhotoToPhotoContainer();
 
   //Inject buttons into DOM
-  ui.questionBtnContainerEl!.innerHTML = renderFourQuestionButtons();
+  ui.questionScreen.questionBtnContainerEl!.innerHTML =
+    renderFourQuestionButtons();
   //Hide next question button
-  ui.nextQuestionBtnEl!.classList.add("d-none");
+  ui.startScreen.nextQuestionBtnEl!.classList.add("d-none");
 };
 
 const renderFourQuestionButtons = function () {
@@ -96,9 +105,9 @@ const renderFourQuestionButtons = function () {
 
 const renderQuestionScreen = function () {
   //Sets player name to stored player name
-  ui.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
+  ui.startScreen.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".startPhotosContainer")!.innerHTML = movies
+  document.querySelector(".start-photos-container")!.innerHTML = movies
     .map((movie) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">
@@ -115,39 +124,47 @@ const renderQuestionScreen = function () {
 export const restartGame = function () {
   game.restart();
 
-  ui.showNoHighScoreEl!.classList.add("d-none");
-  ui.endScreenEl!.classList.add("d-none");
-  ui.startScreenContainerEl!.classList.remove("d-none");
+  ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
+  ui.endScreen.endScreenEl!.classList.add("d-none");
+  ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
   initPlayer();
 };
 
+<<<<<<< HEAD
+const startGame = () => {
+=======
 const startGame = (nbrOfSelectedQuestions: number) => {
+>>>>>>> origin/dev
   // Shuffles the student array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
+<<<<<<< HEAD
+    getNumberOfQuestions(player)
+=======
     nbrOfSelectedQuestions
+>>>>>>> origin/dev
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
+  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // Hide startscreen
-      ui.startScreenContainerEl.classList.add("d-none");
+      ui.startScreen.startScreenContainerEl.classList.add("d-none");
 
       // Show questionScreen
-      ui.questionScreenContainerEl.classList.remove("d-none");
+      ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
 
       // Render the questionPage content
       renderNewQuestion();
     });
   } else {
-    ui.startScreenContainerEl.classList.add("d-none");
+    ui.startScreen.startScreenContainerEl.classList.add("d-none");
     // Show questionScreen
-    ui.questionScreenContainerEl.classList.remove("d-none");
+    ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
     // Render the questionPage content
     renderNewQuestion();
   }
@@ -165,15 +182,24 @@ const setCurrentStudent = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
+<<<<<<< HEAD
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
+    game.currentQuestionNbr
+  }/${getNumberOfQuestions(player)}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
+    player
+  )}/${getNumberOfQuestions(player)}</span>`;
+=======
   ui.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
   ui.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+>>>>>>> origin/dev
 
   if (shouldAnimate) {
-    ui.pointsEl!.classList.add("addScoreAnimation");
-    ui.pointsEl!.addEventListener(
+    ui.questionScreen.pointsEl!.classList.add("add-score-animation");
+    ui.questionScreen.pointsEl!.addEventListener(
       "animationend",
       () => {
-        ui.pointsEl!.classList.remove("addScoreAnimation");
+        ui.questionScreen.pointsEl!.classList.remove("add-score-animation");
       },
       { once: true }
     );
@@ -182,16 +208,16 @@ const updateScoreDisplay = function (shouldAnimate = false) {
 
 /* **************** EVENT LISTENERS****************** */
 
-ui.playerNameInputEl.addEventListener("input", (e) => {
+ui.startScreen.playerNameInputEl.addEventListener("input", (e) => {
   setPlayerNameToLocalStorage((e.target as HTMLInputElement).value);
 });
 
-// Check if answer is correct, then set button to green, else red. Show nextQuestionBtn when clicked.
-ui.questionBtnContainerEl.addEventListener("click", (e) => {
+// Check if answer is correct, then set button to green, else red. Show next-question-btn when clicked.
+ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      player.score++;
+      player = incrementScoreByOne(player);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
       player.rightAnswersArr.push(game.currentQuestion[0]);
@@ -204,14 +230,16 @@ ui.questionBtnContainerEl.addEventListener("click", (e) => {
     }
     disableAllQuestionButtons();
 
-    //Show nextQuestionBtn
-    ui.nextQuestionBtnEl.classList.remove("d-none");
+    //Show next-question-btn
+    ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(game.isCurrentAnswerCorrect && player.score > 0);
+    updateScoreDisplay(
+      game.isCurrentAnswerCorrect && getPlayerScore(player) > 0
+    );
   }
 });
 
-ui.nextQuestionBtnEl.addEventListener("click", () => {
+ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
   game.nbrOfSelectedQuestions.shift();
 
   game.currentQuestionNbr++;
@@ -230,8 +258,8 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
   } else {
     // Game is over, go to endScreen
     //Hide question screen
-    ui.nextQuestionBtnEl.classList.add("d-none");
-    ui.questionScreenContainerEl.classList.add("d-none");
+    ui.startScreen.nextQuestionBtnEl.classList.add("d-none");
+    ui.questionScreen.questionScreenContainerEl.classList.add("d-none");
 
     renderEndScreen();
   }
@@ -239,19 +267,166 @@ ui.nextQuestionBtnEl.addEventListener("click", () => {
 
 /* **************** GAME START****************** */
 //Listen for nbr of questions selected and start game
-ui.startBtnContainerEl.addEventListener("click", (e) => {
+ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
 
   if (button.tagName === "BUTTON") {
+<<<<<<< HEAD
+    const nbrOfSelectedQuestions =
+=======
     player.nbrOfQuestions =
+>>>>>>> origin/dev
       button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
 
+<<<<<<< HEAD
+    player = setNumberOfQuestions(player, nbrOfSelectedQuestions);
+    startGame();
+=======
     startGame(player.nbrOfQuestions);
+>>>>>>> origin/dev
     initPlayer();
   }
 });
-
 //Render initial game screen
 renderQuestionScreen();
+
+/* **************** PLAYER OBJECT ****************** */
+let player: Player = {
+  id: 0,
+  score: 0,
+  name: "",
+  nbrOfQuestions: 0,
+  rightAnswersArr: [] as Movie[],
+  wrongAnswersArr: [] as Movie[],
+};
+
+export const getPlayer = () => player;
+
+//GAME OBJECT
+export const game = {
+  /* **************** METHODS****************** */
+  getLowestHighScore() {
+    return Math.min(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
+    );
+  },
+  removeLowestHighScore() {
+    this.sortHighScoreList();
+    this.highScoreList.pop();
+  },
+  sortHighScoreList() {
+    this.highScoreList.sort((a, b) => b.score - a.score);
+  },
+  getLatestPlayerId() {
+    return Math.max(
+      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
+    );
+  },
+  get nbrOfRightAnswers() {
+    return player.rightAnswersArr.length;
+  },
+  get nbrOfWrongAnswers() {
+    return player.wrongAnswersArr.length;
+  },
+  restart() {
+    player.rightAnswersArr = [];
+    player.wrongAnswersArr = [];
+    player = resetPlayerScore(player);
+    player = setNumberOfQuestions(player, 0);
+    this.isCurrentAnswerCorrect = false;
+    ui.endScreen.highScoreListEl!.innerHTML = "";
+    this.currentQuestionNbr = 1;
+  },
+  /* **************** VARIABLES & ARRAYS ****************** */
+  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  shuffledQuestions: [] as Movie[], //All movies shuffled
+  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
+  nbrOfQuestions: 0,
+  currentQuestionNbr: 1,
+  isCurrentAnswerCorrect: false,
+  highScoreList: [
+    {
+      id: 1,
+      score: 10,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 2,
+      score: 9,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 3,
+      score: 8,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 4,
+      score: 7,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 5,
+      score: 6,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 6,
+      score: 5,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 7,
+      score: 4,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 8,
+      score: 3,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 9,
+      score: 2,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+    {
+      id: 10,
+      score: 0,
+      nbrOfQuestions: 10,
+      name: "J.O",
+      rightAnswersArr: [] as Movie[],
+      wrongAnswersArr: [] as Movie[],
+    },
+  ],
+  currentQuestion: [] as Movie[], //Current question/student
+};

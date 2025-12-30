@@ -22,11 +22,11 @@
   src: url("/src/assets/fonts/LondrinaShadow-Regular.ttf");
 }
 
-.addScoreAnimation {
-  animation: addScoreAnimation 1s ease-in-out;
+.add-score-animation {
+  animation: add-score-animation 1s ease-in-out;
 }
 
-.answerCardsContainer .card::before {
+.answer-cards-container .card::before {
   content: "📌";
   position: absolute;
   transform: scaleX(-1);
@@ -34,19 +34,28 @@
   left: -14px;
 }
 
+<<<<<<< HEAD
+.answer-cards-container .card::after {
+=======
 .answerCardsContainer .card::after {
+>>>>>>> origin/dev
   content: "📌";
   position: absolute;
   top: -10px;
   right: -12px;
 }
 
-.answerCardsContainer .card {
+.answer-cards-container .card {
   border: 1px solid gray;
 }
 
+<<<<<<< HEAD
+.answer-cards-container {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+=======
 .answerCardsContainer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+>>>>>>> origin/dev
 }
 
 body,
@@ -65,31 +74,35 @@ button:active {
   transform: scale(0.9);
 }
 
-.btn-select5 {
+.btn-select-5 {
   background-color: var(--red);
 }
-.btn-select10 {
+
+.btn-select-10 {
   background-color: var(--yellow);
 }
-.btn-select10:hover {
+
+.btn-select-10:hover {
   background-color: #dcb14e;
 }
-.btn-selectAll {
+
+.btn-select-all {
   background-color: var(--green);
 }
 
 .card:nth-child(odd) {
   transform: rotate(3deg);
 }
+
 .card:nth-child(even) {
   transform: rotate(-3deg);
 }
 
-.embiggenFinalScore {
-  animation: embiggenFinalScore 1s ease-in-out alternate 4;
+.embiggen-final-score {
+  animation: embiggen-final-score 1s ease-in-out alternate 4;
 }
 
-.endScreen .card {
+.end-screen .card {
   border: 2px double black;
 }
 
@@ -97,45 +110,53 @@ button:active {
   animation: flip 1.5s ease-in-out;
 }
 
-.finalScore {
+.final-score {
   background-color: var(--yellow);
-  box-shadow: 0 0 40px rgb(255, 209, 102);
+  box-shadow: 0 0 40px rgb(255 209 102);
   border-radius: 50%;
   font-weight: 600;
   text-decoration: underline 5px;
 }
 
-.finalScoreText {
+.final-score-text {
   color: var(--red);
 }
 
 h1,
 h2,
+<<<<<<< HEAD
+.start-photos-container .card-title,
+label[for="player-name-input-field"],
+.no-high-score-header {
+=======
 .startPhotosContainer .card-title,
 label[for="playerNameInput"],
 .noHighScore {
+>>>>>>> origin/dev
   font-family: "Londrina Shadow", sans-serif;
 }
 
-.highScoreListcontainer {
-  animation: pulseShadowRed 1s ease-in-out infinite alternate;
+.high-score-list-container {
+  animation: pulse-shadow-red 1s ease-in-out infinite alternate;
 }
 
-.highScoreListHeader {
+.high-score-list-header {
   text-decoration: underline 4px solid black;
-  animation: pulseUnderline 1s ease-in-out infinite alternate;
+  animation: pulse-underline 1s ease-in-out infinite alternate;
 }
 
 input {
-  animation: pulseShadowYellowGreen 1s ease-in-out infinite alternate;
+  animation: pulse-shadow-yellow-green 1s ease-in-out infinite alternate;
 }
-@keyframes addScoreAnimation {
+
+@keyframes add-score-animation {
   from {
     scale: 1;
     opacity: 1;
     background: var(--yellow);
     border-radius: 10px;
   }
+
   to {
     scale: 2;
     opacity: 0;
@@ -143,62 +164,69 @@ input {
     border-radius: 10px;
   }
 }
-@keyframes pulseShadowYellowGreen {
+
+@keyframes pulse-shadow-yellow-green {
   from {
     box-shadow: 0 0 20px var(--yellow);
   }
+
   to {
     box-shadow: 0 0 20px var(--green);
   }
 }
 
-@keyframes pulseShadowRed {
+@keyframes pulse-shadow-red {
   from {
     box-shadow: 0 4px 8px var(--red);
   }
+
   to {
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0);
+    box-shadow: 0 4px 8px rgb(255 255 255 / 0%);
   }
 }
 
-@keyframes pulseUnderline {
+@keyframes pulse-underline {
   from {
-    text-decoration-color: rgba(255, 255, 255, 0);
+    text-decoration-color: rgb(255 255 255 / 0%);
   }
+
   to {
     text-decoration-color: var(--red);
   }
 }
 
-@keyframes slideOut {
+@keyframes slide-out {
   to {
     transform: translateX(-100%);
     scale: 0;
     opacity: 0;
   }
 }
-@keyframes slideIn {
+
+@keyframes slide-in {
   from {
     transform: translateX(100%);
     opacity: 0;
     scale: 0;
   }
+
   to {
     scale: 1;
   }
 }
 
-@keyframes slideUpOut {
+@keyframes slide-up-out {
   to {
     transform: translateY(-100px);
     opacity: 0;
   }
 }
 
-@keyframes embiggenFinalScore {
+@keyframes embiggen-final-score {
   from {
     scale: 1;
   }
+
   to {
     scale: 2;
   }
@@ -209,75 +237,79 @@ input {
     opacity: 1;
     transform: rotateY(0deg);
   }
+
   to {
     transform: rotateY(180deg);
     opacity: 0;
   }
 }
 
-.nextQuestionBtn {
+.next-question-btn {
   background-color: var(--red);
   box-shadow: 0 0 20px var(--red);
   color: black;
 }
-.nextQuestionBtn:hover {
+
+.next-question-btn:hover {
   transition: color 0.3s ease-in-out;
 }
 
-.photoContainer {
+.photo-container {
   border: 2px double black;
   box-shadow: 0 0px 20px var(--yellow);
-  view-transition-name: photoContainer;
+  view-transition-name: photo-container;
 }
 
-.questionBtnContainer .btn:hover {
+.question-btn-container .btn:hover {
   box-shadow: 0 0 25px var(--red);
   transition: box-shadow 0.3s ease-in-out;
 }
-.rightAnswerCardShadow {
+
+.right-answer-card-shadow {
   box-shadow: 0 0 10px var(--green);
 }
 
-.startBtnContainer {
+.start-btn-container {
   view-transition-name: startScreen;
 }
 
-.siteContainer,
-.questionBtnContainer .btn {
+.site-container,
+.question-btn-container .btn {
   box-shadow: 0 0 40px var(--yellow);
 }
-.startScreenContainer .btn {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+.start-screen-container .btn {
+  box-shadow: 0 4px 8px rgb(0 0 0/ 20%);
   border: 2px solid black;
 }
 
-.startPhotosContainer {
+.start-photos-container {
   height: 35vh;
   overflow: hidden;
 }
 
-.startPhotosContainer img {
+.start-photos-container img {
   filter: hue-rotate(50deg);
   filter: contrast(5);
 }
 
-::view-transition-old(photoContainer) {
-  animation: slideOut 0.8s ease-in-out;
+::view-transition-old(photo-container) {
+  animation: slide-out 0.8s ease-in-out;
 }
 
-::view-transition-new(photoContainer) {
-  animation: slideIn 0.8s ease-in-out;
+::view-transition-new(photo-container) {
+  animation: slide-in 0.8s ease-in-out;
 }
 
 ::view-transition-old(startScreen) {
-  animation: slideUpOut 0.7s forwards;
+  animation: slide-up-out 0.7s forwards;
 }
 
-.welcomeHeader,
-.questionScreenContainer h2 {
+.welcome-header,
+.question-screen-container h2 {
   text-shadow: var(--yellow) 0 0 40px;
 }
 
-.wrongAnswerCardShadow {
+.wrong-answer-card-shadow {
   box-shadow: 0 0 10px var(--red);
 }
