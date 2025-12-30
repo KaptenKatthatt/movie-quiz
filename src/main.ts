@@ -66,7 +66,7 @@ export const game = {
     this.currentQuestionNbr = 1;
   },
   /* **************** VARIABLES & ARRAYS ****************** */
-  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
   shuffledQuestions: [] as Movie[], //All movies shuffled
   nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
@@ -154,7 +154,7 @@ export const game = {
       wrongAnswersArr: [] as Movie[],
     },
   ],
-  currentQuestion: [] as Movie[], //Current question/student
+  currentQuestion: [] as Movie[], //Current question
 };
 
 /* **************** FUNCTIONS****************** */
@@ -201,7 +201,7 @@ const getAnswerButtonNames = function () {
  * @returns Array with 3 wrong answers and 1 right.
  */
 const getThreeRandomAnswers = function () {
-  return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
+  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };
 
 const initPlayer = function () {
@@ -214,13 +214,13 @@ const initPlayer = function () {
  * Make an array of wrong answers to choose from, filters out correct answer
  */
 const makeWrongAnswersArray = function () {
-  game.filteredWrongStudents = game.shuffledQuestions.filter(
-    (student: Movie) => student.id !== game.currentQuestion[0].id
+  game.filteredWrongMovies = game.shuffledQuestions.filter(
+    (movie: Movie) => movie.id !== game.currentQuestion[0].id
   );
 };
 
 const renderNewQuestion = function () {
-  setCurrentStudent();
+  setCurrentMovie();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
 
@@ -235,8 +235,7 @@ const renderFourQuestionButtons = function () {
   // Generate four buttons with answer alternatives
   return getAnswerButtonNames()
     .map(
-      (student) =>
-        `<button class="btn btn-warning btn-lg">${student.name}</button>`
+      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
     )
     .join("");
 };
@@ -269,7 +268,7 @@ export const restartGame = function () {
 };
 
 const startGame = (nbrOfSelectedQuestions: number) => {
-  // Shuffles the student array to create random order on buttons
+  // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
@@ -303,7 +302,7 @@ const startGame = (nbrOfSelectedQuestions: number) => {
 /**
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
-const setCurrentStudent = function () {
+const setCurrentMovie = function () {
   game.currentQuestion[0] = game.nbrOfSelectedQuestions[0];
 };
 
