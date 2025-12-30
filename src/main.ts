@@ -257,9 +257,8 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
       button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
-
-    startGame(player.nbrOfQuestions);
     initPlayer();
+    startGame(player.nbrOfQuestions);
   }
 });
 //Render initial game screen
