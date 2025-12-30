@@ -390,13 +390,13 @@ ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
 //Listen for nbr of questions selected and start game
 ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
+  initPlayer();
 
   if (button.tagName === "BUTTON") {
     player.nbrOfQuestions =
       button.dataset.questions === "all"
         ? movies.length
         : Number(button.dataset.questions);
-    initPlayer();
     startGame(player.nbrOfQuestions);
   }
 });
