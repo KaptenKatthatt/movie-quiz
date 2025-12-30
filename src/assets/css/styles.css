@@ -264,7 +264,7 @@ input {
 }
 
 .start-screen-container .btn {
-  box-shadow: 0 4px 8px rgb(0 0 0/ 20%);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
   border: 2px solid black;
 }
 
