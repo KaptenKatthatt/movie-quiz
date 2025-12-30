@@ -29,10 +29,6 @@ export const getLatestPlayerId = (highScoreList: Player[]) => {
   );
 };
 
-export const getNewHighScoreList = () => {
-  return highScoreList;
-};
-
 export const highScoreList = [
   {
     id: 1,
@@ -115,3 +111,7 @@ export const highScoreList = [
     wrongAnswersArr: [] as Movie[],
   },
 ];
+
+export const getDefaultHighScoreList = () => {
+  return [...highScoreList];
+};
