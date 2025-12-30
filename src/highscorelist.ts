@@ -6,14 +6,14 @@ export const getLowestHighScore = (highScoreList: Player[]) => {
     ...highScoreList.map((highScorePlayer: Player) => highScorePlayer.score)
   );
 };
-export const removeLowestHighScore = (highScoreList: Player[]) => {
-  highScoreList.sort((a, b) => b.score - a.score);
-  highScoreList.pop();
-  return highScoreList;
+export const removeLowestHighScore = (currentHighScoreList: Player[]) => {
+  const sortedList = sortHighScoreList([...currentHighScoreList]);
+  sortedList.pop();
+  return sortedList;
 };
 
-export const sortHighScoreList = (highScoreList: Player[]) => {
-  return highScoreList.sort((a, b) => b.score - a.score);
+export const sortHighScoreList = (currentHighScoreList: Player[]) => {
+  return [...currentHighScoreList].sort((a, b) => b.score - a.score);
 };
 
 export const getLatestPlayerId = (highScoreList: Player[]) => {

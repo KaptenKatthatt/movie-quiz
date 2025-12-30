@@ -23,7 +23,7 @@ export const setPlayerNameToLocalStorage = (playerName: string) => {
   localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };
 
-export const getHighScoreListFromLocalStorage = function () {
+export const getHighScoreList = function () {
   const storedList = localStorage.getItem("highScoreList");
   if (storedList === null) {
     return getNewHighScoreList();

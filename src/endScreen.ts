@@ -1,6 +1,6 @@
 import { getPlayer, restartGame } from "./main";
 import {
-  getHighScoreListFromLocalStorage,
+  getHighScoreList,
   getPlayerNameFromLocalStorage,
   setHighScoreListToLocalStorage,
 } from "./storage";
@@ -14,6 +14,7 @@ import {
   removeLowestHighScore,
   sortHighScoreList,
 } from "./highscorelist";
+import type { Player } from "./types";
 /* **************** FUNCTIONS****************** */
 
 /**
@@ -67,22 +68,22 @@ const renderFinalScoreBanner = function () {
 const renderHighScoreList = function () {
   //Get highscorelist from local storage and parse it to array
   //If first play, get premade highscore from game obj.
-  const storedList = getHighScoreListFromLocalStorage();
-  setHighScoreListToLocalStorage(
-    storedList ? JSON.parse(storedList) : highScoreList
-  );
+  // const storedList = getHighScoreList();
+  // setHighScoreListToLocalStorage(
+  //   storedList ? JSON.parse(storedList) : highScoreList
+  // );
 
   getPlayer().name = getPlayerNameFromLocalStorage();
 
   checkIfHighScoreWorthy();
 
   // Sorts HSL on score before rendering
-  sortHighScoreList(getHighScoreListFromLocalStorage());
+  sortHighScoreList(getHighScoreList());
 
   //render HighScoreList
-  ui.endScreen.highScoreListEl.innerHTML = game.highScoreList
+  ui.endScreen.highScoreListEl.innerHTML = getHighScoreList()
     .map(
-      (highScorePlayer) =>
+      (highScorePlayer: Player) =>
         `<li class="list-group-item ${
           highScorePlayer.id === getPlayer().id ? "fw-bolder" : ""
         }">${highScorePlayer.name} ${highScorePlayer.score}/${
@@ -91,7 +92,7 @@ const renderHighScoreList = function () {
     )
     .join("");
 
-  setHighScoreListToLocalStorage(game.highScoreList);
+  setHighScoreListToLocalStorage(getHighScoreList());
 };
 
 const renderAnswerCards = function () {
