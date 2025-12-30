@@ -33,23 +33,7 @@ export const getPlayer = () => player;
 //GAME OBJECT
 export const game = {
   /* **************** METHODS****************** */
-  getLowestHighScore() {
-    return Math.min(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
-    );
-  },
-  removeLowestHighScore() {
-    this.sortHighScoreList();
-    this.highScoreList.pop();
-  },
-  sortHighScoreList() {
-    this.highScoreList.sort((a, b) => b.score - a.score);
-  },
-  getLatestPlayerId() {
-    return Math.max(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
-    );
-  },
+
   get nbrOfRightAnswers() {
     return player.rightAnswersArr.length;
   },
@@ -72,88 +56,7 @@ export const game = {
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
-  highScoreList: [
-    {
-      id: 1,
-      score: 10,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 2,
-      score: 9,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 3,
-      score: 8,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 4,
-      score: 7,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 5,
-      score: 6,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 6,
-      score: 5,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 7,
-      score: 4,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 8,
-      score: 3,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 9,
-      score: 2,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 10,
-      score: 0,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-  ],
+
   currentQuestion: [] as Movie[], //Current question
 };
 
