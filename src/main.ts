@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { renderEndScreen } from "./endScreen";
 import {
   getPlayerNameFromLocalStorage,
@@ -27,13 +29,7 @@ const addPhotoToPhotoContainer = function () {
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 export const cloneAndShuffleArray = function (array: Movie[]) {
-  const shuffledArrayClone = [...array];
-  for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = shuffledArrayClone[i];
-    shuffledArrayClone[i] = shuffledArrayClone[j];
-    shuffledArrayClone[j] = temp;
-  }
+  const shuffledArrayClone = _.shuffle([...array]);
   return shuffledArrayClone;
 };
 
