@@ -7,10 +7,14 @@ import {
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
-import { getPlayerScore, incrementScoreByOne } from "./player";
+import {
+  getNumberOfQuestions,
+  getPlayerScore,
+  incrementScoreByOne,
+} from "./player";
 import { getLatestPlayerId } from "./highscorelist";
 import { resetPlayerInfo } from "./game";
-import { game, getPlayer, player, updatePlayer } from "./state";
+import { game, getPlayer, updatePlayer } from "./state";
 
 /* **************** VARIABLES****************** */
 
@@ -65,8 +69,10 @@ const getThreeRandomAnswers = function () {
 
 const initPlayer = function () {
   // Create player id & name
-  player.id = getLatestPlayerId(getHighScoreList()) + 1;
-  player.name = getPlayerNameFromLocalStorage();
+  const newPlayer = getPlayer();
+  newPlayer.id = getLatestPlayerId(getHighScoreList()) + 1;
+  newPlayer.name = getPlayerNameFromLocalStorage() || "someDude";
+  updatePlayer(newPlayer);
 };
 
 /**
@@ -142,7 +148,9 @@ const startGame = (nbrOfSelectedQuestions: number) => {
     nbrOfSelectedQuestions
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
+  updateScoreDisplay(
+    game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
+  );
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
@@ -177,8 +185,12 @@ const setCurrentMovie = function () {
  * @param {boolean} shouldAnimate
  */
 const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
+    game.currentQuestionNbr
+  }/${getNumberOfQuestions(getPlayer())}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
+    getPlayer()
+  )}/${getNumberOfQuestions(getPlayer())}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -221,7 +233,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
     updateScoreDisplay(
-      game.isCurrentAnswerCorrect && getPlayerScore(player) > 0
+      game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
     );
   }
 });
@@ -259,11 +271,15 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   initPlayer();
 
   if (button.tagName === "BUTTON") {
-    player.nbrOfQuestions =
-      button.dataset.questions === "all"
-        ? movies.length
-        : Number(button.dataset.questions);
-    startGame(player.nbrOfQuestions);
+    const updatedPlayer = {
+      ...getPlayer(),
+      nbrOfQuestions:
+        button.dataset.questions === "all"
+          ? movies.length
+          : Number(button.dataset.questions),
+    };
+    updatePlayer(updatedPlayer);
+    startGame(getNumberOfQuestions(getPlayer()));
   }
 });
 //Render initial game screen

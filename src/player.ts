@@ -22,3 +22,11 @@ export const setNumberOfQuestions = (
 ) => {
   return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
 };
+
+export const getPlayerId = (currentPlayer: Player) => {
+  return { ...currentPlayer }.id;
+};
+
+export const getPlayerName = (currentPlayer: Player) => {
+  return { ...currentPlayer }.name;
+};

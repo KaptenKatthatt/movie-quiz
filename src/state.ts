@@ -2,7 +2,7 @@ import type { Movie } from "./data/movies";
 import type { Player } from "./types";
 
 /* **************** PLAYER AND GAME STATE ****************** */
-export let player: Player = {
+let player: Player = {
   id: 0,
   score: 0,
   name: "",
