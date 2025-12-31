@@ -1,5 +1,6 @@
 import { renderEndScreen } from "./endScreen";
 import {
+  getHighScoreList,
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
@@ -13,7 +14,7 @@ import {
   resetPlayerScore,
   setNumberOfQuestions,
 } from "./player";
-import { getLatestPlayerId, highScoreList } from "./highscorelist";
+import { getLatestPlayerId } from "./highscorelist";
 
 /* **************** VARIABLES****************** */
 
@@ -110,7 +111,7 @@ const getThreeRandomAnswers = function () {
 
 const initPlayer = function () {
   // Create player id & name
-  player.id = getLatestPlayerId(highScoreList) + 1;
+  player.id = getLatestPlayerId(getHighScoreList()) + 1;
   player.name = getPlayerNameFromLocalStorage();
 };
 
