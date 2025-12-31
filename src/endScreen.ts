@@ -1,6 +1,5 @@
 import { getPlayer, restartGame } from "./main";
 import { getHighScoreList, setHighScoreListToLocalStorage } from "./storage";
-import { game } from "./main";
 import { ui } from "./ui";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
 import {
@@ -11,6 +10,8 @@ import {
 } from "./highscorelist";
 import type { Movie } from "./data/movies";
 import type { Player } from "./types";
+import { getNbrOfWrong } from "./game";
+
 /* **************** FUNCTIONS****************** */
 
 /**
@@ -115,7 +116,7 @@ const renderRightAnswerCards = function () {
 
 const renderWrongAnswerHeading = function () {
   ui.endScreen.wrongAnswersHeadingEl.innerHTML =
-    game.nbrOfWrongAnswers > 0
+    getNbrOfWrong(getPlayer()) > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };

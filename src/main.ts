@@ -8,13 +8,9 @@ import { type Player } from "./types";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
-import {
-  getPlayerScore,
-  incrementScoreByOne,
-  resetPlayerScore,
-  setNumberOfQuestions,
-} from "./player";
+import { getPlayerScore, incrementScoreByOne } from "./player";
 import { getLatestPlayerId } from "./highscorelist";
+import { resetPlayer } from "./game";
 
 /* **************** VARIABLES****************** */
 
@@ -34,24 +30,6 @@ export const getPlayer = () => player;
 
 //GAME OBJECT
 export const game = {
-  /* **************** METHODS****************** */
-
-  get nbrOfRightAnswers() {
-    return player.rightAnswersArr.length;
-  },
-  get nbrOfWrongAnswers() {
-    return player.wrongAnswersArr.length;
-  },
-  restart() {
-    player.rightAnswersArr = [];
-    player.wrongAnswersArr = [];
-    player = resetPlayerScore(player);
-    player = setNumberOfQuestions(player, 0);
-    this.isCurrentAnswerCorrect = false;
-    ui.endScreen.highScoreListEl!.innerHTML = "";
-    this.currentQuestionNbr = 1;
-  },
-  /* **************** VARIABLES & ARRAYS ****************** */
   filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
   shuffledQuestions: [] as Movie[], //All movies shuffled
   nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
@@ -164,7 +142,14 @@ const renderQuestionScreen = function () {
 };
 
 export const restartGame = function () {
-  game.restart();
+  // game.restart();
+  player = resetPlayer(getPlayer());
+
+  game.isCurrentAnswerCorrect = false;
+
+  ui.endScreen.highScoreListEl!.innerHTML = "";
+
+  game.currentQuestionNbr = 1;
 
   ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreen.endScreenEl!.classList.add("d-none");
