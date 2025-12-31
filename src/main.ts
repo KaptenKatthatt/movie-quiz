@@ -10,7 +10,7 @@ import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
 import { getPlayerScore, incrementScoreByOne } from "./player";
 import { getLatestPlayerId } from "./highscorelist";
-import { resetPlayer } from "./game";
+import { resetPlayerInfo } from "./game";
 
 /* **************** VARIABLES****************** */
 
@@ -142,8 +142,7 @@ const renderQuestionScreen = function () {
 };
 
 export const restartGame = function () {
-  // game.restart();
-  player = resetPlayer(getPlayer());
+  player = resetPlayerInfo(getPlayer());
 
   game.isCurrentAnswerCorrect = false;
 

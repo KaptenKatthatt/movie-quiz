@@ -29,7 +29,7 @@ export const getLatestPlayerId = (highScoreList: Player[]) => {
   );
 };
 
-const highScoreList = [
+const DEFAULT_HIGH_SCORE_LIST = [
   {
     id: 1,
     score: 10,
@@ -113,5 +113,5 @@ const highScoreList = [
 ];
 
 export const getDefaultHighScoreList = () => {
-  return [...highScoreList];
+  return [...DEFAULT_HIGH_SCORE_LIST];
 };
