@@ -1,5 +1,6 @@
 import { renderEndScreen } from "./endScreen";
 import {
+  getHighScoreList,
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
@@ -7,12 +8,9 @@ import { type Player } from "./types";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
-import {
-  getPlayerScore,
-  incrementScoreByOne,
-  resetPlayerScore,
-  setNumberOfQuestions,
-} from "./player";
+import { getPlayerScore, incrementScoreByOne } from "./player";
+import { getLatestPlayerId } from "./highscorelist";
+import { resetPlayerInfo } from "./game";
 
 /* **************** VARIABLES****************** */
 
@@ -32,129 +30,14 @@ export const getPlayer = () => player;
 
 //GAME OBJECT
 export const game = {
-  /* **************** METHODS****************** */
-  getLowestHighScore() {
-    return Math.min(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.score)
-    );
-  },
-  removeLowestHighScore() {
-    this.sortHighScoreList();
-    this.highScoreList.pop();
-  },
-  sortHighScoreList() {
-    this.highScoreList.sort((a, b) => b.score - a.score);
-  },
-  getLatestPlayerId() {
-    return Math.max(
-      ...this.highScoreList.map((highScorePlayer) => highScorePlayer.id)
-    );
-  },
-  get nbrOfRightAnswers() {
-    return player.rightAnswersArr.length;
-  },
-  get nbrOfWrongAnswers() {
-    return player.wrongAnswersArr.length;
-  },
-  restart() {
-    player.rightAnswersArr = [];
-    player.wrongAnswersArr = [];
-    player = resetPlayerScore(player);
-    player = setNumberOfQuestions(player, 0);
-    this.isCurrentAnswerCorrect = false;
-    ui.endScreen.highScoreListEl!.innerHTML = "";
-    this.currentQuestionNbr = 1;
-  },
-  /* **************** VARIABLES & ARRAYS ****************** */
-  filteredWrongStudents: [] as Movie[], //Movie array with correct answer filtered out
+  filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
   shuffledQuestions: [] as Movie[], //All movies shuffled
   nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
-  highScoreList: [
-    {
-      id: 1,
-      score: 10,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 2,
-      score: 9,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 3,
-      score: 8,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 4,
-      score: 7,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 5,
-      score: 6,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 6,
-      score: 5,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 7,
-      score: 4,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 8,
-      score: 3,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 9,
-      score: 2,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-    {
-      id: 10,
-      score: 0,
-      nbrOfQuestions: 10,
-      name: "J.O",
-      rightAnswersArr: [] as Movie[],
-      wrongAnswersArr: [] as Movie[],
-    },
-  ],
-  currentQuestion: [] as Movie[], //Current question/student
+
+  currentQuestion: [] as Movie[], //Current question
 };
 
 /* **************** FUNCTIONS****************** */
@@ -201,12 +84,12 @@ const getAnswerButtonNames = function () {
  * @returns Array with 3 wrong answers and 1 right.
  */
 const getThreeRandomAnswers = function () {
-  return cloneAndShuffleArray(game.filteredWrongStudents).slice(0, 3);
+  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };
 
 const initPlayer = function () {
   // Create player id & name
-  player.id = game.getLatestPlayerId() + 1;
+  player.id = getLatestPlayerId(getHighScoreList()) + 1;
   player.name = getPlayerNameFromLocalStorage();
 };
 
@@ -214,13 +97,13 @@ const initPlayer = function () {
  * Make an array of wrong answers to choose from, filters out correct answer
  */
 const makeWrongAnswersArray = function () {
-  game.filteredWrongStudents = game.shuffledQuestions.filter(
-    (student: Movie) => student.id !== game.currentQuestion[0].id
+  game.filteredWrongMovies = game.shuffledQuestions.filter(
+    (movie: Movie) => movie.id !== game.currentQuestion[0].id
   );
 };
 
 const renderNewQuestion = function () {
-  setCurrentStudent();
+  setCurrentMovie();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
 
@@ -235,8 +118,7 @@ const renderFourQuestionButtons = function () {
   // Generate four buttons with answer alternatives
   return getAnswerButtonNames()
     .map(
-      (student) =>
-        `<button class="btn btn-warning btn-lg">${student.name}</button>`
+      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
     )
     .join("");
 };
@@ -260,7 +142,13 @@ const renderQuestionScreen = function () {
 };
 
 export const restartGame = function () {
-  game.restart();
+  player = resetPlayerInfo(getPlayer());
+
+  game.isCurrentAnswerCorrect = false;
+
+  ui.endScreen.highScoreListEl!.innerHTML = "";
+
+  game.currentQuestionNbr = 1;
 
   ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreen.endScreenEl!.classList.add("d-none");
@@ -269,7 +157,7 @@ export const restartGame = function () {
 };
 
 const startGame = (nbrOfSelectedQuestions: number) => {
-  // Shuffles the student array to create random order on buttons
+  // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
@@ -303,7 +191,7 @@ const startGame = (nbrOfSelectedQuestions: number) => {
 /**
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
-const setCurrentStudent = function () {
+const setCurrentMovie = function () {
   game.currentQuestion[0] = game.nbrOfSelectedQuestions[0];
 };
 

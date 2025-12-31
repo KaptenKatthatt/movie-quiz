@@ -1,4 +1,5 @@
 import { type HighScoreList } from "./constants";
+import { getDefaultHighScoreList } from "./highscorelist";
 
 export const getPlayerNameFromLocalStorage = () => {
   if (
@@ -22,9 +23,22 @@ export const setPlayerNameToLocalStorage = (playerName: string) => {
   localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };
 
-export const getHighScoreListFromLocalStorage = function () {
-  return localStorage.getItem("highScoreList");
+export const getHighScoreList = function (): HighScoreList {
+  const storedList = localStorage.getItem("highScoreList");
+  if (storedList === null) {
+    return getDefaultHighScoreList();
+  }
+  try {
+    return JSON.parse(storedList) as HighScoreList;
+  } catch (error) {
+    console.error(
+      "Failed to parse 'highScoreList' from localStorage, using default list instead.",
+      error
+    );
+    return getDefaultHighScoreList();
+  }
 };
+
 export const setHighScoreListToLocalStorage = function (
   highScoreList: HighScoreList
 ) {
