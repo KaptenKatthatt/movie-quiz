@@ -23,13 +23,13 @@ export const setPlayerNameToLocalStorage = (playerName: string) => {
   localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };
 
-export const getHighScoreList = function () {
+export const getHighScoreList = function (): HighScoreList {
   const storedList = localStorage.getItem("highScoreList");
   if (storedList === null) {
     return getDefaultHighScoreList();
   }
   try {
-    return JSON.parse(storedList);
+    return JSON.parse(storedList) as HighScoreList;
   } catch (error) {
     console.error(
       "Failed to parse 'highScoreList' from localStorage, using default list instead.",
