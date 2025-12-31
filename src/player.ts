@@ -1,3 +1,6 @@
+import { getLatestPlayerId } from "./highscorelist";
+import { getPlayer, updatePlayer } from "./state";
+import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
 import { type Player } from "./types";
 
 export const getPlayerScore = (currentPlayer: Player) => {
@@ -29,4 +32,11 @@ export const getPlayerId = (currentPlayer: Player) => {
 
 export const getPlayerName = (currentPlayer: Player) => {
   return { ...currentPlayer }.name;
+};
+export const initPlayer = function () {
+  // Create player id & name
+  const newPlayer = getPlayer();
+  newPlayer.id = getLatestPlayerId(getHighScoreList()) + 1;
+  newPlayer.name = getPlayerNameFromLocalStorage() || "someDude";
+  updatePlayer(newPlayer);
 };

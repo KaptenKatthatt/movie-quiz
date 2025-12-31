@@ -1,6 +1,5 @@
 import { renderEndScreen } from "./endScreen";
 import {
-  getHighScoreList,
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
@@ -11,8 +10,8 @@ import {
   getNumberOfQuestions,
   getPlayerScore,
   incrementScoreByOne,
+  initPlayer,
 } from "./player";
-import { getLatestPlayerId } from "./highscorelist";
 import { resetPlayerInfo } from "./game";
 import { game, getPlayer, updatePlayer } from "./state";
 
@@ -65,14 +64,6 @@ const getAnswerButtonNames = function () {
  */
 const getThreeRandomAnswers = function () {
   return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
-};
-
-const initPlayer = function () {
-  // Create player id & name
-  const newPlayer = getPlayer();
-  newPlayer.id = getLatestPlayerId(getHighScoreList()) + 1;
-  newPlayer.name = getPlayerNameFromLocalStorage() || "someDude";
-  updatePlayer(newPlayer);
 };
 
 /**
