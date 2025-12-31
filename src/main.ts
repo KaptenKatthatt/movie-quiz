@@ -4,41 +4,17 @@ import {
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { type Player } from "./types";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
 import { getPlayerScore, incrementScoreByOne } from "./player";
 import { getLatestPlayerId } from "./highscorelist";
 import { resetPlayerInfo } from "./game";
+import { game, getPlayer, player, updatePlayer } from "./state";
 
 /* **************** VARIABLES****************** */
 
 let questionButtonNames = []; //The four names on the question buttons
-
-/* **************** PLAYER OBJECT ****************** */
-let player: Player = {
-  id: 0,
-  score: 0,
-  name: "",
-  nbrOfQuestions: 0,
-  rightAnswersArr: [] as Movie[],
-  wrongAnswersArr: [] as Movie[],
-};
-
-export const getPlayer = () => player;
-
-//GAME OBJECT
-export const game = {
-  filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
-  shuffledQuestions: [] as Movie[], //All movies shuffled
-  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
-  nbrOfQuestions: 0,
-  currentQuestionNbr: 1,
-  isCurrentAnswerCorrect: false,
-
-  currentQuestion: [] as Movie[], //Current question
-};
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
@@ -142,7 +118,8 @@ const renderQuestionScreen = function () {
 };
 
 export const restartGame = function () {
-  player = resetPlayerInfo(getPlayer());
+  const currentPlayer = resetPlayerInfo(getPlayer());
+  updatePlayer(currentPlayer);
 
   game.isCurrentAnswerCorrect = false;
 
@@ -226,15 +203,16 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      player = incrementScoreByOne(player);
+      const currentPlayer = incrementScoreByOne(getPlayer());
+      updatePlayer(currentPlayer);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
-      player.rightAnswersArr.push(game.currentQuestion[0]);
+      getPlayer().rightAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = true;
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
-      player.wrongAnswersArr.push(game.currentQuestion[0]);
+      getPlayer().wrongAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = false;
     }
     disableAllQuestionButtons();

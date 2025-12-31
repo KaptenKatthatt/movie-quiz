@@ -1,4 +1,4 @@
-import { getPlayer, restartGame } from "./main";
+import { restartGame } from "./main";
 import { getHighScoreList, setHighScoreListToLocalStorage } from "./storage";
 import { ui } from "./ui";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
@@ -11,6 +11,7 @@ import {
 import type { Movie } from "./data/movies";
 import type { Player } from "./types";
 import { getNbrOfWrong } from "./game";
+import { getPlayer } from "./state";
 
 /* **************** FUNCTIONS****************** */
 
