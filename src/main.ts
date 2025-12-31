@@ -12,7 +12,7 @@ import {
   incrementScoreByOne,
   initPlayer,
 } from "./player";
-import { resetPlayerInfo } from "./game";
+import { startGame } from "./game";
 import { game, getPlayer, updatePlayer } from "./state";
 
 /* **************** VARIABLES****************** */
@@ -26,7 +26,7 @@ const addPhotoToPhotoContainer = function () {
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function (array: Movie[]) {
+export const cloneAndShuffleArray = function (array: Movie[]) {
   const shuffledArrayClone = [...array];
   for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -75,7 +75,7 @@ const makeWrongAnswersArray = function () {
   );
 };
 
-const renderNewQuestion = function () {
+export const renderNewQuestion = function () {
   setCurrentMovie();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
@@ -114,56 +114,6 @@ const renderQuestionScreen = function () {
     .join("");
 };
 
-export const restartGame = function () {
-  const currentPlayer = resetPlayerInfo(getPlayer());
-  updatePlayer(currentPlayer);
-
-  game.isCurrentAnswerCorrect = false;
-
-  ui.endScreen.highScoreListEl!.innerHTML = "";
-
-  game.currentQuestionNbr = 1;
-
-  ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
-  ui.endScreen.endScreenEl!.classList.add("d-none");
-  ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
-  initPlayer();
-};
-
-const startGame = (nbrOfSelectedQuestions: number) => {
-  // Shuffles the movie array to create random order on buttons
-  game.shuffledQuestions = cloneAndShuffleArray(movies);
-  //Create an array with selected nbr of movies
-  game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
-    0,
-    nbrOfSelectedQuestions
-  );
-
-  updateScoreDisplay(
-    game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
-  );
-
-  // Trigger view transition on game start if supported
-  if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      // Hide startscreen
-      ui.startScreen.startScreenContainerEl.classList.add("d-none");
-
-      // Show questionScreen
-      ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
-
-      // Render the questionPage content
-      renderNewQuestion();
-    });
-  } else {
-    ui.startScreen.startScreenContainerEl.classList.add("d-none");
-    // Show questionScreen
-    ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
-    // Render the questionPage content
-    renderNewQuestion();
-  }
-};
-
 /**
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
@@ -175,7 +125,7 @@ const setCurrentMovie = function () {
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-const updateScoreDisplay = function (shouldAnimate = false) {
+export const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
   }/${getNumberOfQuestions(getPlayer())}</span>`;

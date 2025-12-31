@@ -1,4 +1,4 @@
-import { restartGame } from "./main";
+import { restartGame } from "./game";
 import { getHighScoreList, setHighScoreListToLocalStorage } from "./storage";
 import { ui } from "./ui";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
