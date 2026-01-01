@@ -104,7 +104,7 @@ const renderQuestionScreen = function () {
         <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">
   <img src="${movie.image}" class="card-img-top" alt="Images of movies to guess the names of.">
   <div class="card-body p-0">
-    <h2 class="card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
+    <h2 class="start-screen-card-title card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
   </div>
 </div>
     `;

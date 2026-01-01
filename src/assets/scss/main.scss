@@ -12,6 +12,7 @@
 @use "./_endScreen.scss";
 @use "./_startScreen.scss";
 @use "./_questionScreen.scss";
+@use "./animations.scss";
 
 /* Color palette: Watermelon Sorbet */
 :root {
@@ -24,10 +25,6 @@
 @font-face {
   font-family: "Londrina Shadow";
   src: url("../fonts/LondrinaShadow-Regular.ttf");
-}
-
-.add-score-animation {
-  animation: add-score-animation 1s ease-in-out;
 }
 
 body,
@@ -46,129 +43,18 @@ button:active {
   transform: scale(0.9);
 }
 
-.flip {
-  animation: flip 1.5s ease-in-out;
-}
-
 h1,
 h2,
-.card-title,
 .no-high-score-header,
 label[for="player-name-input-field"],
-h2.start-screen-photos-container {
+h2.start-screen-photos-container,
+.start-screen-card-title {
   font-family: "Londrina Shadow", sans-serif;
-}
-
-@keyframes add-score-animation {
-  from {
-    scale: 1;
-    opacity: 1;
-    background: var(--yellow);
-    border-radius: 10px;
-  }
-
-  to {
-    scale: 2;
-    opacity: 0;
-    background: var(--yellow);
-    border-radius: 10px;
-  }
-}
-
-@keyframes pulse-shadow-yellow-green {
-  from {
-    box-shadow: 0 0 20px var(--yellow);
-  }
-
-  to {
-    box-shadow: 0 0 20px var(--green);
-  }
-}
-
-@keyframes pulse-shadow-red {
-  from {
-    box-shadow: 0 4px 8px var(--red);
-  }
-
-  to {
-    box-shadow: 0 4px 8px rgb(255 255 255 / 0%);
-  }
-}
-
-@keyframes pulse-underline {
-  from {
-    text-decoration-color: rgb(255 255 255 / 0%);
-  }
-
-  to {
-    text-decoration-color: var(--red);
-  }
-}
-
-@keyframes slide-out {
-  to {
-    transform: translateX(-100%);
-    scale: 0;
-    opacity: 0;
-  }
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-    scale: 0;
-  }
-
-  to {
-    scale: 1;
-  }
-}
-
-@keyframes slide-up-out {
-  to {
-    transform: translateY(-100px);
-    opacity: 0;
-  }
-}
-
-@keyframes embiggen-final-score {
-  from {
-    scale: 1;
-  }
-
-  to {
-    scale: 2;
-  }
-}
-
-@keyframes flip {
-  from {
-    opacity: 1;
-    transform: rotateY(0deg);
-  }
-
-  to {
-    transform: rotateY(180deg);
-    opacity: 0;
-  }
 }
 
 .site-container,
 .question-btn-container .btn {
   box-shadow: 0 0 40px var(--yellow);
-}
-
-::view-transition-old(photo-container) {
-  animation: slide-out 0.8s ease-in-out;
-}
-
-::view-transition-new(photo-container) {
-  animation: slide-in 0.8s ease-in-out;
-}
-
-::view-transition-old(startscreen) {
-  animation: slide-up-out 0.7s forwards;
 }
 
 .welcome-header,
