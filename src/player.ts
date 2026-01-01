@@ -27,11 +27,11 @@ export const setNumberOfQuestions = (
 };
 
 export const getPlayerId = (currentPlayer: Player) => {
-  return { ...currentPlayer }.id;
+  return currentPlayer.id;
 };
 
 export const getPlayerName = (currentPlayer: Player) => {
-  return { ...currentPlayer }.name;
+  return currentPlayer.name;
 };
 export const initPlayer = function () {
   // Create player id & name
