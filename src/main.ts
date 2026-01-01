@@ -31,7 +31,7 @@ const addPhotoToPhotoContainer = function () {
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
 export const cloneAndShuffleArray = function (array: Movie[]) {
-  const shuffledArrayClone = _.shuffle([...array]);
+  const shuffledArrayClone = _.shuffle(array);
   return shuffledArrayClone;
 };
 

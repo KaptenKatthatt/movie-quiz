@@ -34,9 +34,11 @@ export const getPlayerName = (currentPlayer: Player) => {
   return currentPlayer.name;
 };
 export const initPlayer = function () {
-  // Create player id & name
-  const newPlayer = getPlayer();
-  newPlayer.id = getLatestPlayerId(getHighScoreList()) + 1;
-  newPlayer.name = getPlayerNameFromLocalStorage() || "someDude";
+  const currentPlayer = getPlayer();
+  const newPlayer = {
+    ...currentPlayer,
+    id: getLatestPlayerId(getHighScoreList()) + 1,
+    name: getPlayerNameFromLocalStorage() || "someDude",
+  };
   updatePlayer(newPlayer);
 };
