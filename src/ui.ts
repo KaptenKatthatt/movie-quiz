@@ -8,7 +8,7 @@ export const ui = {
       "#player-name-input-field"
     ) as HTMLInputElement,
     startBtnContainerEl: document.querySelector(
-      ".start-btn-container"
+      ".start-screen-nbr-of-questions-btn-container"
     ) as HTMLDivElement,
     startScreenContainerEl: document.querySelector(
       ".start-screen-container"

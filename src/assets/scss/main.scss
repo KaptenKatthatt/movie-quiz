@@ -1,0 +1,63 @@
+/* Bootstrap Breakpoints:
+  xs: <576px (extra small devices, phones)
+  sm: ≥576px (small devices, phones)
+  md: ≥768px (medium devices, tablets)
+  lg: ≥992px (large devices, desktops)
+  xl: ≥1200px (extra large devices, large desktops)
+  xxl: ≥1400px (extra extra large devices, larger desktops)
+  
+  --dBlue: rgb(7 59 76); 
+*/
+
+@use "./_endScreen.scss";
+@use "./_startScreen.scss";
+@use "./_questionScreen.scss";
+@use "./animations.scss";
+
+/* Color palette: Watermelon Sorbet */
+:root {
+  --red: rgb(239 71 111);
+  --yellow: rgb(255 209 102);
+  --green: rgb(6 214 160);
+  --blue: rgb(17 138 178);
+}
+
+@font-face {
+  font-family: "Londrina Shadow";
+  src: url("../fonts/LondrinaShadow-Regular.ttf");
+}
+
+body,
+.btn,
+.card-title,
+input {
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background-color: var(--red);
+  overflow-x: hidden; /* To avoid scroll bars on embiggen animation */
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+h1,
+h2,
+.no-high-score-header,
+label[for="player-name-input-field"],
+h2.start-screen-photos-container,
+.start-screen-card-title {
+  font-family: "Londrina Shadow", sans-serif;
+}
+
+.site-container,
+.question-btn-container .btn {
+  box-shadow: 0 0 40px var(--yellow);
+}
+
+.welcome-header,
+.question-screen-container h2 {
+  text-shadow: var(--yellow) 0 0 40px;
+}

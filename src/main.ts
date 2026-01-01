@@ -1,44 +1,27 @@
+import _ from "lodash";
+
 import { renderEndScreen } from "./endScreen";
 import {
-  getHighScoreList,
   getPlayerNameFromLocalStorage,
   setPlayerNameToLocalStorage,
 } from "./storage";
-import { type Player } from "./types";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./data/movies";
-import { getPlayerScore, incrementScoreByOne } from "./player";
-import { getLatestPlayerId } from "./highscorelist";
-import { resetPlayerInfo } from "./game";
+import {
+  getNumberOfQuestions,
+  getPlayerScore,
+  incrementScoreByOne,
+  initPlayer,
+} from "./player";
+import { startGame } from "./game";
+import { game, getPlayer, updatePlayer } from "./state";
+
+import "./assets/scss/main.scss";
 
 /* **************** VARIABLES****************** */
 
 let questionButtonNames = []; //The four names on the question buttons
-
-/* **************** PLAYER OBJECT ****************** */
-let player: Player = {
-  id: 0,
-  score: 0,
-  name: "",
-  nbrOfQuestions: 0,
-  rightAnswersArr: [] as Movie[],
-  wrongAnswersArr: [] as Movie[],
-};
-
-export const getPlayer = () => player;
-
-//GAME OBJECT
-export const game = {
-  filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
-  shuffledQuestions: [] as Movie[], //All movies shuffled
-  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
-  nbrOfQuestions: 0,
-  currentQuestionNbr: 1,
-  isCurrentAnswerCorrect: false,
-
-  currentQuestion: [] as Movie[], //Current question
-};
 
 /* **************** FUNCTIONS****************** */
 const addPhotoToPhotoContainer = function () {
@@ -47,14 +30,8 @@ const addPhotoToPhotoContainer = function () {
 };
 
 // Fisher-Yates algoritm for array shuffling to the rescue! 🤩
-const cloneAndShuffleArray = function (array: Movie[]) {
-  const shuffledArrayClone = [...array];
-  for (let i = shuffledArrayClone.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = shuffledArrayClone[i];
-    shuffledArrayClone[i] = shuffledArrayClone[j];
-    shuffledArrayClone[j] = temp;
-  }
+export const cloneAndShuffleArray = function (array: Movie[]) {
+  const shuffledArrayClone = _.shuffle(array);
   return shuffledArrayClone;
 };
 
@@ -83,14 +60,8 @@ const getAnswerButtonNames = function () {
  *Take game.currentQuestion and throw into an array with three randos
  * @returns Array with 3 wrong answers and 1 right.
  */
-const getThreeRandomAnswers = function () {
+const getThreeRandomAnswers = () => {
   return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
-};
-
-const initPlayer = function () {
-  // Create player id & name
-  player.id = getLatestPlayerId(getHighScoreList()) + 1;
-  player.name = getPlayerNameFromLocalStorage();
 };
 
 /**
@@ -102,7 +73,7 @@ const makeWrongAnswersArray = function () {
   );
 };
 
-const renderNewQuestion = function () {
+export const renderNewQuestion = function () {
   setCurrentMovie();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
@@ -127,65 +98,18 @@ const renderQuestionScreen = function () {
   //Sets player name to stored player name
   ui.startScreen.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".start-photos-container")!.innerHTML = movies
+  document.querySelector(".start-screen-photos-container")!.innerHTML = movies
     .map((movie) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">
   <img src="${movie.image}" class="card-img-top" alt="Images of movies to guess the names of.">
   <div class="card-body p-0">
-    <h2 class="card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
+    <h2 class="start-screen-card-title card-title text-center display-6 fw-bolder" style="height: 1.5rem;">?</h2>
   </div>
 </div>
     `;
     })
     .join("");
-};
-
-export const restartGame = function () {
-  player = resetPlayerInfo(getPlayer());
-
-  game.isCurrentAnswerCorrect = false;
-
-  ui.endScreen.highScoreListEl!.innerHTML = "";
-
-  game.currentQuestionNbr = 1;
-
-  ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
-  ui.endScreen.endScreenEl!.classList.add("d-none");
-  ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
-  initPlayer();
-};
-
-const startGame = (nbrOfSelectedQuestions: number) => {
-  // Shuffles the movie array to create random order on buttons
-  game.shuffledQuestions = cloneAndShuffleArray(movies);
-  //Create an array with selected nbr of movies
-  game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
-    0,
-    nbrOfSelectedQuestions
-  );
-
-  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore(player) > 0);
-
-  // Trigger view transition on game start if supported
-  if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      // Hide startscreen
-      ui.startScreen.startScreenContainerEl.classList.add("d-none");
-
-      // Show questionScreen
-      ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
-
-      // Render the questionPage content
-      renderNewQuestion();
-    });
-  } else {
-    ui.startScreen.startScreenContainerEl.classList.add("d-none");
-    // Show questionScreen
-    ui.questionScreen.questionScreenContainerEl.classList.remove("d-none");
-    // Render the questionPage content
-    renderNewQuestion();
-  }
 };
 
 /**
@@ -199,9 +123,13 @@ const setCurrentMovie = function () {
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-const updateScoreDisplay = function (shouldAnimate = false) {
-  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${game.currentQuestionNbr}/${player.nbrOfQuestions}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${player.score}/${player.nbrOfQuestions}</span>`;
+export const updateScoreDisplay = function (shouldAnimate = false) {
+  ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
+    game.currentQuestionNbr
+  }/${getNumberOfQuestions(getPlayer())}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
+    getPlayer()
+  )}/${getNumberOfQuestions(getPlayer())}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -226,15 +154,16 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      player = incrementScoreByOne(player);
+      const currentPlayer = incrementScoreByOne(getPlayer());
+      updatePlayer(currentPlayer);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
-      player.rightAnswersArr.push(game.currentQuestion[0]);
+      getPlayer().rightAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = true;
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
-      player.wrongAnswersArr.push(game.currentQuestion[0]);
+      getPlayer().wrongAnswersArr.push(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = false;
     }
     disableAllQuestionButtons();
@@ -243,7 +172,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
     updateScoreDisplay(
-      game.isCurrentAnswerCorrect && getPlayerScore(player) > 0
+      game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
     );
   }
 });
@@ -281,11 +210,15 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   initPlayer();
 
   if (button.tagName === "BUTTON") {
-    player.nbrOfQuestions =
-      button.dataset.questions === "all"
-        ? movies.length
-        : Number(button.dataset.questions);
-    startGame(player.nbrOfQuestions);
+    const updatedPlayer = {
+      ...getPlayer(),
+      nbrOfQuestions:
+        button.dataset.questions === "all"
+          ? movies.length
+          : Number(button.dataset.questions),
+    };
+    updatePlayer(updatedPlayer);
+    startGame(getNumberOfQuestions(getPlayer()));
   }
 });
 //Render initial game screen
