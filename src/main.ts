@@ -17,6 +17,8 @@ import {
 import { startGame } from "./game";
 import { game, getPlayer, updatePlayer } from "./state";
 
+import "./assets/scss/main.scss";
+
 /* **************** VARIABLES****************** */
 
 let questionButtonNames = []; //The four names on the question buttons
@@ -58,7 +60,7 @@ const getAnswerButtonNames = function () {
  *Take game.currentQuestion and throw into an array with three randos
  * @returns Array with 3 wrong answers and 1 right.
  */
-const getThreeRandomAnswers = function () {
+const getThreeRandomAnswers = () => {
   return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };
 
@@ -96,7 +98,7 @@ const renderQuestionScreen = function () {
   //Sets player name to stored player name
   ui.startScreen.playerNameInputEl!.value = getPlayerNameFromLocalStorage()!;
 
-  document.querySelector(".start-photos-container")!.innerHTML = movies
+  document.querySelector(".start-screen-photos-container")!.innerHTML = movies
     .map((movie) => {
       return `
         <div class="card shadow-sm border-dark border-2" style="width: 8rem; height:7.5rem">

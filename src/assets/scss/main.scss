@@ -9,6 +9,10 @@
   --dBlue: rgb(7 59 76); 
 */
 
+@use "./_endScreen.scss";
+@use "./_startScreen.scss";
+@use "./_questionScreen.scss";
+
 /* Color palette: Watermelon Sorbet */
 :root {
   --red: rgb(239 71 111);
@@ -19,34 +23,11 @@
 
 @font-face {
   font-family: "Londrina Shadow";
-  src: url("/src/assets/fonts/LondrinaShadow-Regular.ttf");
+  src: url("../fonts/LondrinaShadow-Regular.ttf");
 }
 
 .add-score-animation {
   animation: add-score-animation 1s ease-in-out;
-}
-
-.answer-cards-container .card::before {
-  content: "📌";
-  position: absolute;
-  transform: scaleX(-1);
-  top: -16px;
-  left: -14px;
-}
-
-.answer-cards-container .card::after {
-  content: "📌";
-  position: absolute;
-  top: -10px;
-  right: -12px;
-}
-
-.answer-cards-container .card {
-  border: 1px solid gray;
-}
-
-.answer-cards-container {
-  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
 }
 
 body,
@@ -65,73 +46,16 @@ button:active {
   transform: scale(0.9);
 }
 
-.btn-select-5 {
-  background-color: var(--red);
-}
-
-.btn-select-10 {
-  background-color: var(--yellow);
-}
-
-.btn-select-10:hover {
-  background-color: #dcb14e;
-}
-
-.btn-select-all {
-  background-color: var(--green);
-}
-
-.card:nth-child(odd) {
-  transform: rotate(3deg);
-}
-
-.card:nth-child(even) {
-  transform: rotate(-3deg);
-}
-
-.embiggen-final-score {
-  animation: embiggen-final-score 1s ease-in-out alternate 4;
-}
-
-.end-screen .card {
-  border: 2px double black;
-}
-
 .flip {
   animation: flip 1.5s ease-in-out;
 }
 
-.final-score {
-  background-color: var(--yellow);
-  box-shadow: 0 0 40px rgb(255 209 102);
-  border-radius: 50%;
-  font-weight: 600;
-  text-decoration: underline 5px;
-}
-
-.final-score-text {
-  color: var(--red);
-}
-
 h1,
 h2,
-.start-photos-container .card-title,
+.start-screen-photos-container.card-title,
 label[for="playerNameInput"],
 .no-high-score-header {
   font-family: "Londrina Shadow", sans-serif;
-}
-
-.high-score-list-container {
-  animation: pulse-shadow-red 1s ease-in-out infinite alternate;
-}
-
-.high-score-list-header {
-  text-decoration: underline 4px solid black;
-  animation: pulse-underline 1s ease-in-out infinite alternate;
-}
-
-input {
-  animation: pulse-shadow-yellow-green 1s ease-in-out infinite alternate;
 }
 
 @keyframes add-score-animation {
@@ -229,53 +153,9 @@ input {
   }
 }
 
-.next-question-btn {
-  background-color: var(--red);
-  box-shadow: 0 0 20px var(--red);
-  color: black;
-}
-
-.next-question-btn:hover {
-  transition: color 0.3s ease-in-out;
-}
-
-.photo-container {
-  border: 2px double black;
-  box-shadow: 0 0 20px var(--yellow);
-  view-transition-name: photo-container;
-}
-
 .site-container,
 .question-btn-container .btn {
   box-shadow: 0 0 40px var(--yellow);
-}
-
-.start-screen-container .btn {
-  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
-  border: 2px solid black;
-}
-
-.question-btn-container .btn:hover {
-  box-shadow: 0 0 25px var(--red);
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.right-answer-card-shadow {
-  box-shadow: 0 0 10px var(--green);
-}
-
-.start-btn-container {
-  view-transition-name: startscreen;
-}
-
-.start-photos-container {
-  height: 35vh;
-  overflow: hidden;
-}
-
-.start-photos-container img {
-  filter: hue-rotate(50deg);
-  filter: contrast(5);
 }
 
 ::view-transition-old(photo-container) {
@@ -293,8 +173,4 @@ input {
 .welcome-header,
 .question-screen-container h2 {
   text-shadow: var(--yellow) 0 0 40px;
-}
-
-.wrong-answer-card-shadow {
-  box-shadow: 0 0 10px var(--red);
 }

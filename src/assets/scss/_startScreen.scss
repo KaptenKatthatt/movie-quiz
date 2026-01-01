@@ -1,0 +1,44 @@
+.btn-select {
+  &-5 {
+    background-color: var(--red);
+  }
+
+  &-10 {
+    background-color: var(--yellow);
+  }
+
+  &-10:hover {
+    background-color: #dcb14e;
+  }
+
+  -all {
+    background-color: var(--green);
+  }
+}
+
+.start-screen {
+  &-container {
+    .btn {
+      box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+      border: 2px solid black;
+    }
+
+    input {
+      animation: pulse-shadow-yellow-green 1s ease-in-out infinite alternate;
+    }
+  }
+
+  &-photos-container {
+    height: 35vh;
+    overflow: hidden;
+
+    img {
+      filter: hue-rotate(50deg);
+      filter: contrast(5);
+    }
+  }
+
+  &-nbr-of-questions-btn-container {
+    view-transition-name: startscreen;
+  }
+}

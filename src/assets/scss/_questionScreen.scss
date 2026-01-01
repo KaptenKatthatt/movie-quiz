@@ -1,0 +1,20 @@
+.next-question-btn {
+  background-color: var(--red);
+  box-shadow: 0 0 20px var(--red);
+  color: black;
+
+  &:hover {
+    transition: color 0.3s ease-in-out;
+  }
+}
+
+.photo-container {
+  border: 2px double black;
+  box-shadow: 0 0 20px var(--yellow);
+  view-transition-name: photo-container;
+}
+
+.question-btn-container .btn:hover {
+  box-shadow: 0 0 25px var(--red);
+  transition: box-shadow 0.3s ease-in-out;
+}
