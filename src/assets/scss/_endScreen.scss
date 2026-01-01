@@ -1,22 +1,21 @@
-.answer-cards-container .card::before {
-  content: "📌";
-  position: absolute;
-  transform: scaleX(-1);
-  top: -16px;
-  left: -14px;
-}
-
-.answer-cards-container .card::after {
-  content: "📌";
-  position: absolute;
-  top: -10px;
-  right: -12px;
-}
-
 .answer-cards-container .card {
   border: 1px solid gray;
-}
 
+  &::before {
+    content: "📌";
+    position: absolute;
+    transform: scaleX(-1);
+    top: -16px;
+    left: -14px;
+  }
+
+  &::after {
+    content: "📌";
+    position: absolute;
+    top: -10px;
+    right: -12px;
+  }
+}
 .answer-cards-container {
   box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
 }
@@ -25,8 +24,21 @@
   animation: embiggen-final-score 1s ease-in-out alternate 4;
 }
 
-.end-screen .card {
-  border: 2px double black;
+.end-screen {
+  .card {
+    border: 2px double black;
+  }
+  .card:nth-child(odd) {
+    transform: rotate(deg);
+  }
+
+  .card:nth-child(even) {
+    transform: rotate(-3deg);
+  }
+
+  h5.card-title {
+    font-family: "Courier New", Courier, monospace;
+  }
 }
 
 .final-score {
@@ -39,14 +51,6 @@
 
 .final-score-text {
   color: var(--red);
-}
-
-.card:nth-child(odd) {
-  transform: rotate(3deg);
-}
-
-.card:nth-child(even) {
-  transform: rotate(-3deg);
 }
 
 .high-score-list-container {

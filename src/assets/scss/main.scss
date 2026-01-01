@@ -52,9 +52,10 @@ button:active {
 
 h1,
 h2,
-.start-screen-photos-container.card-title,
-label[for="playerNameInput"],
-.no-high-score-header {
+.card-title,
+.no-high-score-header,
+label[for="player-name-input-field"],
+h2.start-screen-photos-container {
   font-family: "Londrina Shadow", sans-serif;
 }
 

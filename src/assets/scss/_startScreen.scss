@@ -36,6 +36,14 @@
       filter: hue-rotate(50deg);
       filter: contrast(5);
     }
+
+    .card:nth-child(odd) {
+      transform: rotate(3deg);
+    }
+
+    .card:nth-child(even) {
+      transform: rotate(-3deg);
+    }
   }
 
   &-nbr-of-questions-btn-container {
