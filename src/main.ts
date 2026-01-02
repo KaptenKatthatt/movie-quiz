@@ -18,7 +18,6 @@ import { startGame } from "./game";
 import {
   addRightAnswer,
   addWrongAnswer,
-  answers,
   game,
   getPlayer,
   isCurrentAnswerCorrect,

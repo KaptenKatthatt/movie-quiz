@@ -5,6 +5,7 @@ export interface Player {
   nbrOfQuestions: number;
   rightAnswersArr: Movie[];
   wrongAnswersArr: Movie[];
+  answers: Answer[];
 }
 export interface GameState {
   filteredWrongMovies: Movie[]; //Movie array with correct answer filtered out

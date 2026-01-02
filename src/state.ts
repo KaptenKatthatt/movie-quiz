@@ -1,4 +1,4 @@
-import type { Answer, GameState } from "./types";
+import type { GameState } from "./types";
 import type { Movie } from "./types";
 import type { Player } from "./types";
 
@@ -8,8 +8,9 @@ let player: Player = {
   score: 0,
   name: "",
   nbrOfQuestions: 0,
-  rightAnswersArr: [] as Movie[],
-  wrongAnswersArr: [] as Movie[],
+  rightAnswersArr: [],
+  wrongAnswersArr: [],
+  answers: [],
 };
 
 export const game: GameState = {
@@ -52,8 +53,11 @@ export const isCurrentAnswerCorrect = (isCorrect: boolean) => {
   return game.isCurrentAnswerCorrect;
 };
 
-export const answers: Answer[] = [];
-
 export const saveAnswer = (movie: Movie, isCorrect: boolean) => {
-  answers.push({ movie: movie, isCorrect: isCorrect });
+  const currentPlayer = getPlayer();
+  const updatedPlayer = {
+    ...currentPlayer,
+    answers: [...currentPlayer.answers, { movie: movie, isCorrect: isCorrect }],
+  };
+  updatePlayer(updatedPlayer);
 };
