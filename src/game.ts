@@ -5,29 +5,18 @@ import {
   renderNewQuestion,
 } from "./main";
 import { getPlayerScore, initPlayer } from "./player";
-import { getPlayer, game, updatePlayer } from "./state";
+import { getPlayer, game, updatePlayer, resetQuestionNbr } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
-export const getNbrOfWrong = (currentPlayer: Player) => {
+export const getNbrOfWrong = () => {
+  const currentPlayer = getPlayer();
   const wrongAnswers = currentPlayer.answers.filter(
     (answer) => !answer.isCorrect
   );
   return wrongAnswers.length;
 };
 
-export const resetPlayerInfo = () => {
-  // const currentPlayer = getPlayer();
-  // let updatedPlayer: Player = { ...currentPlayer };
-
-  resetPlayerAnswers();
-  // resetPlayerScore();
-
-  // updatedPlayer = setNumberOfQuestions(0);
-  // updatePlayer(updatedPlayer);
-};
-
-//Deprecated, use resetPlayerAnswers instead
 export const resetPlayerAnswers = () => {
   const currentPlayer = getPlayer();
   const resetPlayer: Player = { ...currentPlayer };
@@ -36,13 +25,13 @@ export const resetPlayerAnswers = () => {
   return updatedPlayer;
 };
 export const restartGame = function () {
-  resetPlayerInfo();
+  resetPlayerAnswers();
+
   game.isCurrentAnswerCorrect = false;
 
+  resetQuestionNbr();
+
   ui.endScreen.highScoreListEl!.innerHTML = "";
-
-  game.currentQuestionNbr = 1;
-
   ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreen.endScreenEl!.classList.add("d-none");
   ui.startScreen.startScreenContainerEl!.classList.remove("d-none");

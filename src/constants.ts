@@ -1,7 +1,6 @@
-import type { Answer, Player } from "./types";
+import type { Answer } from "./types";
 
 //A single object to bind them all
-export type HighScoreList = Player[];
 export const DEFAULT_HIGH_SCORE_LIST = [
   {
     id: 1,

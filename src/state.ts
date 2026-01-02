@@ -39,3 +39,9 @@ export const saveAnswer = (movie: Movie, isCorrect: boolean) => {
   };
   updatePlayer(updatedPlayer);
 };
+export const updateCurrentQuestionNbr = () => {
+  game.currentQuestionNbr++;
+};
+export const resetQuestionNbr = () => {
+  game.currentQuestionNbr = 1;
+};

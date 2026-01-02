@@ -7,16 +7,8 @@ export const getPlayerScore = () => {
   const currentScore = currentPlayer.answers.filter(
     (answer) => answer.isCorrect
   ).length;
-
   return currentScore;
 };
-
-//Deprecated? Same as resetPlayerAnswers?
-// export const resetPlayerScore = () => {
-//   const currentPlayer = getPlayer();
-//   const updatedPlayer = { ...currentPlayer, answers: [] };
-//   updatePlayer(updatedPlayer);
-// };
 
 export const incrementScoreByOne = () => {
   const currentPlayer = getPlayer();
@@ -35,10 +27,6 @@ export const setNumberOfQuestions = (numberOfQuestions: number) => {
   updatePlayer(updatedPlayer);
   return updatedPlayer;
 };
-
-// export const getPlayerId = (currentPlayer: Player) => {
-//   return currentPlayer.id;
-// };
 
 export const getPlayerName = () => {
   const currentPlayer = getPlayer();
