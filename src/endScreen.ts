@@ -107,8 +107,13 @@ const renderRightAnswerHeading = function () {
 };
 
 const renderRightAnswerCards = function () {
+  const currentPlayer = getPlayer();
+  const rightAnswersArr: Movie[] = currentPlayer.answers
+    .filter((answer) => answer.isCorrect)
+    .map((answer) => answer.movie);
+
   ui.endScreen.rightAnswerCardsEl.innerHTML = formatCards(
-    getPlayer().rightAnswersArr,
+    rightAnswersArr,
     true
   );
 };
@@ -121,8 +126,13 @@ const renderWrongAnswerHeading = function () {
 };
 
 const renderWrongAnswerCards = function () {
+  const currentPlayer = getPlayer();
+  const wrongAnswersArr: Movie[] = currentPlayer.answers
+    .filter((answer) => !answer.isCorrect)
+    .map((answer) => answer.movie);
+
   ui.endScreen.wrongAnswerCardsEl.innerHTML = formatCards(
-    getPlayer().wrongAnswersArr,
+    wrongAnswersArr,
     false
   );
 };
