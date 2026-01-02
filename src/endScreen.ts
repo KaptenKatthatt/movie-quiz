@@ -120,7 +120,7 @@ const renderRightAnswerCards = () => {
 
 const renderWrongAnswerHeading = () => {
   ui.endScreen.wrongAnswersHeadingEl.innerHTML =
-    getNbrOfWrong(getPlayer()) > 0
+    getNbrOfWrong() > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };

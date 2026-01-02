@@ -9,7 +9,8 @@ import { getPlayer, game, updatePlayer } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
-export const getNbrOfWrong = (currentPlayer: Player) => {
+export const getNbrOfWrong = () => {
+  const currentPlayer = getPlayer();
   const wrongAnswers = currentPlayer.answers.filter(
     (answer) => !answer.isCorrect
   );
@@ -17,14 +18,7 @@ export const getNbrOfWrong = (currentPlayer: Player) => {
 };
 
 export const resetPlayerInfo = () => {
-  // const currentPlayer = getPlayer();
-  // let updatedPlayer: Player = { ...currentPlayer };
-
   resetPlayerAnswers();
-  // resetPlayerScore();
-
-  // updatedPlayer = setNumberOfQuestions(0);
-  // updatePlayer(updatedPlayer);
 };
 
 //Deprecated, use resetPlayerAnswers instead

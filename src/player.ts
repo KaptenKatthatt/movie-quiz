@@ -7,7 +7,6 @@ export const getPlayerScore = () => {
   const currentScore = currentPlayer.answers.filter(
     (answer) => answer.isCorrect
   ).length;
-
   return currentScore;
 };
 
