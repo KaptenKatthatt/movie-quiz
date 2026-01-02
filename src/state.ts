@@ -28,6 +28,7 @@ export const updatePlayer = (currentPlayer: Player) => {
 };
 export const getPlayer = () => player;
 
+//Deprecated
 export const addRightAnswer = (currentMovie: Movie) => {
   const currentPlayer = getPlayer();
   const updatedPlayer = {
@@ -37,7 +38,7 @@ export const addRightAnswer = (currentMovie: Movie) => {
   updatePlayer(updatedPlayer);
   return updatedPlayer;
 };
-
+//Deprecated
 export const addWrongAnswer = (currentMovie: Movie) => {
   const currentPlayer = getPlayer();
   const updatedPlayer = {

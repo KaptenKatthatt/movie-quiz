@@ -12,10 +12,13 @@ export const getPlayerScore = () => {
   return currentScore;
 };
 
-export const resetPlayerScore = (currentPlayer: Player): Player => {
-  return { ...currentPlayer, score: 0 };
+export const resetPlayerScore = () => {
+  const currentPlayer = getPlayer();
+  const updatedPlayer = { ...currentPlayer, answers: [] };
+  updatePlayer(updatedPlayer);
 };
 
+//Deprecated
 export const incrementScoreByOne = () => {
   const currentPlayer = getPlayer();
   const updatedPlayer = { ...currentPlayer, score: currentPlayer.score + 1 };
