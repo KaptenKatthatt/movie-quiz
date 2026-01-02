@@ -55,9 +55,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions(
-    getPlayer()
-  )}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
 };
 
 /**
