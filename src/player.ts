@@ -1,18 +1,21 @@
+import { update } from "lodash";
 import { getLatestPlayerId } from "./highscorelist";
 import { getPlayer, updatePlayer } from "./state";
 import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
 import { type Player } from "./types";
 
-export const getPlayerScore = (currentPlayer: Player) => {
-  return currentPlayer.score;
+export const getPlayerScore = () => {
+  return getPlayer().score;
 };
 
 export const resetPlayerScore = (currentPlayer: Player): Player => {
   return { ...currentPlayer, score: 0 };
 };
 
-export const incrementScoreByOne = (currentPlayer: Player) => {
-  return { ...currentPlayer, score: currentPlayer.score + 1 };
+export const incrementScoreByOne = () => {
+  const currentPlayer = getPlayer();
+  const updatedPlayer = { ...currentPlayer, score: currentPlayer.score + 1 };
+  updatePlayer(updatedPlayer);
 };
 
 export const getNumberOfQuestions = (currentPlayer: Player) => {

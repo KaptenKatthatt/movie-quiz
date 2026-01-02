@@ -15,7 +15,13 @@ import {
   initPlayer,
 } from "./player";
 import { startGame } from "./game";
-import { game, getPlayer, updatePlayer } from "./state";
+import {
+  addRightAnswer,
+  addWrongAnswer,
+  game,
+  getPlayer,
+  updatePlayer,
+} from "./state";
 
 import "./assets/scss/main.scss";
 
@@ -127,9 +133,9 @@ export const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
   }/${getNumberOfQuestions(getPlayer())}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore(
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions(
     getPlayer()
-  )}/${getNumberOfQuestions(getPlayer())}</span>`;
+  )}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -154,16 +160,15 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      const currentPlayer = incrementScoreByOne(getPlayer());
-      updatePlayer(currentPlayer);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
-      getPlayer().rightAnswersArr.push(game.currentQuestion[0]);
+      incrementScoreByOne();
+      addRightAnswer(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = true;
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
-      getPlayer().wrongAnswersArr.push(game.currentQuestion[0]);
+      addWrongAnswer(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = false;
     }
     disableAllQuestionButtons();
@@ -171,9 +176,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     //Show next-question-btn
     ui.startScreen.nextQuestionBtnEl.classList.remove("d-none");
 
-    updateScoreDisplay(
-      game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
-    );
+    updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
   }
 });
 
