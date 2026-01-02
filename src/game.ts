@@ -4,7 +4,7 @@ import {
   updateScoreDisplay,
   renderNewQuestion,
 } from "./main";
-import { getPlayerScore, initPlayer } from "./player";
+import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
 import {
   getPlayer,
   game,
@@ -12,7 +12,6 @@ import {
   resetQuestionNbr,
   setIsCurrentAnswerCorrect,
 } from "./state";
-import type { Player } from "./types";
 import { ui } from "./ui";
 
 export const getNbrOfWrong = () => {
@@ -24,12 +23,10 @@ export const getNbrOfWrong = () => {
 };
 
 export const resetPlayerAnswers = () => {
-  const currentPlayer = getPlayer();
-  const resetPlayer: Player = { ...currentPlayer };
-  const updatedPlayer = { ...resetPlayer, answers: [] };
+  const updatedPlayer = { ...getPlayer(), answers: [] };
   updatePlayer(updatedPlayer);
-  return updatedPlayer;
 };
+
 export const restartGame = function () {
   resetPlayerAnswers();
   setIsCurrentAnswerCorrect(false);
@@ -41,14 +38,14 @@ export const restartGame = function () {
   ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
   initPlayer();
 };
-export const startGame = (nbrOfSelectedQuestions: number) => {
+
+export const startGame = () => {
   // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
-
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,
-    nbrOfSelectedQuestions
+    getNumberOfQuestions()
   );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);

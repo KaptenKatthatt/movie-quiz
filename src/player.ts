@@ -28,3 +28,10 @@ export const initPlayer = function () {
   };
   updatePlayer(newPlayer);
 };
+export const setNbrOfQuestions = (nbrOfQuestions: number) => {
+  const updatedPlayer = {
+    ...getPlayer(),
+    nbrOfQuestions: nbrOfQuestions,
+  };
+  updatePlayer(updatedPlayer);
+};

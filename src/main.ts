@@ -8,15 +8,14 @@ import {
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./types";
-import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
-import { startGame } from "./game";
 import {
-  game,
-  getPlayer,
-  saveAnswer,
-  setIsCurrentAnswerCorrect,
-  updatePlayer,
-} from "./state";
+  getNumberOfQuestions,
+  getPlayerScore,
+  initPlayer,
+  setNbrOfQuestions,
+} from "./player";
+import { startGame } from "./game";
+import { game, saveAnswer, setIsCurrentAnswerCorrect } from "./state";
 import { updateCurrentQuestionNbr } from "./state";
 
 import "./assets/scss/main.scss";
@@ -208,15 +207,13 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   initPlayer();
 
   if (button.tagName === "BUTTON") {
-    const updatedPlayer = {
-      ...getPlayer(),
-      nbrOfQuestions:
-        button.dataset.questions === "all"
-          ? movies.length
-          : Number(button.dataset.questions),
-    };
-    updatePlayer(updatedPlayer);
-    startGame(getNumberOfQuestions());
+    const selectedNbrOfQuestions =
+      button.dataset.questions === "all"
+        ? movies.length
+        : Number(button.dataset.questions);
+
+    setNbrOfQuestions(selectedNbrOfQuestions);
+    startGame();
   }
 });
 //Render initial game screen
