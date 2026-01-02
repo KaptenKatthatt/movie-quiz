@@ -1,4 +1,3 @@
-import { DEFAULT_HIGH_SCORE_LIST } from "./constants";
 import { getHighScoreList } from "./storage";
 import type { Player } from "./types";
 
@@ -29,8 +28,4 @@ export const getLatestPlayerId = () => {
   return Math.max(
     ...currentHighScoreList.map((highScorePlayer) => highScorePlayer.id)
   );
-};
-
-export const getDefaultHighScoreList = () => {
-  return [...DEFAULT_HIGH_SCORE_LIST];
 };

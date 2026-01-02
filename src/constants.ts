@@ -84,3 +84,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     wrongAnswersArr: [] as Movie[],
   },
 ];
+export const getDefaultHighScoreList = () => {
+  return [...DEFAULT_HIGH_SCORE_LIST];
+};

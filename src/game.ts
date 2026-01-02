@@ -4,8 +4,8 @@ import {
   updateScoreDisplay,
   renderNewQuestion,
 } from "./main";
-import { getPlayerScore, initPlayer, setNumberOfQuestions } from "./player";
-import { getPlayer, updatePlayer, game } from "./state";
+import { getPlayerScore, initPlayer } from "./player";
+import { getPlayer, game } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
@@ -28,8 +28,8 @@ export const resetPlayerInfo = () => {
 export const resetPlayerAnswers = () => {
   const currentPlayer = getPlayer();
   const resetPlayer: Player = { ...currentPlayer };
-  resetPlayer.rightAnswersArr = [];
-  resetPlayer.wrongAnswersArr = [];
+  // resetPlayer.rightAnswersArr = [];
+  // resetPlayer.wrongAnswersArr = [];
   const updatedPlayer = { ...resetPlayer, answers: [] };
 
   return updatedPlayer;
