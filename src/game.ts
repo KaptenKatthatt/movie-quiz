@@ -4,13 +4,8 @@ import {
   updateScoreDisplay,
   renderNewQuestion,
 } from "./main";
-import {
-  getPlayerScore,
-  initPlayer,
-  resetPlayerScore,
-  setNumberOfQuestions,
-} from "./player";
-import { getPlayer, updatePlayer, game } from "./state";
+import { getPlayerScore, initPlayer } from "./player";
+import { getPlayer, game, updatePlayer } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
@@ -18,24 +13,29 @@ export const getNbrOfWrong = (currentPlayer: Player) => {
   return currentPlayer.wrongAnswersArr.length;
 };
 
-export const resetPlayerInfo = (currentPlayer: Player) => {
-  let updatedPlayer: Player = { ...currentPlayer };
-  updatedPlayer = resetPlayerAnswers(updatedPlayer);
-  updatedPlayer = resetPlayerScore(updatedPlayer);
-  updatedPlayer = setNumberOfQuestions(updatedPlayer, 0);
+export const resetPlayerInfo = () => {
+  // const currentPlayer = getPlayer();
+  // let updatedPlayer: Player = { ...currentPlayer };
+
+  resetPlayerAnswers();
+  // resetPlayerScore();
+
+  // updatedPlayer = setNumberOfQuestions(0);
+  // updatePlayer(updatedPlayer);
+};
+
+//Deprecated, use resetPlayerAnswers instead
+export const resetPlayerAnswers = () => {
+  const currentPlayer = getPlayer();
+  const resetPlayer: Player = { ...currentPlayer };
+  // resetPlayer.rightAnswersArr = [];
+  // resetPlayer.wrongAnswersArr = [];
+  const updatedPlayer = { ...resetPlayer, answers: [] };
+  updatePlayer(updatedPlayer);
   return updatedPlayer;
 };
-
-export const resetPlayerAnswers = (currentPlayer: Player) => {
-  const resetPlayer: Player = { ...currentPlayer };
-  resetPlayer.rightAnswersArr = [];
-  resetPlayer.wrongAnswersArr = [];
-  return resetPlayer;
-};
 export const restartGame = function () {
-  const currentPlayer = resetPlayerInfo(getPlayer());
-  updatePlayer(currentPlayer);
-
+  resetPlayerInfo();
   game.isCurrentAnswerCorrect = false;
 
   ui.endScreen.highScoreListEl!.innerHTML = "";
@@ -56,9 +56,7 @@ export const startGame = (nbrOfSelectedQuestions: number) => {
     nbrOfSelectedQuestions
   );
 
-  updateScoreDisplay(
-    game.isCurrentAnswerCorrect && getPlayerScore(getPlayer()) > 0
-  );
+  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {

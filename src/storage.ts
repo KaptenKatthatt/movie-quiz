@@ -1,5 +1,5 @@
 import { type HighScoreList } from "./constants";
-import { getDefaultHighScoreList } from "./highscorelist";
+import { getDefaultHighScoreList } from "./constants";
 
 export const getPlayerNameFromLocalStorage = () => {
   if (

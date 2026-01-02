@@ -7,7 +7,7 @@ import {
 } from "./storage";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
-import type { Movie } from "./data/movies";
+import type { Movie } from "./types";
 import {
   getNumberOfQuestions,
   getPlayerScore,
@@ -20,6 +20,8 @@ import {
   addWrongAnswer,
   game,
   getPlayer,
+  saveAnswer,
+  setIsCurrentAnswerCorrect,
   updatePlayer,
 } from "./state";
 
@@ -132,10 +134,8 @@ const setCurrentMovie = function () {
 export const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
-  }/${getNumberOfQuestions(getPlayer())}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions(
-    getPlayer()
-  )}</span>`;
+  }/${getNumberOfQuestions()}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions()}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -162,14 +162,20 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     if (game.currentQuestion[0].name === button.textContent) {
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
+
       incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
-      game.isCurrentAnswerCorrect = true;
+      setIsCurrentAnswerCorrect(true);
+
+      saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
+
       addWrongAnswer(game.currentQuestion[0]);
-      game.isCurrentAnswerCorrect = false;
+      setIsCurrentAnswerCorrect(false);
+
+      saveAnswer(game.currentQuestion[0], false);
     }
     disableAllQuestionButtons();
 
@@ -221,7 +227,7 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
           : Number(button.dataset.questions),
     };
     updatePlayer(updatedPlayer);
-    startGame(getNumberOfQuestions(getPlayer()));
+    startGame(getNumberOfQuestions());
   }
 });
 //Render initial game screen

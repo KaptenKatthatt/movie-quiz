@@ -1,16 +1,22 @@
-import { update } from "lodash";
 import { getLatestPlayerId } from "./highscorelist";
 import { getPlayer, updatePlayer } from "./state";
-import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
-import { type Player } from "./types";
+import { getPlayerNameFromLocalStorage } from "./storage";
 
 export const getPlayerScore = () => {
-  return getPlayer().score;
+  const currentPlayer = getPlayer();
+  const currentScore = currentPlayer.answers.filter(
+    (answer) => answer.isCorrect
+  ).length;
+
+  return currentScore;
 };
 
-export const resetPlayerScore = (currentPlayer: Player): Player => {
-  return { ...currentPlayer, score: 0 };
-};
+//Deprecated? Same as resetPlayerAnswers?
+// export const resetPlayerScore = () => {
+//   const currentPlayer = getPlayer();
+//   const updatedPlayer = { ...currentPlayer, answers: [] };
+//   updatePlayer(updatedPlayer);
+// };
 
 export const incrementScoreByOne = () => {
   const currentPlayer = getPlayer();
@@ -18,29 +24,31 @@ export const incrementScoreByOne = () => {
   updatePlayer(updatedPlayer);
 };
 
-export const getNumberOfQuestions = (currentPlayer: Player) => {
+export const getNumberOfQuestions = () => {
+  const currentPlayer = getPlayer();
   return currentPlayer.nbrOfQuestions;
 };
 
-export const setNumberOfQuestions = (
-  currentPlayer: Player,
-  numberOfQuestions: number
-) => {
-  return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
+export const setNumberOfQuestions = (numberOfQuestions: number) => {
+  const currentPlayer = getPlayer();
+  const updatedPlayer = { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
+  updatePlayer(updatedPlayer);
+  return updatedPlayer;
 };
 
-export const getPlayerId = (currentPlayer: Player) => {
-  return currentPlayer.id;
-};
+// export const getPlayerId = (currentPlayer: Player) => {
+//   return currentPlayer.id;
+// };
 
-export const getPlayerName = (currentPlayer: Player) => {
+export const getPlayerName = () => {
+  const currentPlayer = getPlayer();
   return currentPlayer.name;
 };
 export const initPlayer = function () {
   const currentPlayer = getPlayer();
   const newPlayer = {
     ...currentPlayer,
-    id: getLatestPlayerId(getHighScoreList()) + 1,
+    id: getLatestPlayerId() + 1,
     name: getPlayerNameFromLocalStorage() || "someDude",
   };
   updatePlayer(newPlayer);

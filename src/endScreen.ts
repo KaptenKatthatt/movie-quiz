@@ -8,7 +8,7 @@ import {
   removeLowestHighScore,
   sortHighScoreList,
 } from "./highscorelist";
-import type { Movie } from "./data/movies";
+import type { Movie } from "./types";
 import type { Player } from "./types";
 import { getNbrOfWrong } from "./game";
 import { getPlayer } from "./state";
@@ -55,9 +55,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore(
-    getPlayer()
-  )}/${getNumberOfQuestions(getPlayer())}!!!</span>`;
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
 };
 
 /**
@@ -103,7 +101,7 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.endScreen.rightAnswersHeadingEl.innerText =
-    getPlayerScore(getPlayer()) > 0
+    getPlayerScore() > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
