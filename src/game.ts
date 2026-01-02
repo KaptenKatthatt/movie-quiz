@@ -21,16 +21,20 @@ export const getNbrOfWrong = (currentPlayer: Player) => {
 export const resetPlayerInfo = (currentPlayer: Player) => {
   let updatedPlayer: Player = { ...currentPlayer };
   updatedPlayer = resetPlayerAnswers(updatedPlayer);
-  updatedPlayer = resetPlayerScore(updatedPlayer);
-  updatedPlayer = setNumberOfQuestions(updatedPlayer, 0);
+  resetPlayerScore();
+  updatedPlayer = setNumberOfQuestions(0);
   return updatedPlayer;
 };
 
-export const resetPlayerAnswers = (currentPlayer: Player) => {
+//Deprecated
+export const resetPlayerAnswers = () => {
+  const currentPlayer = getPlayer();
   const resetPlayer: Player = { ...currentPlayer };
-  resetPlayer.rightAnswersArr = [];
-  resetPlayer.wrongAnswersArr = [];
-  return resetPlayer;
+  // resetPlayer.rightAnswersArr = [];
+  // resetPlayer.wrongAnswersArr = [];
+  const updatedPlayer = { ...resetPlayer, answers: [] };
+
+  return updatedPlayer;
 };
 export const restartGame = function () {
   const currentPlayer = resetPlayerInfo(getPlayer());

@@ -1,6 +1,6 @@
 import { getLatestPlayerId } from "./highscorelist";
 import { getPlayer, updatePlayer } from "./state";
-import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
+import { getPlayerNameFromLocalStorage } from "./storage";
 import { type Player } from "./types";
 
 export const getPlayerScore = () => {
@@ -29,16 +29,14 @@ export const getNumberOfQuestions = (currentPlayer: Player) => {
   return currentPlayer.nbrOfQuestions;
 };
 
-export const setNumberOfQuestions = (
-  currentPlayer: Player,
-  numberOfQuestions: number
-) => {
+export const setNumberOfQuestions = (numberOfQuestions: number) => {
+  const currentPlayer = getPlayer();
   return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
 };
 
-export const getPlayerId = (currentPlayer: Player) => {
-  return currentPlayer.id;
-};
+// export const getPlayerId = (currentPlayer: Player) => {
+//   return currentPlayer.id;
+// };
 
 export const getPlayerName = (currentPlayer: Player) => {
   return currentPlayer.name;
@@ -47,7 +45,7 @@ export const initPlayer = function () {
   const currentPlayer = getPlayer();
   const newPlayer = {
     ...currentPlayer,
-    id: getLatestPlayerId(getHighScoreList()) + 1,
+    id: getLatestPlayerId() + 1,
     name: getPlayerNameFromLocalStorage() || "someDude",
   };
   updatePlayer(newPlayer);
