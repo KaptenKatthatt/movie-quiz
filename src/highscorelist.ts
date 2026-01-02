@@ -1,4 +1,4 @@
-import type { Movie } from "./data/movies";
+import type { Movie } from "./types";
 import type { Player } from "./types";
 
 export const addPlayerToHighScoreList = (

@@ -7,7 +7,7 @@ import {
 } from "./storage";
 import { ui } from "./ui";
 import { movies } from "./data/movies";
-import type { Movie } from "./data/movies";
+import type { Movie } from "./types";
 import {
   getNumberOfQuestions,
   getPlayerScore,
@@ -20,6 +20,7 @@ import {
   addWrongAnswer,
   game,
   getPlayer,
+  isCurrentAnswerCorrect,
   updatePlayer,
 } from "./state";
 
@@ -164,12 +165,12 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.remove("btn-warning");
       incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
-      game.isCurrentAnswerCorrect = true;
+      isCurrentAnswerCorrect(true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
       addWrongAnswer(game.currentQuestion[0]);
-      game.isCurrentAnswerCorrect = false;
+      // isCurrentAnswerCorrect(false);
     }
     disableAllQuestionButtons();
 

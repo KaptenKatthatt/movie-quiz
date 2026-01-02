@@ -8,7 +8,7 @@ import {
   removeLowestHighScore,
   sortHighScoreList,
 } from "./highscorelist";
-import type { Movie } from "./data/movies";
+import type { Movie } from "./types";
 import type { Player } from "./types";
 import { getNbrOfWrong } from "./game";
 import { getPlayer } from "./state";

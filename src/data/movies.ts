@@ -1,8 +1,4 @@
-export interface Movie {
-  id: number;
-  name: string;
-  image: string;
-}
+import type { Movie } from "../types";
 
 export const movies: Movie[] = [
   { id: 0, name: "Amelie", image: "img/amelie.webp" },

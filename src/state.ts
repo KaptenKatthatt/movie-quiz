@@ -1,4 +1,5 @@
-import type { Movie } from "./data/movies";
+import type { GameState } from "./types";
+import type { Movie } from "./types";
 import type { Player } from "./types";
 
 /* **************** PLAYER AND GAME STATE ****************** */
@@ -11,15 +12,14 @@ let player: Player = {
   wrongAnswersArr: [] as Movie[],
 };
 
-export const game = {
-  filteredWrongMovies: [] as Movie[], //Movie array with correct answer filtered out
-  shuffledQuestions: [] as Movie[], //All movies shuffled
-  nbrOfSelectedQuestions: [] as Movie[], //Movie array sliced to nbr of selected guesses
+export const game: GameState = {
+  filteredWrongMovies: [], //Movie array with correct answer filtered out
+  shuffledQuestions: [], //All movies shuffled
+  nbrOfSelectedQuestions: [], //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,
-
-  currentQuestion: [] as Movie[], //Current question
+  currentQuestion: [],
 };
 
 export const updatePlayer = (currentPlayer: Player) => {
@@ -45,4 +45,9 @@ export const addWrongAnswer = (currentMovie: Movie) => {
   };
   updatePlayer(updatedPlayer);
   return updatedPlayer;
+};
+
+export const isCurrentAnswerCorrect = (isCorrect: boolean) => {
+  game.isCurrentAnswerCorrect = isCorrect;
+  return game.isCurrentAnswerCorrect;
 };
