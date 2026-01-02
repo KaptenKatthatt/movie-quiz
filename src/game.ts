@@ -4,12 +4,7 @@ import {
   updateScoreDisplay,
   renderNewQuestion,
 } from "./main";
-import {
-  getPlayerScore,
-  initPlayer,
-  resetPlayerScore,
-  setNumberOfQuestions,
-} from "./player";
+import { getPlayerScore, initPlayer, setNumberOfQuestions } from "./player";
 import { getPlayer, updatePlayer, game } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
@@ -18,28 +13,29 @@ export const getNbrOfWrong = (currentPlayer: Player) => {
   return currentPlayer.wrongAnswersArr.length;
 };
 
-export const resetPlayerInfo = (currentPlayer: Player) => {
-  let updatedPlayer: Player = { ...currentPlayer };
-  updatedPlayer = resetPlayerAnswers(updatedPlayer);
-  resetPlayerScore();
-  updatedPlayer = setNumberOfQuestions(0);
-  return updatedPlayer;
+export const resetPlayerInfo = () => {
+  // const currentPlayer = getPlayer();
+  // let updatedPlayer: Player = { ...currentPlayer };
+
+  resetPlayerAnswers();
+  // resetPlayerScore();
+
+  // updatedPlayer = setNumberOfQuestions(0);
+  // updatePlayer(updatedPlayer);
 };
 
-//Deprecated
+//Deprecated, use resetPlayerAnswers instead
 export const resetPlayerAnswers = () => {
   const currentPlayer = getPlayer();
   const resetPlayer: Player = { ...currentPlayer };
-  // resetPlayer.rightAnswersArr = [];
-  // resetPlayer.wrongAnswersArr = [];
+  resetPlayer.rightAnswersArr = [];
+  resetPlayer.wrongAnswersArr = [];
   const updatedPlayer = { ...resetPlayer, answers: [] };
 
   return updatedPlayer;
 };
 export const restartGame = function () {
-  const currentPlayer = resetPlayerInfo(getPlayer());
-  updatePlayer(currentPlayer);
-
+  resetPlayerInfo();
   game.isCurrentAnswerCorrect = false;
 
   ui.endScreen.highScoreListEl!.innerHTML = "";

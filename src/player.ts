@@ -12,11 +12,12 @@ export const getPlayerScore = () => {
   return currentScore;
 };
 
-export const resetPlayerScore = () => {
-  const currentPlayer = getPlayer();
-  const updatedPlayer = { ...currentPlayer, answers: [] };
-  updatePlayer(updatedPlayer);
-};
+//Deprecated? Same as resetPlayerAnswers?
+// export const resetPlayerScore = () => {
+//   const currentPlayer = getPlayer();
+//   const updatedPlayer = { ...currentPlayer, answers: [] };
+//   updatePlayer(updatedPlayer);
+// };
 
 //Deprecated
 export const incrementScoreByOne = () => {
