@@ -8,8 +8,6 @@ let player: Player = {
   score: 0,
   name: "",
   nbrOfQuestions: 0,
-  rightAnswersArr: [],
-  wrongAnswersArr: [],
   answers: [],
 };
 
@@ -27,27 +25,6 @@ export const updatePlayer = (currentPlayer: Player) => {
   player = { ...currentPlayer };
 };
 export const getPlayer = () => player;
-
-//Deprecated
-export const addRightAnswer = (currentMovie: Movie) => {
-  const currentPlayer = getPlayer();
-  const updatedPlayer = {
-    ...currentPlayer,
-    rightAnswersArr: [...currentPlayer.rightAnswersArr, currentMovie],
-  };
-  updatePlayer(updatedPlayer);
-  return updatedPlayer;
-};
-//Deprecated
-export const addWrongAnswer = (currentMovie: Movie) => {
-  const currentPlayer = getPlayer();
-  const updatedPlayer = {
-    ...currentPlayer,
-    wrongAnswersArr: [...currentPlayer.wrongAnswersArr, currentMovie],
-  };
-  updatePlayer(updatedPlayer);
-  return updatedPlayer;
-};
 
 export const setIsCurrentAnswerCorrect = (isCorrect: boolean) => {
   game.isCurrentAnswerCorrect = isCorrect;

@@ -3,8 +3,6 @@ export interface Player {
   score: number;
   name: string;
   nbrOfQuestions: number;
-  rightAnswersArr: Movie[];
-  wrongAnswersArr: Movie[];
   answers: Answer[];
 }
 export interface GameState {

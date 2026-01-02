@@ -10,7 +10,10 @@ import type { Player } from "./types";
 import { ui } from "./ui";
 
 export const getNbrOfWrong = (currentPlayer: Player) => {
-  return currentPlayer.wrongAnswersArr.length;
+  const wrongAnswers = currentPlayer.answers.filter(
+    (answer) => !answer.isCorrect
+  );
+  return wrongAnswers.length;
 };
 
 export const resetPlayerInfo = () => {
@@ -28,8 +31,6 @@ export const resetPlayerInfo = () => {
 export const resetPlayerAnswers = () => {
   const currentPlayer = getPlayer();
   const resetPlayer: Player = { ...currentPlayer };
-  // resetPlayer.rightAnswersArr = [];
-  // resetPlayer.wrongAnswersArr = [];
   const updatedPlayer = { ...resetPlayer, answers: [] };
   updatePlayer(updatedPlayer);
   return updatedPlayer;

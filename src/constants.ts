@@ -1,4 +1,4 @@
-import type { Answer, Movie, Player } from "./types";
+import type { Answer, Player } from "./types";
 
 //A single object to bind them all
 export type HighScoreList = Player[];
@@ -8,8 +8,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 10,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -17,8 +15,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 9,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -26,8 +22,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 8,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -35,8 +29,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 7,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -44,8 +36,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 6,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -53,8 +43,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 5,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -62,8 +50,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 4,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -71,8 +57,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 3,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -80,8 +64,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 2,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
   {
@@ -89,8 +71,6 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     score: 0,
     nbrOfQuestions: 10,
     name: "J.O",
-    rightAnswersArr: [] as Movie[],
-    wrongAnswersArr: [] as Movie[],
     answers: [] as Answer[],
   },
 ];
