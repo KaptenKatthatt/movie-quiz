@@ -10,22 +10,9 @@ export const getPlayerScore = () => {
   return currentScore;
 };
 
-export const incrementScoreByOne = () => {
-  const currentPlayer = getPlayer();
-  const updatedPlayer = { ...currentPlayer, score: currentPlayer.score + 1 };
-  updatePlayer(updatedPlayer);
-};
-
 export const getNumberOfQuestions = () => {
   const currentPlayer = getPlayer();
   return currentPlayer.nbrOfQuestions;
-};
-
-export const setNumberOfQuestions = (numberOfQuestions: number) => {
-  const currentPlayer = getPlayer();
-  const updatedPlayer = { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
-  updatePlayer(updatedPlayer);
-  return updatedPlayer;
 };
 
 export const getPlayerName = () => {

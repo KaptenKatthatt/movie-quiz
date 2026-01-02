@@ -26,6 +26,6 @@ export const sortHighScoreList = (currentHighScoreList: Player[]) => {
 export const getLatestPlayerId = () => {
   const currentHighScoreList = getHighScoreList();
   return Math.max(
-    ...currentHighScoreList.map((highScorePlayer) => highScorePlayer.id)
+    ...currentHighScoreList.map((highScorePlayer: Player) => highScorePlayer.id)
   );
 };
