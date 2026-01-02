@@ -5,7 +5,7 @@ import {
   renderNewQuestion,
 } from "./main";
 import { getPlayerScore, initPlayer } from "./player";
-import { getPlayer, game } from "./state";
+import { getPlayer, game, updatePlayer } from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
@@ -31,7 +31,7 @@ export const resetPlayerAnswers = () => {
   // resetPlayer.rightAnswersArr = [];
   // resetPlayer.wrongAnswersArr = [];
   const updatedPlayer = { ...resetPlayer, answers: [] };
-
+  updatePlayer(updatedPlayer);
   return updatedPlayer;
 };
 export const restartGame = function () {

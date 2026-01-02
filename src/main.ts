@@ -20,8 +20,8 @@ import {
   addWrongAnswer,
   game,
   getPlayer,
-  isCurrentAnswerCorrect,
   saveAnswer,
+  setIsCurrentAnswerCorrect,
   updatePlayer,
 } from "./state";
 
@@ -167,7 +167,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
 
       incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
-      isCurrentAnswerCorrect(true);
+      setIsCurrentAnswerCorrect(true);
 
       saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
@@ -175,7 +175,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.remove("btn-warning");
 
       addWrongAnswer(game.currentQuestion[0]);
-      isCurrentAnswerCorrect(false);
+      setIsCurrentAnswerCorrect(false);
 
       saveAnswer(game.currentQuestion[0], false);
     }

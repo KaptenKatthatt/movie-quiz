@@ -19,7 +19,6 @@ export const getPlayerScore = () => {
 //   updatePlayer(updatedPlayer);
 // };
 
-//Deprecated
 export const incrementScoreByOne = () => {
   const currentPlayer = getPlayer();
   const updatedPlayer = { ...currentPlayer, score: currentPlayer.score + 1 };
@@ -32,7 +31,9 @@ export const getNumberOfQuestions = (currentPlayer: Player) => {
 
 export const setNumberOfQuestions = (numberOfQuestions: number) => {
   const currentPlayer = getPlayer();
-  return { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
+  const updatedPlayer = { ...currentPlayer, nbrOfQuestions: numberOfQuestions };
+  updatePlayer(updatedPlayer);
+  return updatedPlayer;
 };
 
 // export const getPlayerId = (currentPlayer: Player) => {

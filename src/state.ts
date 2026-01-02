@@ -49,7 +49,7 @@ export const addWrongAnswer = (currentMovie: Movie) => {
   return updatedPlayer;
 };
 
-export const isCurrentAnswerCorrect = (isCorrect: boolean) => {
+export const setIsCurrentAnswerCorrect = (isCorrect: boolean) => {
   game.isCurrentAnswerCorrect = isCorrect;
   return game.isCurrentAnswerCorrect;
 };

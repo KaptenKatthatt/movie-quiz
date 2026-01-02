@@ -1,4 +1,4 @@
-import type { Movie, Player } from "./types";
+import type { Answer, Movie, Player } from "./types";
 
 //A single object to bind them all
 export type HighScoreList = Player[];
@@ -10,6 +10,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 4,
@@ -34,6 +37,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 5,
@@ -42,6 +46,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 6,
@@ -50,6 +55,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 7,
@@ -58,6 +64,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 8,
@@ -66,6 +73,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 9,
@@ -74,6 +82,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
   {
     id: 10,
@@ -82,6 +91,7 @@ export const DEFAULT_HIGH_SCORE_LIST = [
     name: "J.O",
     rightAnswersArr: [] as Movie[],
     wrongAnswersArr: [] as Movie[],
+    answers: [] as Answer[],
   },
 ];
 export const getDefaultHighScoreList = () => {
