@@ -160,10 +160,9 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
   const button = e.target as HTMLButtonElement;
   if (button.tagName === "BUTTON" && button.textContent !== "Next question") {
     if (game.currentQuestion[0].name === button.textContent) {
-      const currentPlayer = incrementScoreByOne(getPlayer());
-      updatePlayer(currentPlayer);
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
+      incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
       game.isCurrentAnswerCorrect = true;
     } else if (game.currentQuestion[0].name !== button.textContent) {

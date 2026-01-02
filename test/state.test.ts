@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { movies } from "../src/data/movies";
+import { movies, type Movie } from "../src/data/movies";
 import {
   addRightAnswer,
   addWrongAnswer,
@@ -13,8 +13,8 @@ const emptyPlayer: Player = {
   score: 0,
   name: "",
   nbrOfQuestions: 0,
-  rightAnswersArr: [] as any[],
-  wrongAnswersArr: [] as any[],
+  rightAnswersArr: [] as Movie[],
+  wrongAnswersArr: [] as Movie[],
 };
 
 beforeEach(() => {
