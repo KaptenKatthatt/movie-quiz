@@ -55,9 +55,9 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
  */
 const renderFinalScoreBanner = function () {
   // Render final score element to DOM
-  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore(
+  ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions(
     getPlayer()
-  )}/${getNumberOfQuestions(getPlayer())}!!!</span>`;
+  )}!!!</span>`;
 };
 
 /**
@@ -103,7 +103,7 @@ const renderAnswerCards = function () {
 
 const renderRightAnswerHeading = function () {
   ui.endScreen.rightAnswersHeadingEl.innerText =
-    getPlayerScore(getPlayer()) > 0
+    getPlayerScore() > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };

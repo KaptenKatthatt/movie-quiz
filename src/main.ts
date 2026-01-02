@@ -164,15 +164,19 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
     if (game.currentQuestion[0].name === button.textContent) {
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
+
       incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
       isCurrentAnswerCorrect(true);
+
       saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
+
       addWrongAnswer(game.currentQuestion[0]);
-      // isCurrentAnswerCorrect(false);
+      isCurrentAnswerCorrect(false);
+
       saveAnswer(game.currentQuestion[0], false);
     }
     disableAllQuestionButtons();

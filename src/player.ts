@@ -4,7 +4,12 @@ import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
 import { type Player } from "./types";
 
 export const getPlayerScore = () => {
-  return getPlayer().score;
+  const currentPlayer = getPlayer();
+  const currentScore = currentPlayer.answers.filter(
+    (answer) => answer.isCorrect
+  ).length;
+
+  return currentScore;
 };
 
 export const resetPlayerScore = (currentPlayer: Player): Player => {
