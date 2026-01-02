@@ -29,16 +29,20 @@ export const getPlayer = () => player;
 
 export const addRightAnswer = (currentMovie: Movie) => {
   const currentPlayer = getPlayer();
-  updatePlayer({
+  const updatedPlayer = {
     ...currentPlayer,
     rightAnswersArr: [...currentPlayer.rightAnswersArr, currentMovie],
-  });
+  };
+  updatePlayer(updatedPlayer);
+  return updatedPlayer;
 };
 
 export const addWrongAnswer = (currentMovie: Movie) => {
   const currentPlayer = getPlayer();
-  updatePlayer({
+  const updatedPlayer = {
     ...currentPlayer,
     wrongAnswersArr: [...currentPlayer.wrongAnswersArr, currentMovie],
-  });
+  };
+  updatePlayer(updatedPlayer);
+  return updatedPlayer;
 };
