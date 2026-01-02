@@ -28,7 +28,7 @@ export const restartGame = function () {
   resetPlayerAnswers();
 
   game.isCurrentAnswerCorrect = false;
-  // game.currentQuestionNbr = 1;
+
   resetQuestionNbr();
 
   ui.endScreen.highScoreListEl!.innerHTML = "";

@@ -176,7 +176,6 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
 });
 
 ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
-  // game.currentQuestionNbr++;
   updateCurrentQuestionNbr();
 
   updateScoreDisplay();
