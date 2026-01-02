@@ -26,3 +26,19 @@ export const updatePlayer = (currentPlayer: Player) => {
   player = { ...currentPlayer };
 };
 export const getPlayer = () => player;
+
+export const addRightAnswer = (currentMovie: Movie) => {
+  const currentPlayer = getPlayer();
+  updatePlayer({
+    ...currentPlayer,
+    rightAnswersArr: [...currentPlayer.rightAnswersArr, currentMovie],
+  });
+};
+
+export const addWrongAnswer = (currentMovie: Movie) => {
+  const currentPlayer = getPlayer();
+  updatePlayer({
+    ...currentPlayer,
+    wrongAnswersArr: [...currentPlayer.wrongAnswersArr, currentMovie],
+  });
+};
