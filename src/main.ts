@@ -134,10 +134,8 @@ const setCurrentMovie = function () {
 export const updateScoreDisplay = function (shouldAnimate = false) {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
-  }/${getNumberOfQuestions(getPlayer())}</span>`;
-  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions(
-    getPlayer()
-  )}</span>`;
+  }/${getNumberOfQuestions()}</span>`;
+  ui.questionScreen.pointsEl!.innerHTML = `<span class="points d-inline-block fw-bold">${getPlayerScore()}/${getNumberOfQuestions()}</span>`;
 
   if (shouldAnimate) {
     ui.questionScreen.pointsEl!.classList.add("add-score-animation");
@@ -229,7 +227,7 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
           : Number(button.dataset.questions),
     };
     updatePlayer(updatedPlayer);
-    startGame(getNumberOfQuestions(getPlayer()));
+    startGame(getNumberOfQuestions());
   }
 });
 //Render initial game screen
