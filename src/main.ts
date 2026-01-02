@@ -18,9 +18,11 @@ import { startGame } from "./game";
 import {
   addRightAnswer,
   addWrongAnswer,
+  answers,
   game,
   getPlayer,
   isCurrentAnswerCorrect,
+  saveAnswer,
   updatePlayer,
 } from "./state";
 
@@ -166,11 +168,13 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       incrementScoreByOne();
       addRightAnswer(game.currentQuestion[0]);
       isCurrentAnswerCorrect(true);
+      saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
       addWrongAnswer(game.currentQuestion[0]);
       // isCurrentAnswerCorrect(false);
+      saveAnswer(game.currentQuestion[0], false);
     }
     disableAllQuestionButtons();
 
