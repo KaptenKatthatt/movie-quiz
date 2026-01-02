@@ -108,7 +108,7 @@ const renderRightAnswerHeading = () => {
 
 const renderRightAnswerCards = () => {
   const currentPlayer = getPlayer();
-  const rightAnswersArr: Movie[] = currentPlayer.answers
+  const rightAnswersArr = currentPlayer.answers
     .filter((answer) => answer.isCorrect)
     .map((answer) => answer.movie);
 
@@ -127,7 +127,7 @@ const renderWrongAnswerHeading = () => {
 
 const renderWrongAnswerCards = () => {
   const currentPlayer = getPlayer();
-  const wrongAnswersArr: Movie[] = currentPlayer.answers
+  const wrongAnswersArr = currentPlayer.answers
     .filter((answer) => !answer.isCorrect)
     .map((answer) => answer.movie);
 
