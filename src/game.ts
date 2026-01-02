@@ -5,7 +5,13 @@ import {
   renderNewQuestion,
 } from "./main";
 import { getPlayerScore, initPlayer } from "./player";
-import { getPlayer, game, updatePlayer, resetQuestionNbr } from "./state";
+import {
+  getPlayer,
+  game,
+  updatePlayer,
+  resetQuestionNbr,
+  setIsCurrentAnswerCorrect,
+} from "./state";
 import type { Player } from "./types";
 import { ui } from "./ui";
 
@@ -26,9 +32,7 @@ export const resetPlayerAnswers = () => {
 };
 export const restartGame = function () {
   resetPlayerAnswers();
-
-  game.isCurrentAnswerCorrect = false;
-
+  setIsCurrentAnswerCorrect(false);
   resetQuestionNbr();
 
   ui.endScreen.highScoreListEl!.innerHTML = "";
@@ -40,6 +44,7 @@ export const restartGame = function () {
 export const startGame = (nbrOfSelectedQuestions: number) => {
   // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
+
   //Create an array with selected nbr of movies
   game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
     0,

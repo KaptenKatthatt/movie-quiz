@@ -1,4 +1,4 @@
-import { getDefaultHighScoreList } from "./constants";
+import { DEFAULT_USER_NAME, getDefaultHighScoreList } from "./constants";
 import type { HighScoreList } from "./types";
 
 export const getPlayerNameFromLocalStorage = () => {
@@ -6,8 +6,8 @@ export const getPlayerNameFromLocalStorage = () => {
     localStorage.getItem("playerName") === null ||
     localStorage.getItem("playerName") === ""
   ) {
-    localStorage.setItem("playerName", "someNoNameDude");
-    return "someNoNameDude";
+    localStorage.setItem("playerName", DEFAULT_USER_NAME);
+    return DEFAULT_USER_NAME;
   } else {
     return localStorage.getItem("playerName")!;
   }
@@ -18,7 +18,7 @@ const sanitizePlayerName = (name: string) =>
 
 export const setPlayerNameToLocalStorage = (playerName: string) => {
   if (localStorage.getItem("playerName") === null || playerName === null) {
-    playerName = "someNoNameDude";
+    playerName = DEFAULT_USER_NAME;
   }
   localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };

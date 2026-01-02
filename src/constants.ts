@@ -76,3 +76,5 @@ export const DEFAULT_HIGH_SCORE_LIST = [
 export const getDefaultHighScoreList = () => {
   return [...DEFAULT_HIGH_SCORE_LIST];
 };
+
+export const DEFAULT_USER_NAME = "someNoNameDude";
