@@ -1,4 +1,3 @@
-import { update } from "lodash";
 import { getLatestPlayerId } from "./highscorelist";
 import { getPlayer, updatePlayer } from "./state";
 import { getHighScoreList, getPlayerNameFromLocalStorage } from "./storage";
