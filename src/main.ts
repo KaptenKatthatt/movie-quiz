@@ -8,12 +8,7 @@ import {
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./types";
-import {
-  getNumberOfQuestions,
-  getPlayerScore,
-  incrementScoreByOne,
-  initPlayer,
-} from "./player";
+import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
 import { startGame } from "./game";
 import {
   game,
@@ -22,6 +17,7 @@ import {
   setIsCurrentAnswerCorrect,
   updatePlayer,
 } from "./state";
+import { updateCurrentQuestionNbr } from "./state";
 
 import "./assets/scss/main.scss";
 
@@ -161,16 +157,13 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.add("btn-success");
       button.classList.remove("btn-warning");
 
-      incrementScoreByOne();
       setIsCurrentAnswerCorrect(true);
-
       saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
 
       setIsCurrentAnswerCorrect(false);
-
       saveAnswer(game.currentQuestion[0], false);
     }
     disableAllQuestionButtons();
@@ -183,10 +176,11 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
 });
 
 ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
-  game.nbrOfSelectedQuestions.shift();
+  // game.currentQuestionNbr++;
+  updateCurrentQuestionNbr();
 
-  game.currentQuestionNbr++;
   updateScoreDisplay();
+  game.nbrOfSelectedQuestions.shift();
 
   // Checks if there is any movies left to question about
   if (game.nbrOfSelectedQuestions.length > 0) {

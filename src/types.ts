@@ -24,3 +24,4 @@ export interface Answer {
   movie: Movie;
   isCorrect: boolean;
 }
+export type HighScoreList = Player[];
