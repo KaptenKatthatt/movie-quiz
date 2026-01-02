@@ -1,10 +1,6 @@
 import { movies } from "./data/movies";
-import {
-  cloneAndShuffleArray,
-  updateScoreDisplay,
-  renderNewQuestion,
-} from "./main";
-import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
+import { cloneAndShuffleArray, renderNewQuestion } from "./main";
+import { getNumberOfQuestions, initPlayer } from "./player";
 import {
   getPlayer,
   game,
@@ -14,7 +10,7 @@ import {
 } from "./state";
 import { ui } from "./ui";
 
-export const getNbrOfWrong = () => {
+export const getNbrOfWrongAnswers = () => {
   const currentPlayer = getPlayer();
   const wrongAnswers = currentPlayer.answers.filter(
     (answer) => !answer.isCorrect
@@ -31,24 +27,24 @@ export const restartGame = function () {
   resetPlayerAnswers();
   setIsCurrentAnswerCorrect(false);
   resetQuestionNbr();
+  initPlayer();
 
   ui.endScreen.highScoreListEl!.innerHTML = "";
   ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreen.endScreenEl!.classList.add("d-none");
   ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
-  initPlayer();
 };
 
 export const startGame = () => {
   // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
-  game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
+  game.selectedQuestionsArray = game.shuffledQuestions.slice(
     0,
     getNumberOfQuestions()
   );
 
-  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
+  // updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
 
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {

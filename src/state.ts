@@ -14,7 +14,7 @@ let player: Player = {
 export const game: GameState = {
   filteredWrongMovies: [], //Movie array with correct answer filtered out
   shuffledQuestions: [], //All movies shuffled
-  nbrOfSelectedQuestions: [], //Movie array sliced to nbr of selected guesses
+  selectedQuestionsArray: [], //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: 0,
   currentQuestionNbr: 1,
   isCurrentAnswerCorrect: false,

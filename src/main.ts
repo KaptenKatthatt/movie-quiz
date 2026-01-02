@@ -117,14 +117,14 @@ const renderQuestionScreen = function () {
  * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
  */
 const setCurrentMovie = function () {
-  game.currentQuestion[0] = game.nbrOfSelectedQuestions[0];
+  game.currentQuestion[0] = game.selectedQuestionsArray[0];
 };
 
 /**
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-export const updateScoreDisplay = function (shouldAnimate = false) {
+export const updateScoreDisplay = (shouldAnimate = false) => {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
   }/${getNumberOfQuestions()}</span>`;
@@ -178,10 +178,10 @@ ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
   updateCurrentQuestionNbr();
 
   updateScoreDisplay();
-  game.nbrOfSelectedQuestions.shift();
+  game.selectedQuestionsArray.shift();
 
   // Checks if there is any movies left to question about
-  if (game.nbrOfSelectedQuestions.length > 0) {
+  if (game.selectedQuestionsArray.length > 0) {
     if (document.startViewTransition) {
       // Checks if view transition is supported, if not skip it.
       document.startViewTransition(() => {
@@ -216,5 +216,5 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
     startGame();
   }
 });
-//Render initial game screen
+//Render initial question screen
 renderQuestionScreen();

@@ -10,7 +10,7 @@ import {
 } from "./highscorelist";
 import type { Movie } from "./types";
 import type { Player } from "./types";
-import { getNbrOfWrong } from "./game";
+import { getNbrOfWrongAnswers } from "./game";
 import { getPlayer } from "./state";
 
 /* **************** FUNCTIONS****************** */
@@ -120,7 +120,7 @@ const renderRightAnswerCards = () => {
 
 const renderWrongAnswerHeading = () => {
   ui.endScreen.wrongAnswersHeadingEl.innerHTML =
-    getNbrOfWrong() > 0
+    getNbrOfWrongAnswers() > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };
