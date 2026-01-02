@@ -16,8 +16,6 @@ import {
 } from "./player";
 import { startGame } from "./game";
 import {
-  addRightAnswer,
-  addWrongAnswer,
   game,
   getPlayer,
   saveAnswer,
@@ -164,7 +162,6 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.remove("btn-warning");
 
       incrementScoreByOne();
-      addRightAnswer(game.currentQuestion[0]);
       setIsCurrentAnswerCorrect(true);
 
       saveAnswer(game.currentQuestion[0], true);
@@ -172,7 +169,6 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.add("btn-danger");
       button.classList.remove("btn-warning");
 
-      addWrongAnswer(game.currentQuestion[0]);
       setIsCurrentAnswerCorrect(false);
 
       saveAnswer(game.currentQuestion[0], false);

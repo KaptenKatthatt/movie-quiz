@@ -53,7 +53,7 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
 /**
  * Renders score count banner
  */
-const renderFinalScoreBanner = function () {
+const renderFinalScoreBanner = () => {
   // Render final score element to DOM
   ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
 };
@@ -67,7 +67,7 @@ const renderFinalScoreBanner = function () {
   Get highscorelist from local storage and parse it to array
   //If first play, get premade high score list.
   */
-const renderHighScoreList = function () {
+const renderHighScoreList = () => {
   const highScoreList = getHighScoreList();
   const finalHighScoreList = isHighScoreWorthy(getPlayer(), highScoreList);
 
@@ -99,37 +99,47 @@ const renderAnswerCards = function () {
   renderWrongAnswerCards();
 };
 
-const renderRightAnswerHeading = function () {
+const renderRightAnswerHeading = () => {
   ui.endScreen.rightAnswersHeadingEl.innerText =
     getPlayerScore() > 0
       ? "These were correct!"
       : "No right answers... Try again!🙃";
 };
 
-const renderRightAnswerCards = function () {
+const renderRightAnswerCards = () => {
+  const currentPlayer = getPlayer();
+  const rightAnswersArr = currentPlayer.answers
+    .filter((answer) => answer.isCorrect)
+    .map((answer) => answer.movie);
+
   ui.endScreen.rightAnswerCardsEl.innerHTML = formatCards(
-    getPlayer().rightAnswersArr,
+    rightAnswersArr,
     true
   );
 };
 
-const renderWrongAnswerHeading = function () {
+const renderWrongAnswerHeading = () => {
   ui.endScreen.wrongAnswersHeadingEl.innerHTML =
     getNbrOfWrong(getPlayer()) > 0
       ? "These were wrong..."
       : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
 };
 
-const renderWrongAnswerCards = function () {
+const renderWrongAnswerCards = () => {
+  const currentPlayer = getPlayer();
+  const wrongAnswersArr = currentPlayer.answers
+    .filter((answer) => !answer.isCorrect)
+    .map((answer) => answer.movie);
+
   ui.endScreen.wrongAnswerCardsEl.innerHTML = formatCards(
-    getPlayer().wrongAnswersArr,
+    wrongAnswersArr,
     false
   );
 };
 
 /* **************** EXPORT ****************** */
 
-export const renderEndScreen = function () {
+export const renderEndScreen = () => {
   renderFinalScoreBanner();
 
   //Show endscreen
