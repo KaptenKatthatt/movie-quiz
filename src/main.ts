@@ -19,7 +19,7 @@ import {
   game,
   makeWrongAnswersArray,
   saveAnswer,
-  setCurrentMovie,
+  setRightAnswer,
   setIsCurrentAnswerCorrect,
 } from "./state";
 import { updateCurrentQuestionNbr } from "./state";
@@ -64,7 +64,7 @@ const getAnswerButtonNames = function () {
 };
 
 export const renderNewQuestion = function () {
-  setCurrentMovie();
+  setRightAnswer();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
 

@@ -44,8 +44,6 @@ export const startGame = () => {
     getNumberOfQuestions()
   );
 
-  // updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
-
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
     document.startViewTransition(() => {

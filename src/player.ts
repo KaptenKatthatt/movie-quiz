@@ -11,13 +11,11 @@ export const getPlayerScore = () => {
 };
 
 export const getNumberOfQuestions = () => {
-  const currentPlayer = getPlayer();
-  return currentPlayer.nbrOfQuestions;
+  return getPlayer().nbrOfQuestions;
 };
 
 export const getPlayerName = () => {
-  const currentPlayer = getPlayer();
-  return currentPlayer.name;
+  return getPlayer().name;
 };
 export const initPlayer = function () {
   const currentPlayer = getPlayer();
