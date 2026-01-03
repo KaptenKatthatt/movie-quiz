@@ -8,9 +8,11 @@ export const getLatestPlayerId = () => {
   );
 };
 
-export const getLowestHighScore = (highScoreList: Player[]) => {
+export const getLowestHighScore = () => {
   return Math.min(
-    ...highScoreList.map((highScorePlayer: Player) => highScorePlayer.score)
+    ...getHighScoreList().map(
+      (highScorePlayer: Player) => highScorePlayer.score
+    )
   );
 };
 

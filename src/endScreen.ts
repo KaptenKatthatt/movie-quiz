@@ -34,7 +34,7 @@ function formatCards(answerArr: Movie[], isAnswerCorrect: boolean) {
 }
 
 function isHighScoreWorthy(currentPlayerScore: number) {
-  if (currentPlayerScore > getLowestHighScore(getHighScoreList())) {
+  if (currentPlayerScore > getLowestHighScore()) {
     return true;
   } else {
     return false;
