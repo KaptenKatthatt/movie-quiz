@@ -22,7 +22,8 @@ describe("state: addRightAnswer / addWrongAnswer", () => {
     expect(initial.answers).toHaveLength(0);
 
     const movie = movies[0];
-    const updated = saveAnswer(movie, true);
+    saveAnswer(movie, true);
+    const updated = getPlayer();
 
     expect(updated.answers).toHaveLength(1);
     expect(updated.answers[0].movie).toBe(movie);
@@ -35,7 +36,8 @@ describe("state: addRightAnswer / addWrongAnswer", () => {
   it("saveAnswer immutably adds an incorrect answer and returns the updated player", () => {
     const initial = getPlayer();
     const movie = movies[1];
-    const updated = saveAnswer(movie, false);
+    saveAnswer(movie, false);
+    const updated = getPlayer();
 
     expect(updated.answers).toHaveLength(1);
     expect(updated.answers[0].movie).toBe(movie);
