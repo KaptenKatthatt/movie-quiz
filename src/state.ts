@@ -23,6 +23,12 @@ export const game: GameState = {
 
 export const getPlayer = () => player;
 
+export const increasePlayerScore = () => {
+  const updatedPlayer = getPlayer();
+  updatedPlayer.score++;
+  updatePlayer(updatedPlayer);
+};
+
 export const makeWrongAnswersArray = () => {
   game.filteredWrongMovies = game.shuffledQuestions.filter(
     (movie: Movie) => movie.id !== game.currentQuestion[0].id

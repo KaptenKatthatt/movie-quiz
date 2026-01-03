@@ -21,6 +21,7 @@ import {
   saveAnswer,
   setRightAnswer,
   setIsCurrentAnswerCorrect,
+  increasePlayerScore,
 } from "./state";
 import { updateCurrentQuestionNbr } from "./state";
 
@@ -139,6 +140,7 @@ ui.questionScreen.questionBtnContainerEl.addEventListener("click", (e) => {
       button.classList.remove("btn-warning");
 
       setIsCurrentAnswerCorrect(true);
+      increasePlayerScore();
       saveAnswer(game.currentQuestion[0], true);
     } else if (game.currentQuestion[0].name !== button.textContent) {
       button.classList.add("btn-danger");

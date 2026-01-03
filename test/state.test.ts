@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { movies, type Movie } from "../src/data/movies";
+import { movies } from "../src/data/movies";
 import { saveAnswer, getPlayer, updatePlayer } from "../src/state";
 import type { Player } from "../src/types";
 
