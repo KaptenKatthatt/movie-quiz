@@ -1,28 +1,6 @@
 import { DEFAULT_USER_NAME, getDefaultHighScoreList } from "./constants";
 import type { HighScoreList } from "./types";
 
-export const getPlayerNameFromLocalStorage = () => {
-  if (
-    localStorage.getItem("playerName") === null ||
-    localStorage.getItem("playerName") === ""
-  ) {
-    localStorage.setItem("playerName", DEFAULT_USER_NAME);
-    return DEFAULT_USER_NAME;
-  } else {
-    return localStorage.getItem("playerName")!;
-  }
-};
-
-const sanitizePlayerName = (name: string) =>
-  name.replace(/[^\p{L}\p{N}\s-]/gu, "").trim();
-
-export const setPlayerNameToLocalStorage = (playerName: string) => {
-  if (localStorage.getItem("playerName") === null || playerName === null) {
-    playerName = DEFAULT_USER_NAME;
-  }
-  localStorage.setItem("playerName", sanitizePlayerName(playerName));
-};
-
 export const getHighScoreList = function (): HighScoreList {
   const storedList = localStorage.getItem("highScoreList");
   if (storedList === null) {
@@ -39,8 +17,30 @@ export const getHighScoreList = function (): HighScoreList {
   }
 };
 
+export const getPlayerNameFromLocalStorage = () => {
+  if (
+    localStorage.getItem("playerName") === null ||
+    localStorage.getItem("playerName") === ""
+  ) {
+    localStorage.setItem("playerName", DEFAULT_USER_NAME);
+    return DEFAULT_USER_NAME;
+  } else {
+    return localStorage.getItem("playerName")!;
+  }
+};
+
+const sanitizePlayerName = (name: string) =>
+  name.replace(/[^\p{L}\p{N}\s-]/gu, "").trim();
+
 export const setHighScoreListToLocalStorage = function (
   highScoreList: HighScoreList
 ) {
   localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+};
+
+export const setPlayerNameToLocalStorage = (playerName: string) => {
+  if (localStorage.getItem("playerName") === null || playerName === null) {
+    playerName = DEFAULT_USER_NAME;
+  }
+  localStorage.setItem("playerName", sanitizePlayerName(playerName));
 };

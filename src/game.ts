@@ -1,6 +1,10 @@
 import { movies } from "./data/movies";
-import { cloneAndShuffleArray, renderNewQuestion } from "./main";
-import { getNumberOfQuestions, initPlayer } from "./player";
+import {
+  cloneAndShuffleArray,
+  renderNewQuestion,
+  updateScoreDisplay,
+} from "./main";
+import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
 import {
   getPlayer,
   game,
@@ -16,6 +20,10 @@ export const getNbrOfWrongAnswers = () => {
     (answer) => !answer.isCorrect
   );
   return wrongAnswers.length;
+};
+
+export const getThreeRandomAnswers = () => {
+  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };
 
 export const resetPlayerAnswers = () => {
@@ -44,6 +52,8 @@ export const startGame = () => {
     getNumberOfQuestions()
   );
 
+  updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);
+
   // Trigger view transition on game start if supported
   if (document.startViewTransition) {
     document.startViewTransition(() => {
@@ -63,11 +73,4 @@ export const startGame = () => {
     // Render the questionPage content
     renderNewQuestion();
   }
-};
-/**
- *Take game.currentQuestion and throw into an array with three randos
- * @returns Array with 3 wrong answers and 1 right.
- */
-export const getThreeRandomAnswers = () => {
-  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };

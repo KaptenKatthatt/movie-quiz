@@ -63,6 +63,15 @@ const getAnswerButtonNames = function () {
   return questionButtonNames;
 };
 
+const renderFourQuestionButtons = function () {
+  // Generate four buttons with answer alternatives
+  return getAnswerButtonNames()
+    .map(
+      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
+    )
+    .join("");
+};
+
 export const renderNewQuestion = function () {
   setRightAnswer();
   makeWrongAnswersArray();
@@ -73,15 +82,6 @@ export const renderNewQuestion = function () {
     renderFourQuestionButtons();
   //Hide next question button
   ui.startScreen.nextQuestionBtnEl!.classList.add("d-none");
-};
-
-const renderFourQuestionButtons = function () {
-  // Generate four buttons with answer alternatives
-  return getAnswerButtonNames()
-    .map(
-      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
-    )
-    .join("");
 };
 
 const renderQuestionScreen = function () {

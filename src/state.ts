@@ -21,15 +21,16 @@ export const game: GameState = {
   currentQuestion: [],
 };
 
-export const updatePlayer = (currentPlayer: Player) => {
-  player = { ...currentPlayer };
-};
-
 export const getPlayer = () => player;
 
-export const setIsCurrentAnswerCorrect = (isCorrect: boolean) => {
-  game.isCurrentAnswerCorrect = isCorrect;
-  return game.isCurrentAnswerCorrect;
+export const makeWrongAnswersArray = () => {
+  game.filteredWrongMovies = game.shuffledQuestions.filter(
+    (movie: Movie) => movie.id !== game.currentQuestion[0].id
+  );
+};
+
+export const resetQuestionNbr = () => {
+  game.currentQuestionNbr = 1;
 };
 
 export const saveAnswer = (movie: Movie, isCorrect: boolean) => {
@@ -40,23 +41,20 @@ export const saveAnswer = (movie: Movie, isCorrect: boolean) => {
   };
   updatePlayer(updatedPlayer);
 };
+
+export const setIsCurrentAnswerCorrect = (isCorrect: boolean) => {
+  game.isCurrentAnswerCorrect = isCorrect;
+  return game.isCurrentAnswerCorrect;
+};
+
+export const setRightAnswer = () => {
+  game.currentQuestion[0] = game.selectedQuestionsArray[0];
+};
+
 export const updateCurrentQuestionNbr = () => {
   game.currentQuestionNbr++;
 };
-export const resetQuestionNbr = () => {
-  game.currentQuestionNbr = 1;
-};
-/**
- * Make an array of wrong answers to choose from, filters out correct answer
- */
-export const makeWrongAnswersArray = () => {
-  game.filteredWrongMovies = game.shuffledQuestions.filter(
-    (movie: Movie) => movie.id !== game.currentQuestion[0].id
-  );
-};
-/**
- * Creates current right answer from first index of game.selectedQuestionsArray array.
- */
-export const setRightAnswer = () => {
-  game.currentQuestion[0] = game.selectedQuestionsArray[0];
+
+export const updatePlayer = (currentPlayer: Player) => {
+  player = { ...currentPlayer };
 };

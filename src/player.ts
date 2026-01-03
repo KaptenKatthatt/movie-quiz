@@ -2,6 +2,14 @@ import { getLatestPlayerId } from "./highscorelist";
 import { getPlayer, updatePlayer } from "./state";
 import { getPlayerNameFromLocalStorage } from "./storage";
 
+export const getNumberOfQuestions = () => {
+  return getPlayer().nbrOfQuestions;
+};
+
+export const getPlayerName = () => {
+  return getPlayer().name;
+};
+
 export const getPlayerScore = () => {
   const currentPlayer = getPlayer();
   const currentScore = currentPlayer.answers.filter(
@@ -10,13 +18,6 @@ export const getPlayerScore = () => {
   return currentScore;
 };
 
-export const getNumberOfQuestions = () => {
-  return getPlayer().nbrOfQuestions;
-};
-
-export const getPlayerName = () => {
-  return getPlayer().name;
-};
 export const initPlayer = function () {
   const currentPlayer = getPlayer();
   const newPlayer = {
@@ -26,6 +27,7 @@ export const initPlayer = function () {
   };
   updatePlayer(newPlayer);
 };
+
 export const setNbrOfQuestions = (nbrOfQuestions: number) => {
   const updatedPlayer = {
     ...getPlayer(),
