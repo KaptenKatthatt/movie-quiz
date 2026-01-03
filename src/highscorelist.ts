@@ -17,9 +17,9 @@ export const getLowestHighScore = () => {
 };
 
 export const removeLowestHighScore = () => {
-  const updatedHighScoreList = sortHighScoreList(getHighScoreList());
-  updatedHighScoreList.pop();
-  setHighScoreListToLocalStorage(updatedHighScoreList);
+  const sortedHighScoreList = sortHighScoreList(getHighScoreList());
+  sortedHighScoreList.pop();
+  setHighScoreListToLocalStorage(sortedHighScoreList);
 };
 
 export const sortHighScoreList = (currentHighScoreList: Player[]) => {
