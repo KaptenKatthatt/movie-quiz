@@ -14,8 +14,14 @@ import {
   initPlayer,
   setNbrOfQuestions,
 } from "./player";
-import { startGame } from "./game";
-import { game, saveAnswer, setIsCurrentAnswerCorrect } from "./state";
+import { getThreeRandomAnswers, startGame } from "./game";
+import {
+  game,
+  makeWrongAnswersArray,
+  saveAnswer,
+  setCurrentMovie,
+  setIsCurrentAnswerCorrect,
+} from "./state";
 import { updateCurrentQuestionNbr } from "./state";
 
 import "./assets/scss/main.scss";
@@ -57,23 +63,6 @@ const getAnswerButtonNames = function () {
   return questionButtonNames;
 };
 
-/**
- *Take game.currentQuestion and throw into an array with three randos
- * @returns Array with 3 wrong answers and 1 right.
- */
-const getThreeRandomAnswers = () => {
-  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
-};
-
-/**
- * Make an array of wrong answers to choose from, filters out correct answer
- */
-const makeWrongAnswersArray = function () {
-  game.filteredWrongMovies = game.shuffledQuestions.filter(
-    (movie: Movie) => movie.id !== game.currentQuestion[0].id
-  );
-};
-
 export const renderNewQuestion = function () {
   setCurrentMovie();
   makeWrongAnswersArray();
@@ -111,13 +100,6 @@ const renderQuestionScreen = function () {
     `;
     })
     .join("");
-};
-
-/**
- * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
- */
-const setCurrentMovie = function () {
-  game.currentQuestion[0] = game.selectedQuestionsArray[0];
 };
 
 /**

@@ -45,3 +45,17 @@ export const updateCurrentQuestionNbr = () => {
 export const resetQuestionNbr = () => {
   game.currentQuestionNbr = 1;
 };
+/**
+ * Make an array of wrong answers to choose from, filters out correct answer
+ */
+export const makeWrongAnswersArray = function () {
+  game.filteredWrongMovies = game.shuffledQuestions.filter(
+    (movie: Movie) => movie.id !== game.currentQuestion[0].id
+  );
+};
+/**
+ * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
+ */
+export const setCurrentMovie = function () {
+  game.currentQuestion[0] = game.selectedQuestionsArray[0];
+};

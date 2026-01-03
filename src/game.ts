@@ -66,3 +66,10 @@ export const startGame = () => {
     renderNewQuestion();
   }
 };
+/**
+ *Take game.currentQuestion and throw into an array with three randos
+ * @returns Array with 3 wrong answers and 1 right.
+ */
+export const getThreeRandomAnswers = () => {
+  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
+};
