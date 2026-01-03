@@ -3,7 +3,6 @@ import { getHighScoreList, setHighScoreListToLocalStorage } from "./storage";
 import { ui } from "./ui";
 import { getNumberOfQuestions, getPlayerScore } from "./player";
 import {
-  addPlayerToHighScoreList,
   getLowestHighScore,
   removeLowestHighScore,
   sortHighScoreList,
@@ -34,17 +33,25 @@ function formatCards(answerArr: Movie[], isAnswerCorrect: boolean) {
     .join("");
 }
 
-function isHighScoreWorthy(
-  currentPlayer: Player,
-  currentHighScoreList: Player[]
-) {
-  if (currentPlayer.score > getLowestHighScore(currentHighScoreList)) {
-    const updatedList = removeLowestHighScore(currentHighScoreList);
-    return addPlayerToHighScoreList(currentPlayer, updatedList);
+function isHighScoreWorthy(currentPlayerScore: number) {
+  const currentHighScoreList = getHighScoreList();
+
+  if (currentPlayerScore > getLowestHighScore(currentHighScoreList)) {
+    removeLowestHighScore(currentHighScoreList);
+    return true;
   } else {
-    return currentHighScoreList;
+    return false;
   }
 }
+
+export const addPlayerToHighScoreList = () => {
+  let currentHighScoreList = getHighScoreList();
+  if (getPlayerScore() > getLowestHighScore(currentHighScoreList)) {
+    removeLowestHighScore(currentHighScoreList);
+    currentHighScoreList = [...currentHighScoreList, getPlayer()];
+    setHighScoreListToLocalStorage(currentHighScoreList);
+  }
+};
 
 function renderAnswerCards() {
   renderRightAnswerHeading();
@@ -58,14 +65,12 @@ function renderFinalScoreBanner() {
 }
 
 function renderHighScoreList() {
-  const highScoreList = getHighScoreList();
-  const finalHighScoreList = isHighScoreWorthy(getPlayer(), highScoreList);
-
-  if (finalHighScoreList === highScoreList) {
+  if (isHighScoreWorthy(getPlayerScore())) {
+    addPlayerToHighScoreList();
+  } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
   }
-
-  const sortedFinalHighScoreList = sortHighScoreList(finalHighScoreList);
+  const sortedFinalHighScoreList = sortHighScoreList(getHighScoreList());
 
   ui.endScreen.highScoreListEl.innerHTML = sortedFinalHighScoreList
     .map(
