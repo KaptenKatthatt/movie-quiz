@@ -1,12 +1,5 @@
-import { getHighScoreList } from "./storage";
+import { getHighScoreList, setHighScoreListToLocalStorage } from "./storage";
 import type { Player } from "./types";
-
-export const addPlayerToHighScoreList = (
-  currentPlayer: Player,
-  currentHighScoreList: Player[]
-) => {
-  return [...currentHighScoreList, currentPlayer];
-};
 
 export const getLatestPlayerId = () => {
   const currentHighScoreList = getHighScoreList();
@@ -15,16 +8,18 @@ export const getLatestPlayerId = () => {
   );
 };
 
-export const getLowestHighScore = (highScoreList: Player[]) => {
+export const getLowestHighScore = () => {
   return Math.min(
-    ...highScoreList.map((highScorePlayer: Player) => highScorePlayer.score)
+    ...getHighScoreList().map(
+      (highScorePlayer: Player) => highScorePlayer.score
+    )
   );
 };
 
-export const removeLowestHighScore = (currentHighScoreList: Player[]) => {
-  const sortedList = sortHighScoreList([...currentHighScoreList]);
-  sortedList.pop();
-  return sortedList;
+export const removeLowestHighScore = () => {
+  const sortedHighScoreList = sortHighScoreList(getHighScoreList());
+  sortedHighScoreList.pop();
+  setHighScoreListToLocalStorage(sortedHighScoreList);
 };
 
 export const sortHighScoreList = (currentHighScoreList: Player[]) => {
