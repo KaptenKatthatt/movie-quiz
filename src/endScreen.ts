@@ -60,7 +60,7 @@ function renderFinalScoreBanner() {
 
 function renderHighScoreList() {
   if (isHighScoreWorthy(getPlayerScore())) {
-    removeLowestHighScore(getHighScoreList());
+    removeLowestHighScore();
     addPlayerToHighScoreList();
   } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
