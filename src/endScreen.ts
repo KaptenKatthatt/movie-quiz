@@ -34,10 +34,7 @@ function formatCards(answerArr: Movie[], isAnswerCorrect: boolean) {
 }
 
 function isHighScoreWorthy(currentPlayerScore: number) {
-  const currentHighScoreList = getHighScoreList();
-
-  if (currentPlayerScore > getLowestHighScore(currentHighScoreList)) {
-    removeLowestHighScore(currentHighScoreList);
+  if (currentPlayerScore > getLowestHighScore(getHighScoreList())) {
     return true;
   } else {
     return false;
@@ -46,11 +43,8 @@ function isHighScoreWorthy(currentPlayerScore: number) {
 
 export const addPlayerToHighScoreList = () => {
   let currentHighScoreList = getHighScoreList();
-  if (getPlayerScore() > getLowestHighScore(currentHighScoreList)) {
-    removeLowestHighScore(currentHighScoreList);
-    currentHighScoreList = [...currentHighScoreList, getPlayer()];
-    setHighScoreListToLocalStorage(currentHighScoreList);
-  }
+  currentHighScoreList = [...currentHighScoreList, getPlayer()];
+  setHighScoreListToLocalStorage(currentHighScoreList);
 };
 
 function renderAnswerCards() {
@@ -66,6 +60,7 @@ function renderFinalScoreBanner() {
 
 function renderHighScoreList() {
   if (isHighScoreWorthy(getPlayerScore())) {
+    removeLowestHighScore(getHighScoreList());
     addPlayerToHighScoreList();
   } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
