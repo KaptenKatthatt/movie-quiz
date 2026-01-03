@@ -42,6 +42,7 @@ function isHighScoreWorthy(currentPlayerScore: number) {
 }
 
 export const addPlayerToHighScoreList = () => {
+  removeLowestHighScore();
   let currentHighScoreList = getHighScoreList();
   currentHighScoreList = [...currentHighScoreList, getPlayer()];
   setHighScoreListToLocalStorage(currentHighScoreList);
@@ -60,7 +61,6 @@ function renderFinalScoreBanner() {
 
 function renderHighScoreList() {
   if (isHighScoreWorthy(getPlayerScore())) {
-    removeLowestHighScore();
     addPlayerToHighScoreList();
   } else {
     ui.endScreen.showNoHighScoreEl.classList.remove("d-none");
