@@ -43,9 +43,9 @@ function isHighScoreWorthy(currentPlayerScore: number) {
 
 export const addPlayerToHighScoreList = () => {
   removeLowestHighScore();
-  let currentHighScoreList = getHighScoreList();
-  currentHighScoreList = [...currentHighScoreList, getPlayer()];
-  setHighScoreListToLocalStorage(currentHighScoreList);
+  const currentHighScoreList = getHighScoreList();
+  const updatedHighScoreList = [...currentHighScoreList, getPlayer()];
+  setHighScoreListToLocalStorage(updatedHighScoreList);
 };
 
 function renderAnswerCards() {

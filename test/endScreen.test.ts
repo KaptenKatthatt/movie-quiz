@@ -25,7 +25,8 @@ import { updatePlayer } from "../src/state";
 
 const _storage: Record<string, string> = {};
 (globalThis as any).localStorage = (globalThis as any).localStorage || {
-  getItem: (k: string) => (_storage.hasOwnProperty(k) ? _storage[k] : null),
+  getItem: (k: string) =>
+    Object.prototype.hasOwnProperty.call(_storage, k) ? _storage[k] : null,
   setItem: (k: string, v: string) => {
     _storage[k] = String(v);
   },
