@@ -21,7 +21,7 @@ beforeEach(() => {
   updatePlayer({ ...emptyPlayer });
 });
 
-describe("state: addRightAnswer / addWrongAnswer", () => {
+describe("state: saveAnswer / increasePlayerScore", () => {
   it("saveAnswer immutably adds a correct answer and returns the updated player", () => {
     const initial = getPlayer();
     expect(initial.answers).toHaveLength(0);

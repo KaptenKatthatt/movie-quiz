@@ -24,8 +24,11 @@ export const game: GameState = {
 export const getPlayer = () => player;
 
 export const increasePlayerScore = () => {
-  const updatedPlayer = getPlayer();
-  updatedPlayer.score++;
+  const currentPlayer = getPlayer();
+  const updatedPlayer: Player = {
+    ...currentPlayer,
+    score: currentPlayer.score + 1,
+  };
   updatePlayer(updatedPlayer);
 };
 
