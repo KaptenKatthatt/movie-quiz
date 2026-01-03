@@ -8,14 +8,19 @@ import {
 import { ui } from "./ui";
 import { movies } from "./data/movies";
 import type { Movie } from "./types";
-import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
-import { startGame } from "./game";
+import {
+  getNumberOfQuestions,
+  getPlayerScore,
+  initPlayer,
+  setNbrOfQuestions,
+} from "./player";
+import { getThreeRandomAnswers, startGame } from "./game";
 import {
   game,
-  getPlayer,
+  makeWrongAnswersArray,
   saveAnswer,
+  setRightAnswer,
   setIsCurrentAnswerCorrect,
-  updatePlayer,
 } from "./state";
 import { updateCurrentQuestionNbr } from "./state";
 
@@ -58,25 +63,17 @@ const getAnswerButtonNames = function () {
   return questionButtonNames;
 };
 
-/**
- *Take game.currentQuestion and throw into an array with three randos
- * @returns Array with 3 wrong answers and 1 right.
- */
-const getThreeRandomAnswers = () => {
-  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
-};
-
-/**
- * Make an array of wrong answers to choose from, filters out correct answer
- */
-const makeWrongAnswersArray = function () {
-  game.filteredWrongMovies = game.shuffledQuestions.filter(
-    (movie: Movie) => movie.id !== game.currentQuestion[0].id
-  );
+const renderFourQuestionButtons = function () {
+  // Generate four buttons with answer alternatives
+  return getAnswerButtonNames()
+    .map(
+      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
+    )
+    .join("");
 };
 
 export const renderNewQuestion = function () {
-  setCurrentMovie();
+  setRightAnswer();
   makeWrongAnswersArray();
   addPhotoToPhotoContainer();
 
@@ -85,15 +82,6 @@ export const renderNewQuestion = function () {
     renderFourQuestionButtons();
   //Hide next question button
   ui.startScreen.nextQuestionBtnEl!.classList.add("d-none");
-};
-
-const renderFourQuestionButtons = function () {
-  // Generate four buttons with answer alternatives
-  return getAnswerButtonNames()
-    .map(
-      (movie) => `<button class="btn btn-warning btn-lg">${movie.name}</button>`
-    )
-    .join("");
 };
 
 const renderQuestionScreen = function () {
@@ -115,17 +103,10 @@ const renderQuestionScreen = function () {
 };
 
 /**
- * Creates current right answer from first index of game.nbrOfSelectedQuestions array.
- */
-const setCurrentMovie = function () {
-  game.currentQuestion[0] = game.nbrOfSelectedQuestions[0];
-};
-
-/**
  * Fires score animation if user scored a point
  * @param {boolean} shouldAnimate
  */
-export const updateScoreDisplay = function (shouldAnimate = false) {
+export const updateScoreDisplay = (shouldAnimate = false) => {
   ui.questionScreen.questionBoardEl.innerHTML = `<span class="nbrOfQuestions d-inline-block">${
     game.currentQuestionNbr
   }/${getNumberOfQuestions()}</span>`;
@@ -179,10 +160,10 @@ ui.startScreen.nextQuestionBtnEl.addEventListener("click", () => {
   updateCurrentQuestionNbr();
 
   updateScoreDisplay();
-  game.nbrOfSelectedQuestions.shift();
+  game.selectedQuestionsArray.shift();
 
   // Checks if there is any movies left to question about
-  if (game.nbrOfSelectedQuestions.length > 0) {
+  if (game.selectedQuestionsArray.length > 0) {
     if (document.startViewTransition) {
       // Checks if view transition is supported, if not skip it.
       document.startViewTransition(() => {
@@ -208,16 +189,14 @@ ui.startScreen.startBtnContainerEl.addEventListener("click", (e) => {
   initPlayer();
 
   if (button.tagName === "BUTTON") {
-    const updatedPlayer = {
-      ...getPlayer(),
-      nbrOfQuestions:
-        button.dataset.questions === "all"
-          ? movies.length
-          : Number(button.dataset.questions),
-    };
-    updatePlayer(updatedPlayer);
-    startGame(getNumberOfQuestions());
+    const selectedNbrOfQuestions =
+      button.dataset.questions === "all"
+        ? movies.length
+        : Number(button.dataset.questions);
+
+    setNbrOfQuestions(selectedNbrOfQuestions);
+    startGame();
   }
 });
-//Render initial game screen
+//Render initial question screen
 renderQuestionScreen();

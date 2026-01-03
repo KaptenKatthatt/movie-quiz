@@ -1,15 +1,20 @@
 import { movies } from "./data/movies";
 import {
   cloneAndShuffleArray,
-  updateScoreDisplay,
   renderNewQuestion,
+  updateScoreDisplay,
 } from "./main";
-import { getPlayerScore, initPlayer } from "./player";
-import { getPlayer, game, updatePlayer, resetQuestionNbr } from "./state";
-import type { Player } from "./types";
+import { getNumberOfQuestions, getPlayerScore, initPlayer } from "./player";
+import {
+  getPlayer,
+  game,
+  updatePlayer,
+  resetQuestionNbr,
+  setIsCurrentAnswerCorrect,
+} from "./state";
 import { ui } from "./ui";
 
-export const getNbrOfWrong = () => {
+export const getNbrOfWrongAnswers = () => {
   const currentPlayer = getPlayer();
   const wrongAnswers = currentPlayer.answers.filter(
     (answer) => !answer.isCorrect
@@ -17,33 +22,34 @@ export const getNbrOfWrong = () => {
   return wrongAnswers.length;
 };
 
-export const resetPlayerAnswers = () => {
-  const currentPlayer = getPlayer();
-  const resetPlayer: Player = { ...currentPlayer };
-  const updatedPlayer = { ...resetPlayer, answers: [] };
-  updatePlayer(updatedPlayer);
-  return updatedPlayer;
+export const getThreeRandomAnswers = () => {
+  return cloneAndShuffleArray(game.filteredWrongMovies).slice(0, 3);
 };
+
+export const resetPlayerAnswers = () => {
+  const updatedPlayer = { ...getPlayer(), answers: [] };
+  updatePlayer(updatedPlayer);
+};
+
 export const restartGame = function () {
   resetPlayerAnswers();
-
-  game.isCurrentAnswerCorrect = false;
-
+  setIsCurrentAnswerCorrect(false);
   resetQuestionNbr();
+  initPlayer();
 
   ui.endScreen.highScoreListEl!.innerHTML = "";
   ui.endScreen.showNoHighScoreEl!.classList.add("d-none");
   ui.endScreen.endScreenEl!.classList.add("d-none");
   ui.startScreen.startScreenContainerEl!.classList.remove("d-none");
-  initPlayer();
 };
-export const startGame = (nbrOfSelectedQuestions: number) => {
+
+export const startGame = () => {
   // Shuffles the movie array to create random order on buttons
   game.shuffledQuestions = cloneAndShuffleArray(movies);
   //Create an array with selected nbr of movies
-  game.nbrOfSelectedQuestions = game.shuffledQuestions.slice(
+  game.selectedQuestionsArray = game.shuffledQuestions.slice(
     0,
-    nbrOfSelectedQuestions
+    getNumberOfQuestions()
   );
 
   updateScoreDisplay(game.isCurrentAnswerCorrect && getPlayerScore() > 0);

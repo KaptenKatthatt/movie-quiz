@@ -8,7 +8,7 @@ export interface Player {
 export interface GameState {
   filteredWrongMovies: Movie[]; //Movie array with correct answer filtered out
   shuffledQuestions: Movie[]; //All movies shuffled
-  nbrOfSelectedQuestions: Movie[]; //Movie array sliced to nbr of selected guesses
+  selectedQuestionsArray: Movie[]; //Movie array sliced to nbr of selected guesses
   nbrOfQuestions: number;
   currentQuestionNbr: number;
   isCurrentAnswerCorrect: boolean;

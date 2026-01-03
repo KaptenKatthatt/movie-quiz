@@ -10,28 +10,12 @@ import {
 } from "./highscorelist";
 import type { Movie } from "./types";
 import type { Player } from "./types";
-import { getNbrOfWrong } from "./game";
+import { getNbrOfWrongAnswers } from "./game";
 import { getPlayer } from "./state";
 
 /* **************** FUNCTIONS****************** */
 
-/**
- * Check if player score is higher than lowest score.
- * Add player to updated HSL if so, else return old HSL.
- */
-const isHighScoreWorthy = function (
-  currentPlayer: Player,
-  currentHighScoreList: Player[]
-) {
-  if (currentPlayer.score > getLowestHighScore(currentHighScoreList)) {
-    const updatedList = removeLowestHighScore(currentHighScoreList);
-    return addPlayerToHighScoreList(currentPlayer, updatedList);
-  } else {
-    return currentHighScoreList;
-  }
-};
-
-const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
+function formatCards(answerArr: Movie[], isAnswerCorrect: boolean) {
   return answerArr
     .map(
       (movie) => `
@@ -48,26 +32,32 @@ const formatCards = function (answerArr: Movie[], isAnswerCorrect: boolean) {
     `
     )
     .join("");
-};
+}
 
-/**
- * Renders score count banner
- */
-const renderFinalScoreBanner = () => {
-  // Render final score element to DOM
+function isHighScoreWorthy(
+  currentPlayer: Player,
+  currentHighScoreList: Player[]
+) {
+  if (currentPlayer.score > getLowestHighScore(currentHighScoreList)) {
+    const updatedList = removeLowestHighScore(currentHighScoreList);
+    return addPlayerToHighScoreList(currentPlayer, updatedList);
+  } else {
+    return currentHighScoreList;
+  }
+}
+
+function renderAnswerCards() {
+  renderRightAnswerHeading();
+  renderRightAnswerCards();
+  renderWrongAnswerHeading();
+  renderWrongAnswerCards();
+}
+
+function renderFinalScoreBanner() {
   ui.endScreen.finalScoreEl.innerHTML = `<span class="final-score-text">Your final score is -> </span><span class="final-score">${getPlayerScore()}/${getNumberOfQuestions()}!!!</span>`;
-};
+}
 
-/**
- *Adds current player to HSL
-
-  Checks if score higher than lowest score.
-  Yes? Remove lowest score before push. No? Don't add
-
-  Get highscorelist from local storage and parse it to array
-  //If first play, get premade high score list.
-  */
-const renderHighScoreList = () => {
+function renderHighScoreList() {
   const highScoreList = getHighScoreList();
   const finalHighScoreList = isHighScoreWorthy(getPlayer(), highScoreList);
 
@@ -77,7 +67,6 @@ const renderHighScoreList = () => {
 
   const sortedFinalHighScoreList = sortHighScoreList(finalHighScoreList);
 
-  //render HighScoreList
   ui.endScreen.highScoreListEl.innerHTML = sortedFinalHighScoreList
     .map(
       (highScorePlayer: Player) =>
@@ -90,23 +79,9 @@ const renderHighScoreList = () => {
     .join("");
 
   setHighScoreListToLocalStorage(sortedFinalHighScoreList);
-};
+}
 
-const renderAnswerCards = function () {
-  renderRightAnswerHeading();
-  renderRightAnswerCards();
-  renderWrongAnswerHeading();
-  renderWrongAnswerCards();
-};
-
-const renderRightAnswerHeading = () => {
-  ui.endScreen.rightAnswersHeadingEl.innerText =
-    getPlayerScore() > 0
-      ? "These were correct!"
-      : "No right answers... Try again!🙃";
-};
-
-const renderRightAnswerCards = () => {
+function renderRightAnswerCards() {
   const currentPlayer = getPlayer();
   const rightAnswersArr = currentPlayer.answers
     .filter((answer) => answer.isCorrect)
@@ -116,16 +91,16 @@ const renderRightAnswerCards = () => {
     rightAnswersArr,
     true
   );
-};
+}
 
-const renderWrongAnswerHeading = () => {
-  ui.endScreen.wrongAnswersHeadingEl.innerHTML =
-    getNbrOfWrong() > 0
-      ? "These were wrong..."
-      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
-};
+function renderRightAnswerHeading() {
+  ui.endScreen.rightAnswersHeadingEl.innerText =
+    getPlayerScore() > 0
+      ? "These were correct!"
+      : "No right answers... Try again!🙃";
+}
 
-const renderWrongAnswerCards = () => {
+function renderWrongAnswerCards() {
   const currentPlayer = getPlayer();
   const wrongAnswersArr = currentPlayer.answers
     .filter((answer) => !answer.isCorrect)
@@ -135,11 +110,16 @@ const renderWrongAnswerCards = () => {
     wrongAnswersArr,
     false
   );
-};
+}
 
-/* **************** EXPORT ****************** */
+function renderWrongAnswerHeading() {
+  ui.endScreen.wrongAnswersHeadingEl.innerHTML =
+    getNbrOfWrongAnswers() > 0
+      ? "These were wrong..."
+      : `<h2 class="text-black fw-bold">No wrong answers! Good job!</h2>`;
+}
 
-export const renderEndScreen = () => {
+export function renderEndScreen() {
   renderFinalScoreBanner();
 
   //Show endscreen
@@ -158,7 +138,7 @@ export const renderEndScreen = () => {
   renderHighScoreList();
   // Render correct and wrong answers with name and photo with BS-cards
   renderAnswerCards();
-};
+}
 
 /* **************** EVENT LISTENERS****************** */
 

@@ -8,11 +8,19 @@ export const addPlayerToHighScoreList = (
   return [...currentHighScoreList, currentPlayer];
 };
 
+export const getLatestPlayerId = () => {
+  const currentHighScoreList = getHighScoreList();
+  return Math.max(
+    ...currentHighScoreList.map((highScorePlayer: Player) => highScorePlayer.id)
+  );
+};
+
 export const getLowestHighScore = (highScoreList: Player[]) => {
   return Math.min(
     ...highScoreList.map((highScorePlayer: Player) => highScorePlayer.score)
   );
 };
+
 export const removeLowestHighScore = (currentHighScoreList: Player[]) => {
   const sortedList = sortHighScoreList([...currentHighScoreList]);
   sortedList.pop();
@@ -21,11 +29,4 @@ export const removeLowestHighScore = (currentHighScoreList: Player[]) => {
 
 export const sortHighScoreList = (currentHighScoreList: Player[]) => {
   return [...currentHighScoreList].sort((a, b) => b.score - a.score);
-};
-
-export const getLatestPlayerId = () => {
-  const currentHighScoreList = getHighScoreList();
-  return Math.max(
-    ...currentHighScoreList.map((highScorePlayer) => highScorePlayer.id)
-  );
 };
